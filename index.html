@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>প্রাইমারি স্কুল অ্যাটেনডেন্স</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{background:#f0f4f8;padding:12px}
+h1{text-align:center;color:#1a56db;margin:10px 0;font-size:22px}
+.card{background:#fff;border-radius:12px;padding:14px;margin:10px 0;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.step{background:#eef4ff;border-radius:10px;padding:10px;margin:8px 0}
+.step b{color:#1a56db}
+select,input,button{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc;font-size:15px}
+button{background:#1a56db;color:#fff;border:none;font-weight:bold;cursor:pointer}
+button.green{background:#057a55}button.red{background:#c81e1e}
+.student{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
+.btns{display:flex;gap:6px}.btns button{width:auto;padding:8px 14px}
+.present{background:#e6f9ec;border-left:4px solid #057a55}
+.absent{background:#fdeaea;border-left:4px solid #c81e1e}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{border:1px solid #ddd;padding:8px;text-align:center}
+th{background:#1a56db;color:#fff}
+.tabs{display:flex;gap:6px;margin:10px 0}
+.tabs button{flex:1}
+.hidden{display:none}
+.summary{display:flex;gap:8px;text-align:center}
+.summary div{flex:1;padding:10px;border-radius:8px;color:#fff;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>🏫 স্কুল অ্যাটেনডেন্স</h1>
+
+<div class="tabs">
+<button onclick="show('att')">📝 হাজিরা</button>
+<button onclick="show('std')">👦 শিক্ষার্থী</button>
+<button onclick="show('rep')">📊 রিপোর্ট</button>
+</div>
+
+<!-- ধাপ ১-৩: শিফট, শ্রেণি, শাখা -->
+<div class="card">
+<div class="step"><b>ধাপ ১: শিফট নির্বাচন</b>
+<select id="shift" onchange="refreshAll()">
+<option value="morning">🌅 প্রভাতি শিফট</option>
+<option value="day">☀️ দিবা শিফট</option>
+<option value="single">🏫 এক শিফট</option>
+</select></div>
+<div class="step"><b>ধাপ ২: শ্রেণি নির্বাচন</b>
+<select id="cls" onchange="refreshAll()">
+<option value="pre">প্রাক-প্রাথমিক</option>
+<option value="1">প্রথম শ্রেণি</option>
+<option value="2">দ্বিতীয় শ্রেণি</option>
+<option value="3">তৃতীয় শ্রেণি</option>
+<option value="4">চতুর্থ শ্রেণি</option>
+<option value="5">পঞ্চম শ্রেণি</option>
+<option value="6">ষষ্ঠ শ্রেণি</option>
+<option value="7">সপ্তম শ্রেণি</option>
+<option value="8">অষ্টম শ্রেণি</option>
+</select></div>
+<div class="step"><b>ধাপ ৩: শাখা নির্বাচন (ঐচ্ছিক)</b>
+<select id="sec" onchange="refreshAll()">
+<option value="na">N/A (শাখা নেই)</option>
+<option value="a">শাখা এ</option>
+<option value="b">শাখা বি</option>
+</select></div>
+</div>
+
+<div id="att" class="card">
+<label>তারিখ:</label>
+<input type="date" id="dt">
+<div id="list"></div>
+<button class="green" onclick="saveAtt()">💾 হাজিরা সংরক্ষণ</button>
+</div>
+
+<div id="std" class="card hidden">
+<input id="sname" placeholder="শিক্ষার্থীর নাম লিখুন">
+<input id="sroll" type="number" placeholder="রোল নম্বর">
+<button onclick="addStudent()">➕ যোগ করুন</button>
+<div id="stdlist"></div>
+</div>
+
+<div id="rep" class="card hidden">
+<label>তারিখ:</label>
+<input type="date" id="rdt" onchange="report()">
+<div id="repout"></div>
+</div>
+
+<script>
+document.getElementById('dt').value=new Date().toISOString().slice(0,10);
+document.getElementById('rdt').value=new Date().toISOString().slice(0,10);
+function get(k){return JSON.parse(localStorage.getItem(k)||'[]')}
+function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function key(){return document.getElementById('shift').value+'_'+document.getElementById('cls').value+'_'+document.getElementById('sec').value;}
+function show(id){['att','std','rep'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');refreshAll();}
+function refreshAll(){if(!document.getElementById('std').classList.contains('hidden'))loadStdList();if(!document.getElementById('rep').classList.contains('hidden'))report();loadStudents();}
+function addStudent(){let n=document.getElementById('sname').value.trim(),r=document.getElementById('sroll').value;if(!n||!r){alert('নাম ও রোল দিন!');return}let s=get('std_'+key());s.push({n:n,r:r});set('std_'+key(),s);document.getElementById('sname').value='';document.getElementById('sroll').value='';loadStdList();}
+function loadStdList(){let s=get('std_'+key());document.getElementById('stdlist').innerHTML=s.map((x,i)=>`<div class="student"><span>রোল ${x.r} - ${x.n}</span><button class="red" style="width:auto;padding:6px 10px" onclick="delStd(${i})">মুছুন</button></div>`).join('')||'<p>কোনো শিক্ষার্থী নেই</p>';}
+function delStd(i){let s=get('std_'+key());if(confirm('মুছে ফেলবেন?')){s.splice(i,1);set('std_'+key(),s);loadStdList();}
+function loadStudents(){let s=get('std_'+key());document.getElementById('list').innerHTML=s.map((x,i)=>`<div class="student" id="row${i}"><span>রোল ${x.r} - ${x.n}</span><div class="btns"><button class="green" onclick="mark(${i},1)">উপস্থিত</button><button class="red" onclick="mark(${i},0)">অনুপস্থিত</button></div></div>`).join('')||'<p>আগে শিক্ষার্থী যোগ করুন</p>';window._att=s.map(()=>1);}
+function mark(i,v){window._att[i]=v;let r=document.getElementById('row'+i);r.classList.remove('present','absent');r.classList.add(v?'present':'absent');}
+function saveAtt(){let d=document.getElementById('dt').value;if(!d){alert('তারিখ দিন!');return}let s=get('std_'+key());let rec=s.map((x,i)=>({r:x.r,n:x.n,p:window._att[i]}));set('att_'+key()+'_'+d,rec);alert('✅ হাজিরা সংরক্ষণ হয়েছে!');}
+function report(){let d=document.getElementById('rdt').value;let rec=get('att_'+key()+'_'+d);if(!rec.length){document.getElementById('repout').innerHTML='<p>এই তারিখের হাজিরা পাওয়া যায়নি</p>';return}let p=rec.filter(x=>x.p).length,a=rec.length-p;document.getElementById('repout').innerHTML=`<div class="summary"><div style="background:#057a55">উপস্থিত<br>${p}</div><div style="background:#c81e1e">অনুপস্থিত<br>${a}</div><div style="background:#1a56db">মোট<br>${rec.length}</div></div><br><table><tr><th>রোল</th><th>নাম</th><th>অবস্থা</th></tr>${rec.map(x=>`<tr><td>${x.r}</td><td>${x.n}</td><td>${x.p?'✅ উপস্থিত':'❌ অনুপস্থিত'}</td></tr>`).join('')}</table>`;}
+loadStudents();
+</script>
+</body>
+</html>
