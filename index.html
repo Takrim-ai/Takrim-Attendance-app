@@ -1,250 +1,158 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>প্রতিষ্ঠান হাজিরা সিস্টেম</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primary School - Final 3 Page</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
-body{background:#0b2b23;padding:12px;min-height:100vh}
-.card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.step{background:#eef4ff;border-radius:10px;padding:10px;margin:8px 0}
-.step b{color:#1a56db}
-select,input,button{width:100%;padding:11px;margin:6px 0;border-radius:10px;border:1px solid #ccc;font-size:15px}
-button{background:#1a56db;color:#fff;border:none;font-weight:bold;cursor:pointer}
-button.green{background:#16a34a}button.red{background:#dc2626}button.yellow{background:#facc15;color:#1a1a1a}
-.hidden{display:none}
-.pad{background:#fff;border-radius:16px;padding:12px;display:flex;align-items:center;gap:12px;margin-bottom:4px}
-.pad img{width:64px;height:64px;border-radius:50%;border:3px solid #facc15;object-fit:cover}
-.pad.t b{color:#1e3a8a;font-size:16px;display:block}
-.pad.t span{color:#dc2626;font-size:13px;display:block}
-.pad.t small{color:#333;font-size:12px}
-.clsline{text-align:center;color:#fff;font-size:20px;font-weight:bold;margin:12px 0}
-.clsline2{text-align:center;color:#facc15;font-size:17px;font-weight:bold;margin:8px 0}
-.dbtn{display:block;width:100%;padding:14px;margin:8px 0;border-radius:12px;font-size:16px;font-weight:bold;text-align:center}
-.dash{border:2px dashed #1a56db;background:#fff;color:#1a56db}
-.secttl{font-size:18px;font-weight:bold;margin:14px 0 6px;color:#fff}
-.noticebox{background:#fff;border-radius:12px;padding:12px;margin:6px 0}
-.row3{display:flex;gap:8px}
-.row3 button{flex:1;padding:12px;font-size:14px}
-.stats{display:flex;gap:8px;margin:10px 0}
-.stat{flex:1;border-radius:12px;padding:12px 6px;text-align:center;color:#fff;font-weight:bold;font-size:14px}
-.student{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee;background:#fff}
-.btns{display:flex;gap:6px}.btns button{width:auto;padding:8px 12px;font-size:13px}
-.present{background:#e6f9ec!important;border-left:4px solid #16a34a}
-.absent{background:#fdeaea!important;border-left:4px solid #dc2626}
-table{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
-th,td{border:1px solid #ddd;padding:7px;text-align:center}
-th{background:#1a56db;color:#fff}
-.backbtn{background:#fff;color:#1a56db;width:auto;padding:8px 20px;border-radius:20px;display:block;margin:8px auto}
-.addstd{border:2px dashed #16a34a;background:#f0fdf4;color:#111;border-radius:12px;padding:14px;text-align:center;font-weight:bold;cursor:pointer;margin:10px 0}
-h2.pttl{text-align:center;color:#fff;font-size:24px;margin:6px 0}
-.admrow{display:flex;gap:6px}.admrow input{flex:1}
-.lrow{display:flex;justify-content:space-between;align-items:center;background:#f8fafc;border-radius:10px;padding:10px;margin:6px 0}
-.lrow button{width:auto;padding:6px 12px;font-size:13px}
+*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{margin:0;background:#0a2342;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:12px}
+.logo{width:360px;max-width:92%;border-radius:22px;border:3px solid #ffd700;margin-top:10px}
+.menu-btn{display:block;width:100%;max-width:380px;background:#fff;border:3px solid #ffd700;border-radius:18px;padding:16px;font-size:19px;font-weight:bold;color:#111;margin-top:14px;cursor:pointer;text-align:center}
+.page{display:none;width:100%;max-width:480px}.page.active{display:flex;flex-direction:column;align-items:center;width:100%}
+.header{background:#0f3d2e;color:white;padding:25px 15px 50px;text-align:center;border-radius:0 0 25px 25px;width:100%}
+.card{background:white;margin:-25px 12px 15px;border-radius:18px;padding:15px;width:100%}
+.yellow-btn{background:#ffcc00;width:100%;padding:14px;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
+.sms-btns{display:flex;gap:8px}.sms-btns button{flex:1;padding:12px;border:none;border-radius:10px;color:white;font-weight:bold}
+.green{background:#16a34a}.orange{background:#ea580c}.yellow{background:#eab308;color:#000!important}
+.student-row{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee}
+.filter-tabs{display:flex;gap:6px;margin:12px 0;flex-wrap:wrap}.filter-tabs button{flex:1;min-width:70px;padding:10px 6px;border:none;border-radius:10px;font-weight:bold;cursor:pointer;font-size:13px}
+select,input{width:100%;padding:14px;border-radius:14px;border:1.5px solid #ccc;font-size:16px;margin:6px 0;background:white}
+.college-pad{background:#fff!important;border-radius:14px!important;padding:8px 12px!important;display:flex!important;align-items:center!important;gap:10px!important;box-shadow:0 3px 10px rgba(0,0,0,.2)!important;width:100%}
+.college-pad img{width:56px!important;height:56px!important;border-radius:50%!important;border:3px solid #ffcc00!important;object-fit:cover!important;flex-shrink:0;background:white}
+.pad-bn{font-size:12px!important;font-weight:700!important;color:#0f2d5a!important;line-height:1.3}
+.pad-sm{font-size:10px!important;color:#333!important;margin-top:2px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;width:100%}
+.topbar button{background:#ffcc00;border:none;border-radius:10px;padding:8px 14px;font-weight:bold;cursor:pointer}
+.btn{width:100%;padding:13px;background:linear-gradient(135deg,#ffcc00,#ffb300);border:none;border-radius:12px;font-size:17px;font-weight:bold;color:#0f2d5a;margin-top:10px;cursor:pointer}
+.btn-blue{background:linear-gradient(135deg,#0f3d2e,#1a6b4f);color:#fff}
+.pa{padding:8px 14px;border-radius:10px;border:none;font-weight:bold;cursor:pointer}.a-on{background:#f44336;color:#fff}
+#monthlyDivFirst{display:none}
+#studentList{display:none!important} #studentList.show{display:block!important}
+#resultDiv{display:none}
 </style>
 </head>
 <body>
 
-<!-- ============ প্রথম পাতা ============ -->
-<div id="pg1">
-<div style="margin-bottom:10px;border-radius:18px;overflow:hidden;border:3px solid #d4af37"><img src="IMG-20261005-WA0019(3).jpg" style="width:100%;display:block" alt="banner"></div>
-<div id="pad1"></div>
+<!-- ১ম পাতা -->
+<div id="home" class="page active">
+<img class="logo" src="logo.jpg" onerror="this.style.display='none'">
+<button class="menu-btn" onclick="show('newInstScr')">➕ নতুন প্রতিষ্ঠান যোগ করুন</button>
+<button class="menu-btn" onclick="show('loginScr')">🔑 প্রতিষ্ঠান লগইন</button>
+<button class="menu-btn" onclick="adminGate()">🏫 প্রতিষ্ঠানের তালিকা দেখুন</button>
+</div>
 
+<!-- নতুন প্রতিষ্ঠান - প্রাইমারি ফাইনাল -->
+<div id="newInstScr" class="page">
+<div class="topbar"><button onclick="show('home')">⬅ ফিরুন</button><h2 style="color:#fff;margin:0">➕ নতুন প্রতিষ্ঠান</h2><span></span></div>
 <div class="card">
-<h3 style="text-align:center;color:#1a56db;margin-bottom:8px">🏫 নতুন প্রতিষ্ঠান ফরম</h3>
-<center><img id="logoPrev" src="" style="width:80px;height:80px;border-radius:50%;border:3px solid #facc15;object-fit:cover;display:none;margin-bottom:6px"></center>
-<button class="yellow" onclick="document.getElementById('logoFile').click()">🖼️ লোগো চেঞ্জ</button>
-<input type="file" id="logoFile" accept="image/*" class="hidden" onchange="prevLogo(this)">
-<input id="f_bn" placeholder="বাংলা নাম">
-<input id="f_en" placeholder="English Name">
-<div class="admrow"><input id="f_eiin" placeholder="EIIN"><input id="f_code" placeholder="Code"></div>
-<input id="f_pass" type="password" placeholder="🔑 পাসওয়ার্ড দিন">
-<button class="green" onclick="saveInst()">সেভ করুন ✅</button>
+<div style="border:2px solid #ffcc00;border-radius:22px;padding:18px;margin-bottom:12px">
+<div style="display:flex;gap:14px;align-items:center">
+<div style="text-align:center;min-width:90px">
+<label for="npLogoInp" style="cursor:pointer;display:block">
+<img id="npLogo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNmNWY1ZjUiLz48L3N2Zz4=" style="width:80px;height:80px;border-radius:50%;border:5px solid #ffcc00;object-fit:cover;background:#f5f5f5;display:block;margin:0 auto">
+<div style="color:#1a3aed;font-weight:bold;margin-top:6px;font-size:14px">লোগো চেঞ্জ</div>
+</label>
+<input type="file" id="npLogoInp" accept="image/*" onchange="npLogoChg(this)" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+</div>
+<div style="flex:1">
+<input id="npBn" placeholder="বাংলা নাম - ২৭নং পোতরপাড়..." style="text-align:center;font-weight:bold">
+<div style="display:flex;gap:8px">
+<input id="npEi" placeholder="EMIS Code - 9141109607" style="text-align:center;margin:0">
+<input id="npCd" placeholder="বিদ্যালয় কোড" style="text-align:center;margin:0">
+</div>
+</div></div>
+<input id="npAddr" placeholder="ঠিকানা - পোতরপাড়, সোনারগাঁও, নারায়ণগঞ্জ" style="text-align:center">
+<div style="display:flex;gap:8px">
+<input id="npMobile" placeholder="মোবাইল নম্বর" style="text-align:center;margin:0">
+<input id="npEmail" placeholder="ইমেইল" style="text-align:center;margin:0">
+</div>
+</div>
+<label style="font-weight:bold">🔑 পাসওয়ার্ড</label><input id="npPass" type="password" placeholder="পাসওয়ার্ড দিন">
+<button class="btn btn-blue" onclick="saveNewInst()">সেভ করুন ✔️</button>
+</div></div>
+
+<!-- লগইন -->
+<div id="loginScr" class="page">
+<div class="topbar"><button onclick="show('home')">⬅ ফিরুন</button><span></span><span></span></div>
+<div class="card" style="text-align:center;border:3px solid #ffcc00;margin-top:0">
+<div style="font-size:50px">🔐</div><h2>প্রতিষ্ঠান লগইন</h2>
+<label style="text-align:left;font-weight:bold">🏫 EMIS / কোড</label><input id="l_code" placeholder="যেমন: 9141109607">
+<label style="text-align:left;font-weight:bold">🔑 পাসওয়ার্ড</label><input id="l_pass" type="password" placeholder="পাসওয়ার্ড দিন">
+<label style="text-align:left;font-weight:bold">🎓 শ্রেণি</label><select id="l_cls"></select>
+<button class="btn" onclick="teacherLogin()">প্রবেশ করুন ➜</button>
+<p id="l_msg" style="color:red;font-size:14px;margin-top:8px"></p>
+</div></div>
+
+<!-- তালিকা -->
+<div id="listScr" class="page">
+<div class="topbar"><button onclick="show('home')">⬅ ফিরুন</button><h2 style="color:#fff;margin:0">🏫 তালিকা</h2><span></span></div>
+<div class="card"><div id="instList"></div></div>
 </div>
 
+<!-- ২য় পাতা - ড্যাশবোর্ড -->
+<div id="firstPage" class="page">
+<div class="header" style="padding:10px 10px 35px">
+<div class="college-pad"><div onclick="logoInput.click()" style="cursor:pointer;text-align:center;min-width:60px"><img id="boxLogo" src="https://via.placeholder.com/65"><div style="font-size:9px;color:blue">লোগো চেঞ্জ</div><input type="file" id="logoInput" accept="image/*" style="display:none" onchange="changeBoxLogo(this)"></div>
+<div style="flex:1;overflow:hidden;text-align:left">
+<div id="boxNameBn" class="pad-bn" contenteditable="true" onblur="saveBox()">২৭নং পোতরপাড় আছমা খাতুন সরকারি প্রাথমিক বিদ্যালয়</div>
+<div class="pad-sm">EMIS: <b><span id="boxEIIN" contenteditable="true" onblur="saveBox()">9141109607</span></b> | Code: <b><span id="boxIns" contenteditable="true" onblur="saveBox()">-</span></b></div>
+<div class="pad-sm"><span id="boxAddr" contenteditable="true" onblur="saveBox()">পোতরপাড়, সোনারগাঁও, নারায়ণগঞ্জ</span> | <span id="boxMobile" contenteditable="true" onblur="saveBox()">01724-057734</span></div>
+</div></div>
+<p id="boxStatus" style="color:#ffcc00;font-size:12px;height:12px;margin:5px 0 0"></p>
+<p style="margin:8px 0 0;font-weight:700">শ্রেণী: <span id="showClass"></span></p></div>
 <div class="card">
-<h3 style="text-align:center;color:#1a56db;margin-bottom:8px">🔐 প্রতিষ্ঠান লগইন</h3>
-<label>প্রতিষ্ঠান:</label><select id="l_inst"></select>
-<div class="step"><b>ধাপ ১: শিফট</b><select id="l_shift"><option value="morning">🌅 প্রভাতি</option><option value="day">☀️ দিবা</option><option value="single">🏫 এক শিফট</option></select></div>
-<div class="step"><b>ধাপ ২: শ্রেণি</b><select id="l_cls"><option>প্রাক-প্রাথমিক</option><option>১ম শ্রেণি</option><option>২য় শ্রেণি</option><option>৩য় শ্রেণি</option><option>৪র্থ শ্রেণি</option><option>৫ম শ্রেণি</option><option>৬ষ্ঠ শ্রেণি</option><option>৭ম শ্রেণি</option><option>৮ম শ্রেণি</option><option>৯ম শ্রেণি</option><option>১০ম শ্রেণি</option></select></div>
-<div class="step"><b>ধাপ ৩: শাখা</b><select id="l_sec"><option value="na">N/A</option><option>শাখা এ</option><option>শাখা বি</option></select></div>
-<div class="step"><b>ধাপ ৪: পাসওয়ার্ড</b><input id="l_pass" type="password" placeholder="প্রতিষ্ঠানের পাসওয়ার্ড"></div>
-<button onclick="doLogin()">🔓 প্রবেশ করুন</button>
-<p id="loginErr" style="color:#dc2626;text-align:center;min-height:20px"></p>
-</div>
+<button class="yellow-btn" onclick="openStudentPage()">👥 শিক্ষার্থীর তালিকা দেখুন</button>
+<button onclick="toggleMonthlyFirst()" style="width:100%;margin-top:12px;padding:14px;background:#fff;border:2px dashed #2563eb;border-radius:12px;font-weight:bold;color:#2563eb">📋 মাসিক হাজিরা দেখুন</button>
+<div id="monthlyDivFirst" style="overflow:auto;margin-top:10px;border:2px dashed #2563eb;border-radius:12px;padding:10px;background:#f8fafc"></div>
+<h3>📢 নোটিশ বোর্ড</h3><input type="text" id="noticeText" placeholder="নোটিশ লিখুন...">
+<h3>💬 SMS পাঠান</h3><div class="sms-btns"><button class="green" onclick="sendDirectSMS('present')">✅ উপস্থিত</button><button class="orange" onclick="sendDirectSMS('absent')">❌ অনুপস্থিত</button><button class="yellow" onclick="sendDirectSMS('notice')">📢 নোটিশ</button></div>
+<h3>📲 WhatsApp-এ পাঠান</h3><div class="sms-btns"><button class="green" onclick="sendWA('present')">✅ উপস্থিত</button><button class="orange" onclick="sendWA('absent')">❌ অনুপস্থিত</button><button class="yellow" onclick="sendWA('notice')">📢 নোটিশ</button></div>
+<button onclick="shareReport()" style="width:100%;margin-top:10px;padding:14px;background:#25D366;color:white;border:none;border-radius:12px;font-weight:bold">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button>
+<button onclick="location.reload()" style="width:100%;margin-top:12px;padding:10px;background:#555;color:white;border:none;border-radius:10px">⬅️ লগআউট</button>
+</div></div>
 
+<!-- ৩য় পাতা - শিক্ষার্থী তালিকা -->
+<div id="secondPage" class="page">
+<div class="header" style="padding-bottom:20px"><div class="college-pad"><img id="boxLogo3"><div style="flex:1;overflow:hidden;text-align:left"><div id="boxNameBn3" class="pad-bn"></div><div class="pad-sm"><span id="boxEIIN3"></span> | <span id="boxIns3"></span></div><div class="pad-sm" id="boxAddr3"></div></div></div>
+<h2 style="margin:10px 0 0">শিক্ষার্থীর তালিকা</h2><div style="color:#ffcc00;font-size:13px;margin-top:6px;font-weight:700">শ্রেণী: <span id="showClass3"></span></div>
+<button onclick="show('firstPage')" style="margin-top:10px;background:white;color:#0f3d2e;border:none;padding:6px 15px;border-radius:20px;font-weight:bold">⬅️ ড্যাশবোর্ড</button></div>
 <div class="card">
-<h3 style="text-align:center;color:#1a56db;margin-bottom:8px">🔒 প্রতিষ্ঠানের তালিকা দেখুন</h3>
-<div id="lockBox">
-<input id="a_user" placeholder="এডমিন নাম">
-<input id="a_pass" type="password" placeholder="এডমিন পাসওয়ার্ড">
-<button class="red" onclick="unlockList()">🔓 তালিকা খুলুন</button>
-<p id="admErr" style="color:#dc2626;text-align:center;min-height:20px"></p>
-</div>
-<div id="instList" class="hidden"></div>
-</div>
-</div>
-
-<!-- ============ দ্বিতীয় পাতা: ড্যাশবোর্ড ============ -->
-<div id="pg2" class="hidden">
-<div id="pad2"></div>
-<div class="clsline">শ্রেণী: <span id="d_cls"></span></div>
-<button class="dbtn yellow" onclick="goPage('pg3');loadStdPage()">👥 শিক্ষার্থীর তালিকা দেখুন</button>
-<button class="dbtn dash" onclick="goPage('pgM');showMonthly()">📋 মাসিক হাজিরা দেখুন</button>
-<div class="secttl">📢 নোটিশ বোর্ড</div>
-<div class="noticebox"><input id="noticeTxt" placeholder="নোটিশ লিখুন..."><button class="green" onclick="saveNotice()">📢 নোটিশ সেভ করুন</button><div id="noticeList"></div></div>
-<div class="secttl">💬 SMS পাঠান</div>
-<div class="row3"><button class="green" onclick="sendSMS('p')">✅ উপস্থিত</button><button class="red" onclick="sendSMS('a')">❌ অনুপস্থিত</button><button class="yellow" onclick="sendSMS('n')">📢 নোটিশ</button></div>
-<div class="secttl">📲 WhatsApp-এ পাঠান</div>
-<div class="row3"><button class="green" onclick="sendWA('p')">✅ উপস্থিত</button><button class="red" onclick="sendWA('a')">❌ অনুপস্থিত</button><button class="yellow" onclick="sendWA('n')">📢 নোটিশ</button></div>
-<button class="dbtn green" onclick="sendWAReport()">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button>
-<button class="dbtn red" onclick="logout()">🚪 লগআউট</button>
-</div>
-
-<!-- ============ তৃতীয় পাতা: শিক্ষার্থীর তালিকা ============ -->
-<div id="pg3" class="hidden">
-<div id="pad3"></div>
-<h2 class="pttl">শিক্ষার্থীর তালিকা</h2>
-<div class="clsline2">শ্রেণী: <span id="s_cls"></span></div>
-<button class="backbtn" onclick="goPage('pg2')">⬅ ড্যাশবোর্ড</button>
-<div class="card">
-<div class="addstd" onclick="document.getElementById('addForm').classList.toggle('hidden')">➕ শিক্ষার্থী যোগ করুন</div>
-<div id="addForm" class="hidden">
-<input id="s_name" placeholder="শিক্ষার্থীর নাম">
-<div class="admrow"><input id="s_roll" type="number" placeholder="রোল"><input id="s_phone" placeholder="মোবাইল (ঐচ্ছিক)"></div>
-<button class="green" onclick="addStudent()">➕ যোগ করুন</button>
-</div>
-<div class="stats">
-<div class="stat" style="background:#facc15;color:#111">📋 সবাই<br><span id="c_all">0</span></div>
-<div class="stat" style="background:#16a34a">✅ উপস্থিত<br><span id="c_p">0</span></div>
-<div class="stat" style="background:#dc2626">❌ অনুপস্থিত<br><span id="c_a">0</span></div>
-<div class="stat" style="background:#7c3aed" onclick="goPage('pgM');showMonthly()">🏆<br>ফলাফল</div>
-</div>
-<label>তারিখ:</label>
-<input type="date" id="attDate">
-<div id="stdRows"></div>
-<button class="green" onclick="saveAtt()">💾 হাজিরা সংরক্ষণ</button>
-</div>
-</div>
-
-<!-- ============ মাসিক হাজিরা ============ -->
-<div id="pgM" class="hidden">
-<div id="pad4"></div>
-<h2 class="pttl">📋 মাসিক হাজিরা</h2>
-<button class="backbtn" onclick="goPage('pg2')">⬅ ড্যাশবোর্ড</button>
-<div class="card">
-<label>মাস নির্বাচন:</label>
-<input type="month" id="mMonth" onchange="showMonthly()">
-<div id="mOut" style="overflow-x:auto"></div>
-</div>
-</div>
+<button onclick="toggleAdd()" style="width:100%;padding:14px;background:#dcfce7;border:2px dashed #16a34a;border-radius:12px;font-weight:bold">➕ শিক্ষার্থী যোগ করুন</button>
+<div id="addForm" style="display:none;margin-top:10px;padding:12px;background:#f0fdf4;border-radius:12px;border:1px solid #16a34a"><input type="text" id="sName" placeholder="নাম"><input type="text" id="sRoll" placeholder="রোল"><input type="text" id="sMobile" placeholder="মোবাইল"><div style="display:flex;gap:8px"><button onclick="addStudent()" style="flex:1;padding:12px;background:#16a34a;color:white;border:none;border-radius:8px">✅ যোগ</button><button onclick="toggleAdd()" style="flex:1;padding:12px;background:#555;color:white;border:none;border-radius:8px">❌ বন্ধ</button></div></div>
+<div class="filter-tabs"><button style="background:#ffcc00" onclick="filterList('all')">📋 সবাই<br><span id="cAll">0</span></button><button style="background:#16a34a;color:white" onclick="filterList('present')">✅ উপস্থিত<br><span id="cPresent">0</span></button><button style="background:#ef4444;color:white" onclick="filterList('absent')">❌ অনুপস্থিত<br><span id="cAbsent">0</span></button><button style="background:#7c3aed;color:white" onclick="filterList('result')">🏆 ফলাফল</button></div>
+<div id="studentList"></div><div id="resultDiv" style="overflow:auto;margin-top:10px;border:2px solid #7c3aed;border-radius:12px;padding:10px;background:#f5f3ff"></div>
+</div></div>
 
 <script>
-const ADMIN_U="malek", ADMIN_P="takrim2022";
-function get(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}
-function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function today(){return new Date().toISOString().slice(0,10)}
-function goPage(id){['pg1','pg2','pg3','pgM'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0)}
-function S(){return sessionStorage}
-const DEF_LOGO="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%231e3a8a'/><text x='50' y='70' font-size='52' text-anchor='middle'>🎓</text></svg>";
-function padHTML(inst){
-  const logo=(inst&&inst.logo)||DEF_LOGO;
-  const bn=inst?inst.bn:'প্রতিষ্ঠানের নাম';
-  const en=(inst&&inst.en)?'<span>'+inst.en+'</span>':'';
-  const ec='EIIN: '+((inst&&inst.eiin)||'-')+' &nbsp; Code: '+((inst&&inst.code)||'-');
-  return '<div class="pad"><img src="'+logo+'"><div class="t"><b>'+bn+'</b>'+en+'<small>'+ec+'</small></div></div>';
-}
-function renderPads(){
-  const insts=get('inst_list');
-  const sel=insts.find(x=>x.id===document.getElementById('l_inst').value)||insts[0]||null;
-  document.getElementById('pad1').innerHTML=padHTML(sel);
-  const cur=curInst();
-  document.getElementById('pad2').innerHTML=padHTML(cur);
-  document.getElementById('pad3').innerHTML=padHTML(cur);
-  document.getElementById('pad4').innerHTML=padHTML(cur);
-}
-let tmpLogo="";
-function prevLogo(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{tmpLogo=e.target.result;const p=document.getElementById('logoPrev');p.src=tmpLogo;p.style.display='block'};r.readAsDataURL(f)}
-function saveInst(){
-  const bn=document.getElementById('f_bn').value.trim(),en=document.getElementById('f_en').value.trim(),eiin=document.getElementById('f_eiin').value.trim(),code=document.getElementById('f_code').value.trim(),pass=document.getElementById('f_pass').value;
-  if(!bn||!pass){alert('বাংলা নাম ও পাসওয়ার্ড দিন!');return}
-  const l=get('inst_list');l.push({id:'i'+Date.now(),bn:bn,en:en,eiin:eiin,code:code,pass:pass,logo:tmpLogo||''});set('inst_list',l);
-  ['f_bn','f_en','f_eiin','f_code','f_pass'].forEach(id=>document.getElementById(id).value='');
-  tmpLogo='';document.getElementById('logoPrev').style.display='none';
-  fillLoginInsts();renderPads();alert('✅ প্রতিষ্ঠান সেভ হয়েছে!');
-}
-function fillLoginInsts(){const l=get('inst_list');document.getElementById('l_inst').innerHTML=l.map(x=>'<option value="'+x.id+'">'+x.bn+'</option>').join('')||'<option value="">-- কোনো প্রতিষ্ঠান নেই --</option>'}
-function doLogin(){
-  const inst=get('inst_list').find(x=>x.id===document.getElementById('l_inst').value);
-  if(!inst){document.getElementById('loginErr').textContent='আগে প্রতিষ্ঠান যোগ করুন!';return}
-  if(document.getElementById('l_pass').value!==inst.pass){document.getElementById('loginErr').textContent='❌ ভুল পাসওয়ার্ড!';return}
-  S().setItem('login','1');S().setItem('inst',inst.id);
-  S().setItem('shift',document.getElementById('l_shift').value);
-  S().setItem('cls',document.getElementById('l_cls').value);
-  S().setItem('sec',document.getElementById('l_sec').value);
-  enterDash();
-}
-function curInst(){return get('inst_list').find(x=>x.id===S().getItem('inst'))||null}
-function key(){return S().getItem('inst')+'_'+S().getItem('shift')+'_'+S().getItem('cls')+'_'+S().getItem('sec')}
-function enterDash(){renderPads();document.getElementById('d_cls').textContent=S().getItem('cls');document.getElementById('s_cls').textContent=S().getItem('cls');loadNotices();goPage('pg2')}
-function logout(){S().removeItem('login');location.reload()}
-function unlockList(){
-  const u=document.getElementById('a_user').value.trim(),p=document.getElementById('a_pass').value;
-  if(u===ADMIN_U&&p===ADMIN_P){
-    const l=get('inst_list');
-    document.getElementById('instList').innerHTML=l.map(x=>'<div class="lrow"><span>🏫 '+x.bn+'<br><small>EIIN:'+(x.eiin||'-')+' | Code:'+(x.code||'-')+'</small></span><button class="red" onclick="delInst(\''+x.id+'\')">মুছুন</button></div>').join('')||'<p>কোনো প্রতিষ্ঠান নেই</p>';
-    document.getElementById('instList').classList.remove('hidden');
-    document.getElementById('admErr').textContent='';
-  }else{document.getElementById('admErr').textContent='❌ ভুল এডমিন তথ্য!'}
-}
-function delInst(id){if(!confirm('মুছে ফেলবেন?'))return;set('inst_list',get('inst_list').filter(x=>x.id!==id));fillLoginInsts();renderPads();unlockList()}
-function addStudent(){
-  const n=document.getElementById('s_name').value.trim(),r=document.getElementById('s_roll').value.trim(),ph=document.getElementById('s_phone').value.trim();
-  if(!n||!r){alert('নাম ও রোল দিন!');return}
-  const s=get('std_'+key());s.push({n:n,r:r,ph:ph});set('std_'+key(),s);
-  document.getElementById('s_name').value='';document.getElementById('s_roll').value='';document.getElementById('s_phone').value='';
-  loadStdPage();
-}
-function loadStdPage(){
-  const s=get('std_'+key());
-  if(!document.getElementById('attDate').value)document.getElementById('attDate').value=today();
-  document.getElementById('stdRows').innerHTML=s.map((x,i)=>'<div class="student" id="row'+i+'"><span>রোল '+x.r+' - '+x.n+'</span><div class="btns"><button class="green" onclick="mark('+i+',1)">✅</button><button class="red" onclick="mark('+i+',0)">❌</button><button onclick="delStd('+i+')" style="background:#64748b">🗑</button></div>').join('')||'<p style="color:#fff">কোনো শিক্ষার্থী নেই</p>';
-  window._att=s.map(()=>1);updCounts();
-}
-function mark(i,v){window._att[i]=v;const r=document.getElementById('row'+i);r.classList.remove('present','absent');r.classList.add(v?'present':'absent');updCounts()}
-function updCounts(){const a=window._att||[],p=a.filter(x=>x).length;document.getElementById('c_all').textContent=a.length;document.getElementById('c_p').textContent=p;document.getElementById('c_a').textContent=a.length-p}
-function delStd(i){if(!confirm('মুছে ফেলবেন?'))return;const s=get('std_'+key());s.splice(i,1);set('std_'+key(),s);loadStdPage()}
-function saveAtt(){const d=document.getElementById('attDate').value||today();const s=get('std_'+key());set('att_'+key()+'_'+d,s.map((x,i)=>({r:x.r,n:x.n,p:window._att[i]})));alert('✅ হাজিরা সংরক্ষণ হয়েছে!')}
-function saveNotice(){const t=document.getElementById('noticeTxt').value.trim();if(!t)return;const k='notice_'+S().getItem('inst');const n=get(k);n.unshift(t);set(k,n);document.getElementById('noticeTxt').value='';loadNotices()}
-function loadNotices(){const n=get('notice_'+S().getItem('inst'));document.getElementById('noticeList').innerHTML=n.map(x=>'<div class="lrow"><span>📢 '+x+'</span></div>').join('')}
-function todayAtt(){return get('att_'+key()+'_'+today())}
-function msgText(t){
-  const inst=curInst(),cls=S().getItem('cls'),d=today(),rec=todayAtt(),p=rec.filter(x=>x.p).length;
-  const head=(inst?inst.bn:'')+'\nশ্রেণী: '+cls+'\nতারিখ: '+d+'\n';
-  if(t==='p')return head+'✅ উপস্থিত: '+p+' জন';
-  if(t==='a')return head+'❌ অনুপস্থিত: '+(rec.length-p)+' জন';
-  return head+'📢 নোটিশ: '+(get('notice_'+S().getItem('inst'))[0]||'কোনো নোটিশ নেই');
-}
-function sendSMS(t){location.href='sms:?body='+encodeURIComponent(msgText(t))}
-function sendWA(t){window.open('https://wa.me/?text='+encodeURIComponent(msgText(t)),'_blank')}
-function sendWAReport(){
-  const inst=curInst(),cls=S().getItem('cls'),d=today(),rec=todayAtt(),p=rec.filter(x=>x.p).length;
-  let t='📊 হাজিরা রিপোর্ট\n'+(inst?inst.bn:'')+'\nশ্রেণী: '+cls+'\nতারিখ: '+d+'\n\nউপস্থিত: '+p+'\nঅনুপস্থিত: '+(rec.length-p)+'\nমোট: '+rec.length+'\n\n'+rec.map(x=>(x.p?'✅':'❌')+' রোল '+x.r+' - '+x.n).join('\n');
-  window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');
-}
-function showMonthly(){
-  const m=document.getElementById('mMonth').value||today().slice(0,7);
-  document.getElementById('mMonth').value=m;
-  const px='att_'+key()+'_'+m, days={};
-  for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf(px)===0)days[k.slice(px.length+1)]=get(k)}
-  const dl=Object.keys(days).sort(), studs=get('std_'+key());
-  const rows=studs.map(s=>{let p=0;dl.forEach(d=>{const r=days[d].find(x=>String(x.r)===String(s.r));if(r&&r.p)p++});const pc=dl.length?Math.round(p/dl.length*100):0;return '<tr><td>'+s.r+'</td><td>'+s.n+'</td><td>'+p+'</td><td>'+dl.length+'</td><td>'+pc+'%</td></tr>'}).join('');
-  document.getElementById('mOut').innerHTML='<table><tr><th>রোল</th><th>নাম</th><th>উপস্থিত</th><th>মোট দিন</th><th>%</th></tr>'+(rows||'<tr><td colspan="5">ডেটা নেই</td></tr>')+'</table>';
-}
-fillLoginInsts();renderPads();
-document.getElementById('l_inst').addEventListener('change',renderPads);
-if(S().getItem('login')==='1')enterDash();
+function show(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+let users=JSON.parse(localStorage.getItem('takrim_users')||'{}');
+let insts=JSON.parse(localStorage.getItem('takrim_insts')||'[]');
+const LCLASSES=['১ম শ্রেণি','২য় শ্রেণি','৩য় শ্রেণি','৪র্থ শ্রেণি','৫ম শ্রেণি'];
+l_cls.innerHTML='<option value="">শ্রেণি সিলেক্ট করুন</option>'+LCLASSES.map(c=>'<option value="'+c+'">'+c+'</option>').join('');
+let npLogoData='';function npLogoChg(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{npLogoData=e.target.result;npLogo.src=e.target.result;};r.readAsDataURL(f);}
+function saveNewInst(){let bn=npBn.value.trim();if(!bn){alert('বাংলা নাম দিন');return;}let ei=npEi.value.trim(),cd=npCd.value.trim(),addr=npAddr.value.trim(),mob=npMobile.value.trim(),em=npEmail.value.trim(),pass=npPass.value;if(!pass){alert('পাসওয়ার্ড দিন');return;}insts.push({name:bn,eiin:ei,code:cd,addr:addr,mobile:mob,email:em,logo:npLogoData,pass:pass});localStorage.setItem('takrim_insts',JSON.stringify(insts));let k=cd||ei;if(k&&pass){users[k]=pass;localStorage.setItem('takrim_users',JSON.stringify(users));}npBn.value='';npEi.value='';npCd.value='';npAddr.value='';npMobile.value='';npEmail.value='';npPass.value='';npLogoData='';alert('✔️ প্রাইমারি প্রতিষ্ঠান যোগ হয়েছে');show('home');}
+function teacherLogin(){let c=l_code.value.trim(),p=l_pass.value,cl=l_cls.value;if(!c||!p){l_msg.textContent='কোড ও পাসওয়ার্ড দিন';return;}if(!cl){l_msg.textContent='শ্রেণি সিলেক্ট করুন';return;}let i=insts.findIndex(s=>((s.code||'').trim()===c||(s.eiin||'').trim()===c));let ok=(users[c]&&users[c]===p);if(!ok&&i>=0&&(insts[i].pass||'')===p)ok=true;if(!ok){l_msg.textContent='❌ ভুল কোড বা পাসওয়ার্ড!';return;}l_msg.textContent='';l_code.value='';l_pass.value='';l_cls.value='';let s=insts[i>=0?i:0]||{};localStorage.setItem('collegeInfo',JSON.stringify({nameBn:s.name||'',eiin:s.eiin||'',ins:s.code||'',addr:s.addr||'',mobile:s.mobile||'',email:s.email||'',logo:s.logo||''}));currentClass=cl;loadClassData();showClass.innerText=currentClass;showClass3.innerText=currentClass;loadBox();show('firstPage');}
+function adminGate(){let ap=localStorage.getItem('takrim_admin_pass');if(!ap){let np=prompt('প্রথমবার: এডমিন পাসওয়ার্ড সেট করুন (ID: takrim)');if(!np)return;localStorage.setItem('takrim_admin_pass',np);alert('✔️ সেট হয়েছে');openListScr();return;}let id=prompt('🔐 এডমিন আইডি দিন');if(id!=='takrim'){alert('❌ অনুমতি নেই!');return;}let pw=prompt('🔐 এডমিন পাসওয়ার্ড দিন');if(pw!==ap){alert('❌ ভুল পাসওয়ার্ড!');return;}openListScr();}
+function openListScr(){show('listScr');let seen={},uniq=[];insts.forEach((s,i)=>{let k=(s.eiin||'')+(s.name||'');if(!seen[k]){seen[k]=1;uniq.push(i);}});instList.innerHTML=uniq.length?uniq.map(i=>{let s=insts[i];return '<div class="card" style="display:flex;align-items:center;gap:10px;padding:10px;margin:0 0 10px">'+(s.logo?'<img src="'+s.logo+'" style="width:45px;height:45px;border-radius:50%;object-fit:cover">':'🏫')+'<div style="flex:1"><b>'+s.name+'</b><br><small>EMIS: '+(s.eiin||'-')+' | Code: '+(s.code||'-')+'<br>📍 '+(s.addr||'-')+'<br>📱 '+(s.mobile||'-')+'</small></div><button class="pa a-on" onclick="delInst('+i+')">🗑️</button></div>';}).join(''):'<p style="text-align:center;color:#888">কোনো প্রতিষ্ঠান নেই</p>';}
+function delInst(idx){if(!confirm('ডিলিট করবেন?'))return;let s=insts[idx];if(s.code&&users[s.code]){delete users[s.code];localStorage.setItem('takrim_users',JSON.stringify(users));}insts.splice(idx,1);localStorage.setItem('takrim_insts',JSON.stringify(insts));openListScr();}
+let currentClass="";let students=[],attendance={};let currentFilter='none';
+function key(n){return n+'_'+currentClass;}
+function loadClassData(){students=JSON.parse(localStorage.getItem(key('students'))||'[]');attendance=JSON.parse(localStorage.getItem(key('att'))||'{}');}
+function saveAll(){if(!currentClass)return;localStorage.setItem(key('students'),JSON.stringify(students));localStorage.setItem(key('att'),JSON.stringify(attendance));}
+function saveBox(){let info={nameBn:boxNameBn.innerText.trim(),eiin:boxEIIN.innerText.trim(),ins:boxIns.innerText.trim(),addr:boxAddr.innerText.trim(),mobile:boxMobile.innerText.trim(),logo:boxLogo.src};localStorage.setItem('collegeInfo',JSON.stringify(info));boxStatus.innerText="✅ সেভ হয়েছে";setTimeout(()=>boxStatus.innerText="",1200);boxNameBn3.innerText=info.nameBn;boxEIIN3.innerText="EMIS: "+info.eiin;boxIns3.innerText="Code: "+info.ins;boxAddr3.innerText=info.addr+" | "+info.mobile;boxLogo3.src=info.logo;}
+function changeBoxLogo(i){let f=i.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{boxLogo.src=e.target.result;saveBox();};r.readAsDataURL(f);}
+function loadBox(){let info=JSON.parse(localStorage.getItem('collegeInfo')||'{}');if(info.nameBn)boxNameBn.innerText=info.nameBn;if(info.eiin)boxEIIN.innerText=info.eiin;if(info.ins)boxIns.innerText=info.ins;if(info.addr)boxAddr.innerText=info.addr;if(info.mobile)boxMobile.innerText=info.mobile;if(info.logo){boxLogo.src=info.logo;boxLogo3.src=info.logo;}boxNameBn3.innerText=info.nameBn||boxNameBn.innerText;boxEIIN3.innerText="EMIS: "+(info.eiin||boxEIIN.innerText);boxIns3.innerText="Code: "+(info.ins||boxIns.innerText);boxAddr3.innerText=(info.addr||'')+" | "+(info.mobile||'');}
+function openStudentPage(){show('secondPage');loadBox();updateCounts();studentList.style.display='none';studentList.classList.remove('show');resultDiv.style.display='none';currentFilter='none';}
+function toggleAdd(){let f=addForm;f.style.display=f.style.display=='none'?'block':'none';}
+function addStudent(){let n=sName.value.trim();if(!n)return alert('নাম দিন');students.push({name:n,roll:sRoll.value.trim(),mobile:sMobile.value.trim()});saveAll();addForm.style.display='none';sName.value='';sRoll.value='';sMobile.value='';filterList('all');}
+function toggleAtt(i,isP){attendance[i]=isP?'present':'absent';saveAll();render();updateCounts();}
+function updateCounts(){let p=0;students.forEach((_,i)=>{if(attendance[i]!=='absent')p++;});cAll.innerText=students.length;cPresent.innerText=p;cAbsent.innerText=students.length-p;}
+function filterList(t){currentFilter=t;let sl=studentList,rd=resultDiv;sl.style.display='none';rd.style.display='none';sl.classList.remove('show');if(t=='result'){rd.style.display='block';}else{sl.style.display='block';sl.classList.add('show');render();}}
+function render(){let sl=studentList;sl.innerHTML='';students.forEach((s,i)=>{if(currentFilter=='present'&&attendance[i]=='absent')return;if(currentFilter=='absent'&&attendance[i]!=='absent')return;let isP=attendance[i]!=='absent';sl.innerHTML+='<div class="student-row" style="background:'+(isP?'#e8f5e9':'#ffebee')+'"><div><b>'+s.name+'</b><br><small>রোল: '+(s.roll||'-')+' | '+(s.mobile||'-')+'</small></div><div><button class="pa" style="background:'+(isP?'#16a34a':'#ccc')+';color:#fff" onclick="toggleAtt('+i+',true)">✅</button> <button class="pa" style="background:'+(!isP?'#ef4444':'#ccc')+';color:#fff" onclick="toggleAtt('+i+',false)">❌</button></div></div>';});}
+function toggleMonthlyFirst(){let d=monthlyDivFirst;d.style.display=d.style.display=='none'?'block':'none';}
+function sendDirectSMS(t){alert(t+' SMS');}function sendWA(t){alert(t+' WA');}function shareReport(){alert('রিপোর্ট শেয়ার');}
 </script>
 </body>
 </html>
