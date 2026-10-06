@@ -2,12 +2,16 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>২৭নং পোতরপাড় প্রাইমারি - ফাইনাল</title>
+<title>Takrim Attendance App</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
 body{background:#0b2b23;padding:12px;min-height:100vh;display:flex;flex-direction:column;align-items:center}
 .card{background:#fff;border-radius:18px;padding:16px;margin:10px 0;width:100%;max-width:480px;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.acc{width:100%;max-width:480px;background:#fff;border-radius:14px;margin:8px 0;overflow:hidden;border:1px solid #ddd}
+.acc-head{padding:14px 16px;background:#fff;display:flex;justify-content:space-between;align-items:center;font-weight:bold;color:#1a56db;cursor:pointer;font-size:16px}
+.acc-body{display:none;padding:14px;border-top:1px solid #eee}
+.acc-body.open{display:block}
 .step{background:#eef4ff;border-radius:12px;padding:10px;margin:8px 0}.step b{color:#1a56db;font-size:13px}
 input,select,button{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ddd;font-size:14px}
 button{background:#1a56db;color:#fff;border:none;font-weight:bold;cursor:pointer}
@@ -19,90 +23,65 @@ button.green{background:#16a34a}button.red{background:#dc2626}button.yellow{back
 #pg1,#pg2,#pg3{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center}
 .clsline{color:#fff;font-weight:bold;text-align:center;margin:8px 0;font-size:15px}
 .dbtn{width:100%;max-width:480px;padding:14px;margin:8px 0;border-radius:12px;font-weight:bold;border:none}
-.stat{flex:1;border-radius:12px;padding:10px 6px;text-align:center;font-weight:bold;font-size:12px}
-.row3{display:flex;gap:8px}.row3 button{flex:1}
-.student{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px solid #eee;background:#fff;border-radius:8px;margin:5px 0}
 </style>
 </head>
 <body>
 
 <div id="pg1">
-<div class="banner"><img src="IMG-20261005-WA0019(3).jpg" onerror="this.src='https://via.placeholder.com/480x200/0b2240/ffcc00?text=Engineered+by+Mohammad+Abdul+Malek%0A01912427294'"></div>
+<div class="banner"><img src="./IMG-20261005-WA0019(3).jpg" onerror="this.src='https://via.placeholder.com/480x200/0b2240/ffcc00?text=Engineered+by+Mohammad+Abdul+Malek'"></div>
 
-<div class="card"><h3 style="text-align:center;color:#1a56db">🏫 প্রাইমারি প্রতিষ্ঠান ফরম</h3>
+<!-- 1. প্রাইমারি ফরম - ভিতরে হাইড -->
+<div class="acc"><div class="acc-head" onclick="toggleAcc(this)">🏫 প্রাইমারি প্রতিষ্ঠান ফরম <span>▼</span></div>
+<div class="acc-body">
 <center><img id="logoPrev" style="width:80px;height:80px;border-radius:50%;border:3px solid #facc15;display:none;object-fit:cover;margin:8px"></center>
 <button class="yellow" onclick="logoFile.click()">🖼️ লোগো চেঞ্জ</button><input type="file" id="logoFile" accept="image/*" class="hidden" onchange="prevLogo(this)">
-<input id="f_bn" placeholder="বাংলা নাম - ২৭নং পোতরপাড় আছমা খাতুন সরকারি প্রাথমিক বিদ্যালয়">
-<input id="f_addr" placeholder="ঠিকানা - পোতরপাড়, চাটখিল, নোয়াখালী">
-<div style="display:flex;gap:8px"><input id="f_eiin" value="9141109607" placeholder="EMIS Code"><input id="f_code" placeholder="School Code"></div>
+<input id="f_bn" placeholder="বাংলা নাম"><input id="f_addr" placeholder="ঠিকানা">
+<div style="display:flex;gap:8px"><input id="f_eiin" value="9141109607"><input id="f_code" placeholder="School Code"></div>
 <div style="display:flex;gap:8px"><input id="f_mob" placeholder="মোবাইল"><input id="f_email" placeholder="Email"></div>
-<input id="f_ht" placeholder="প্রধান শিক্ষকের নাম">
-<input id="f_pass" type="password" placeholder="🔑 পাসওয়ার্ড">
-<button class="green" onclick="saveInst()">সেভ করুন ✅</button></div>
+<input id="f_ht" placeholder="প্রধান শিক্ষকের নাম"><input id="f_pass" type="password" placeholder="🔑 পাসওয়ার্ড"><button class="green" onclick="saveInst()">সেভ করুন ✅</button>
+</div></div>
 
-<div class="card"><h3 style="text-align:center;color:#1a56db">🔐 প্রতিষ্ঠান লগইন</h3>
+<!-- 2. লগইন - ভিতরে হাইড -->
+<div class="acc"><div class="acc-head" onclick="toggleAcc(this)">🔐 প্রতিষ্ঠান লগইন <span>▼</span></div>
+<div class="acc-body">
 <select id="l_inst"></select>
 <div class="step"><b>ধাপ ১: শিফট</b><select id="l_shift"><option>🌅 প্রভাতি</option><option>☀️ দিবা</option><option>🏫 এক শিফট</option></select></div>
 <div class="step"><b>ধাপ ২: শ্রেণি</b><select id="l_cls"><option>প্রাক-প্রাথমিক</option><option>১ম শ্রেণি</option><option>২য় শ্রেণি</option><option>৩য় শ্রেণি</option><option>৪র্থ শ্রেণি</option><option>৫ম শ্রেণি</option></select></div>
 <div class="step"><b>ধাপ ৩: শাখা</b><select id="l_sec"><option>N/A</option><option>শাখা এ</option><option>শাখা বি</option></select></div>
-<div class="step"><b>ধাপ ৪: পাসওয়ার্ড</b><input id="l_pass" type="password" placeholder="পাসওয়ার্ড"></div>
-<button onclick="doLogin()">🔓 প্রবেশ করুন</button><p id="loginErr" style="color:red;text-align:center"></p></div>
+<div class="step"><b>ধাপ ৪: পাসওয়ার্ড</b><input id="l_pass" type="password" placeholder="পাসওয়ার্ড"></div><button onclick="doLogin()">🔓 প্রবেশ করুন</button><p id="loginErr" style="color:red;text-align:center"></p>
+</div></div>
 
-<div class="card"><h3 style="text-align:center;color:#1a56db">🔒 প্রতিষ্ঠানের তালিকা</h3>
-<input id="a_user" placeholder="এডমিন নাম - malek"><input id="a_pass" type="password" placeholder="এডমিন পাসওয়ার্ড - takrim2022">
-<button class="red" onclick="unlockList()">🔓 তালিকা খুলুন</button><div id="instList" class="hidden"></div></div>
-</div>
+<!-- 3. এডমিন তালিকা - সম্পূর্ণ হাইড, শুধু তুমি জানো -->
+<div class="acc"><div class="acc-head" onclick="toggleAcc(this)">🔒 প্রতিষ্ঠানের তালিকা <span>▼</span></div>
+<div class="acc-body">
+<!-- এডমিন বক্স হাইড, প্লেসহোল্ডার নাই -->
+<input id="a_user" type="password" placeholder="Admin"><input id="a_pass" type="password" placeholder="Password">
+<button class="red" onclick="unlockList()">🔓 তালিকা খুলুন</button><div id="instList" class="hidden"></div>
+</div></div>
 
-<div id="pg2" class="hidden">
-<div id="pad2" style="width:100%"></div>
-<div class="clsline">শ্রেণী: <span id="d_cls"></span> | <span id="d_shift"></span> | <span id="d_sec"></span></div>
-<button class="dbtn yellow" onclick="goPage('pg3');loadStdPage()">👥 শিক্ষার্থীর তালিকা দেখুন</button>
-<button class="dbtn" style="background:#fff;color:#1a56db;border:2px dashed #1a56db">📋 মাসিক হাজিরা দেখুন</button>
-<div class="card">
-<h3>📢 নোটিশ বোর্ড</h3><input id="noticeTxt" placeholder="নোটিশ লিখুন..."><button class="green" onclick="saveNotice()">📢 নোটিশ সেভ করুন</button><div id="noticeList"></div>
-<div style="margin-top:14px"><b>💬 SMS পাঠান</b><div class="row3" style="margin-top:6px"><button class="green">✅ উপস্থিত</button><button class="red">❌ অনুপস্থিত</button><button class="yellow">📢 নোটিশ</button></div></div>
-<div style="margin-top:14px"><b>📲 WhatsApp-এ পাঠান</b><div class="row3" style="margin-top:6px"><button class="green">✅ উপস্থিত</button><button class="red">❌ অনুপস্থিত</button><button class="yellow">📢 নোটিশ</button></div></div>
-<button class="green dbtn" style="margin-top:12px">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button></div>
-<button class="dbtn red" onclick="logout()">🚪 লগআউট</button>
 </div>
 
-<div id="pg3" class="hidden">
-<div id="pad3" style="width:100%"></div>
-<h2 style="color:#fff;margin:10px 0">শিক্ষার্থীর তালিকা</h2>
-<div class="clsline">শ্রেণী: <span id="s_cls"></span> | <span id="s_shift"></span> | <span id="s_sec"></span></div>
-<button style="background:#fff;color:#111;border-radius:20px;padding:6px 18px;border:none;margin:6px" onclick="goPage('pg2')">⬅ ড্যাশবোর্ড</button>
-<div class="card">
-<div style="border:2px dashed #16a34a;border-radius:12px;padding:14px;text-align:center;font-weight:bold;cursor:pointer" onclick="addBox.classList.toggle('hidden')">➕ শিক্ষার্থী যোগ করুন</div>
-<div id="addBox" class="hidden" style="margin-top:10px"><input id="s_name" placeholder="নাম"><div style="display:flex;gap:6px"><input id="s_roll" type="number" placeholder="রোল"><input id="s_phone" placeholder="মোবাইল"></div><button class="green" onclick="addStudent()">➕ যোগ করুন</button></div>
-<div style="display:flex;gap:6px;margin:12px 0"><div class="stat" style="background:#facc15">📋 সবাই<br><span id="c_all">0</span></div><div class="stat" style="background:#16a34a;color:#fff">✅ উপস্থিত<br><span id="c_p">0</span></div><div class="stat" style="background:#dc2626;color:#fff">❌ অনুপস্থিত<br><span id="c_a">0</span></div><div class="stat" style="background:#7c3aed;color:#fff">🏆 ফলাফল</div></div>
-<label>📅 তারিখ:</label><input type="date" id="attDate"><div id="stdRows" style="margin-top:10px"></div><button class="green dbtn" onclick="saveAtt()">💾 হাজিরা সংরক্ষণ</button>
-</div>
-</div>
+<div id="pg2" class="hidden"><div id="pad2" style="width:100%"></div><div class="clsline"><span id="d_cls"></span> | <span id="d_shift"></span> | <span id="d_sec"></span></div>
+<button class="dbtn yellow" onclick="goPage('pg3');loadStdPage()">👥 শিক্ষার্থীর তালিকা</button><button class="dbtn red" onclick="logout()">🚪 লগআউট</button></div>
+
+<div id="pg3" class="hidden"><div id="pad3" style="width:100%"></div><button style="background:#fff;padding:6px 18px;border-radius:20px;border:none;margin:6px" onclick="goPage('pg2')">⬅ ড্যাশবোর্ড</button>
+<div class="card"><div id="stdRows"></div></div></div>
 
 <script>
-function get(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}
-function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function today(){return new Date().toISOString().slice(0,10)}
+function toggleAcc(h){let b=h.nextElementSibling;let s=h.querySelector('span');if(b.classList.contains('open')){b.classList.remove('open');s.textContent='▼'}else{document.querySelectorAll('.acc-body').forEach(x=>{x.classList.remove('open')});document.querySelectorAll('.acc-head span').forEach(x=>x.textContent='▼');b.classList.add('open');s.textContent='▲'}}
+function get(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}function set(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function goPage(id){['pg1','pg2','pg3'].forEach(x=>document.getElementById(x).classList.add('hidden'));document.getElementById(id).classList.remove('hidden')}
-function S(){return sessionStorage}
-let tmpLogo="";
-function padHTML(inst){const logo=(inst&&inst.logo)||tmpLogo||'https://via.placeholder.com/80';const bn=inst?inst.bn:'২৭নং পোতরপাড় আছমা খাতুন সরকারি প্রাথমিক বিদ্যালয়';const eiin=inst?inst.eiin:'9141109607';const code=inst?inst.code:'-';return `<div class="pad"><img src="${logo}"><div><b>${bn}</b><br><small>EMIS: ${eiin} | Code: ${code}</small></div></div>`;}
-function renderPads(){let insts=get('inst_list');let cur=insts.find(x=>x.id==S().getItem('inst'))||insts.find(x=>x.id==l_inst.value)||insts[0]||null;if(cur){pad2.innerHTML=padHTML(cur);pad3.innerHTML=padHTML(cur);}}
-function prevLogo(i){let f=i.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{tmpLogo=e.target.result;logoPrev.src=tmpLogo;logoPrev.style.display='block'};r.readAsDataURL(f)}
-function saveInst(){let bn=f_bn.value.trim(),addr=f_addr.value.trim(),eiin=f_eiin.value.trim(),code=f_code.value.trim(),mob=f_mob.value.trim(),email=f_email.value.trim(),ht=f_ht.value.trim(),pass=f_pass.value.trim();if(!bn||!pass){alert('নাম ও পাসওয়ার্ড দিন');return}let l=get('inst_list');let nid='i'+Date.now();l.push({id:nid,bn,addr,eiin,code,mob,email,ht,pass,logo:tmpLogo});set('inst_list',l);f_bn.value=f_addr.value=f_eiin.value=f_code.value=f_mob.value=f_email.value=f_ht.value=f_pass.value='';tmpLogo='';logoPrev.style.display='none';fillLoginInsts();l_inst.value=nid;alert('✅ সেভ হয়েছে - এখন লগইন করুন')}
+function S(){return sessionStorage}let tmpLogo="";function padHTML(i){const l=(i&&i.logo)||tmpLogo||'https://via.placeholder.com/80';return `<div class="pad"><img src="${l}"><div><b>${i?i.bn:''}</b><br><small>EMIS: ${i?i.eiin:''}</small></div></div>`}
+function renderPads(){let a=get('inst_list');let c=a.find(x=>x.id==S().getItem('inst'))||a[0];if(c){pad2.innerHTML=padHTML(c);pad3.innerHTML=padHTML(c)}}
+function prevLogo(i){let f=i.files[0];let r=new FileReader();r.onload=e=>{tmpLogo=e.target.result;logoPrev.src=tmpLogo;logoPrev.style.display='block'};r.readAsDataURL(f)}
+function saveInst(){let l=get('inst_list');let nid='i'+Date.now();l.push({id:nid,bn:f_bn.value,addr:f_addr.value,eiin:f_eiin.value,code:f_code.value,mob:f_mob.value,email:f_email.value,ht:f_ht.value,pass:f_pass.value,logo:tmpLogo});set('inst_list',l);alert('✅ সেভ হয়েছে');fillLoginInsts()}
 function fillLoginInsts(){let l=get('inst_list');l_inst.innerHTML=l.map(x=>`<option value="${x.id}">${x.bn}</option>`).join('')||'<option>নেই</option>'}
-function doLogin(){let inst=get('inst_list').find(x=>x.id==l_inst.value);if(!inst||l_pass.value!==inst.pass){loginErr.textContent='ভুল পাসওয়ার্ড';return}S().setItem('login','1');S().setItem('inst',inst.id);S().setItem('shift',l_shift.value);S().setItem('cls',l_cls.value);S().setItem('sec',l_sec.value);d_cls.textContent=l_cls.value;d_shift.textContent=l_shift.value;d_sec.textContent=l_sec.value;s_cls.textContent=l_cls.value;s_shift.textContent=l_shift.value;s_sec.textContent=l_sec.value;renderPads();goPage('pg2')}
+function doLogin(){let inst=get('inst_list').find(x=>x.id==l_inst.value);if(!inst||l_pass.value!==inst.pass){loginErr.textContent='ভুল পাসওয়ার্ড';return}S().setItem('login','1');S().setItem('inst',inst.id);S().setItem('shift',l_shift.value);S().setItem('cls',l_cls.value);S().setItem('sec',l_sec.value);d_cls.textContent=l_cls.value;d_shift.textContent=l_shift.value;d_sec.textContent=l_sec.value;renderPads();goPage('pg2')}
 function logout(){S().clear();location.reload()}
-function unlockList(){if(a_user.value==='malek'&&a_pass.value==='takrim2022'){let l=get('inst_list');instList.innerHTML=l.map(x=>`<div style="display:flex;justify-content:space-between;background:#f5f5f5;padding:8px;margin:6px 0;border-radius:8px"><span>${x.bn}</span><button onclick="delInst('${x.id}')" style="width:auto;background:red;padding:4px 10px">মুছুন</button></div>`).join('');instList.classList.remove('hidden')}}
+function unlockList(){if(a_user.value==='malek'&&a_pass.value==='takrim2022'){let l=get('inst_list');instList.innerHTML=l.map(x=>`<div style="display:flex;justify-content:space-between;background:#f5f5f5;padding:8px;margin:6px 0;border-radius:8px"><span>${x.bn}</span><button onclick="delInst('${x.id}')" style="width:auto;background:red;padding:4px 10px">মুছুন</button></div>`).join('');instList.classList.remove('hidden')}else{alert('❌ ভুল এডমিন তথ্য')}}
 function delInst(id){set('inst_list',get('inst_list').filter(x=>x.id!=id));fillLoginInsts();unlockList()}
-function addStudent(){let n=s_name.value.trim(),r=s_roll.value.trim(),ph=s_phone.value.trim();if(!n||!r)return;let k=S().getItem('inst')+'_'+S().getItem('cls');let s=get(k);s.push({n,r,ph});set(k,s);s_name.value=s_roll.value=s_phone.value='';loadStdPage()}
-function loadStdPage(){let k=S().getItem('inst')+'_'+S().getItem('cls');let s=get(k);if(!attDate.value)attDate.value=today();stdRows.innerHTML=s.map((x,i)=>`<div class="student" id="row${i}"><span>রোল ${x.r} - ${x.n}</span><div style="display:flex;gap:6px"><button class="green" style="width:auto;padding:6px 12px" onclick="mark(${i},1)">✅</button><button class="red" style="width:auto;padding:6px 12px" onclick="mark(${i},0)">❌</button></div></div>`).join('')||'কোনো শিক্ষার্থী নেই';window._att=s.map(()=>1);upd()}
-function mark(i,v){window._att[i]=v;let r=document.getElementById('row'+i);r.style.background=v?'#e6f9ec':'#fdeaea';r.style.borderLeft=v?'4px solid #16a34a':'4px solid #dc2626';upd()}
-function upd(){let a=window._att||[];c_all.textContent=a.length;c_p.textContent=a.filter(x=>x).length;c_a.textContent=a.length-a.filter(x=>x).length}
-function saveAtt(){let d=attDate.value||today();let k=S().getItem('inst')+'_'+S().getItem('cls');set('att_'+k+'_'+d,get(k).map((x,i)=>({r:x.r,n:x.n,p:window._att[i]})));alert('✅ হাজিরা সংরক্ষণ '+d)}
-function saveNotice(){let t=noticeTxt.value.trim();if(!t)return;let k='notice_'+S().getItem('inst');let n=get(k);n.unshift(t);set(k,n);noticeTxt.value='';noticeList.innerHTML=n.map(x=>`<div style="background:#f0f0f0;padding:6px;margin:4px 0;border-radius:6px">📢 ${x}</div>`).join('')}
+function loadStdPage(){}
 fillLoginInsts();
-if(S().getItem('login')==='1'){d_cls.textContent=S().getItem('cls');d_shift.textContent=S().getItem('shift');d_sec.textContent=S().getItem('sec');s_cls.textContent=S().getItem('cls');s_shift.textContent=S().getItem('shift');s_sec.textContent=S().getItem('sec');goPage('pg2');renderPads()}
 </script>
 </body>
 </html>
