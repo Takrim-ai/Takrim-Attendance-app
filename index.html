@@ -2,139 +2,81 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mumtaz College - Final</title>
+<title>Final Touch</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
 body{background:#0f2f1f;padding:10px}
-.top-banner{background:#fff;border-radius:20px;padding:10px;display:flex;gap:10px;align-items:center;justify-content:center}
-.top-banner img{width:56px;height:56px}
-.top-banner h2{font-size:15px;color:#0f2f1f}
-.top-banner p{font-size:12px;color:#d00;font-weight:700}
-.main-title{color:#fff;text-align:center;font-size:28px;margin:12px 0 2px;font-weight:700}
-.class-title{color:#ffeb3b;text-align:center;margin-bottom:10px}
-.dash{background:#fff;border-radius:12px;padding:5px 14px;border:none;font-weight:700;display:block;margin:0 auto 10px}
+.top-title{color:#ffeb3b;text-align:center;font-weight:700;font-size:20px;margin:8px 0}
+.dash{display:block;margin:0 auto 10px;background:#fff;border:none;border-radius:20px;padding:8px 18px;font-weight:700}
 .card{background:#fff;border-radius:20px;padding:10px}
-.add{width:100%;border:2px dashed #16a34a;background:#f0fdf4;border-radius:12px;padding:12px;font-weight:700}
-.stats{display:flex;gap:7px;margin:10px 0}
-.stats div{flex:1;border-radius:14px;padding:10px 2px;text-align:center;font-weight:700;color:#fff;font-size:13px}
-.s-y{background:#ffcc00;color:#000}.s-g{background:#16a34a}.s-r{background:#ef4444}.s-p{background:#7c3aed}
+.add{width:100%;border:2.5px dashed #16a34a;background:#f6fef8;border-radius:14px;padding:14px;font-weight:700;font-size:18px}
+.stats3{display:flex;gap:8px;margin:12px 0}
+.stats3 div{flex:1;border-radius:16px;padding:12px 2px;text-align:center;font-weight:700;color:#fff;font-size:15px}
+.s-y{background:#ffcc00;color:#000}.s-g{background:#16a34a}.s-r{background:#ef4444}
+.result-green{width:100%;background:#16a34a;color:#fff;border-radius:14px;padding:13px;text-align:center;font-weight:700;font-size:18px;margin-bottom:12px}
 .box{border:2.5px solid #8b5cf6;border-radius:16px;padding:8px}
-.title{color:#7c3aed;text-align:center;font-weight:700;margin-bottom:6px}
-.row{display:flex;gap:8px;align-items:center;margin:6px 0}
-.btn-p{background:#7c3aed;color:#fff;border:none;border-radius:10px;padding:9px 12px;font-weight:700}
-.inp{flex:1;border:2px solid #e5e7eb;border-radius:10px;padding:8px;text-align:center;font-weight:700}
-.tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid #eee}
-table{width:100%;border-collapse:collapse;min-width:700px}
-th{background:#0f2f1f;color:#fff;padding:6px;border:1px solid #1a4a2f}
-td{border:1px solid #ddd;padding:6px;text-align:center;background:#fff}
-.sub-pill{background:#fff;color:#222;border-radius:10px;padding:9px 10px;min-width:100px;display:inline-block;font-weight:700;cursor:pointer}
-.mark-pill{background:#fff;border:1.5px solid #ccc;border-radius:30px;width:70px;height:40px;display:flex;align-items:center;justify-content:center;margin:auto;cursor:pointer}
-.yellow{background:#fef9c3!important;font-weight:700}
-.total{background:#ffcc00;border-radius:10px;padding:10px;display:flex;justify-content:space-between;font-weight:700;margin-top:8px}
-.btn-row{display:flex;gap:8px;margin-top:8px}
-.btn-row button{flex:1;padding:12px;border-radius:12px;border:none;color:#fff;font-weight:700}
+.title{color:#7c3aed;text-align:center;font-weight:700;font-size:19px;margin-bottom:8px}
+.row{display:flex;gap:8px;align-items:center;margin:8px 0}
+.btn-purple{background:#7c3aed;color:#fff;border:none;border-radius:12px;padding:12px 10px;font-weight:700;width:85px}
+.inp-white{flex:1;border:2px solid #e5e7eb;border-radius:12px;padding:11px;text-align:center;font-weight:700;font-size:16px}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid #e5e7eb;margin-top:8px}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th{background:#0f2f1f;color:#fff;padding:8px 4px;border:1px solid #1a4a2f;font-size:15px}
+td{border:1px solid #e5e7eb;padding:7px;text-align:center;background:#fff;font-weight:600}
+.sub-pill{background:#fff;color:#000;border-radius:12px;padding:12px 14px;min-width:110px;display:inline-block;font-weight:700}
+.mark-view{background:#fff;border:1.5px solid #cbd5e1;border-radius:30px;min-width:75px;height:44px;display:flex;align-items:center;justify-content:center;margin:auto}
+.mark-input{width:78px;height:44px;border:2px solid #16a34a;border-radius:30px;text-align:center;font-weight:700;font-size:17px;outline:none;background:#f0fdf4}
+.mark-input:focus{border-color:#7c3aed;background:#fff}
+.yellow-cell{background:#fef9c3!important;font-weight:700}
+.total-bar{background:#ffcc00;border-radius:12px;padding:12px;display:flex;justify-content:space-between;font-weight:700;margin-top:10px;font-size:16px}
+.btn-row{display:flex;gap:10px;margin-top:10px}
+.btn-row button{flex:1;padding:13px;border-radius:12px;border:none;font-weight:700;color:#fff;font-size:16px}
+.b-green{background:#16a34a}.b-gray{background:#6b7280}.b-dark{background:#334155}
 </style>
 </head>
 <body>
-
-<div class="top-banner">
-<img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
-<div><h2>মমতাজ উদ্দিন বিজনেস ম্যানেজমেন্ট কলেজ</h2><p>Mumtaz Uddin Business Management College</p><small>EIIN:132332 | Code:50017</small></div>
-</div>
-<div class="main-title">শিক্ষার্থীর তালিকা</div>
-<div class="class-title">শ্রেণী: ১০ম শ্রেণি</div>
+<div class="top-title">শ্রেণী: ১০ম শ্রেণি</div>
 <button class="dash">⬅️ ড্যাশবোর্ড</button>
-
 <div class="card">
-<button class="add" onclick="addStu()">+ শিক্ষার্থী যোগ করুন</button>
-<div class="stats">
+<button class="add">+ শিক্ষার্থী যোগ করুন</button>
+<div class="stats3">
 <div class="s-y">📋 সবাই<br><span id="cAll">1</span></div>
 <div class="s-g">✅ উপস্থিত<br>1</div>
 <div class="s-r">❌ অনুপস্থিত<br>0</div>
-<div class="s-p">🏆 ফলাফল</div>
 </div>
-
+<div class="result-green">🏆 ফলাফল দেখুন</div>
 <div class="box">
 <div class="title">📋 ফলাফল সিট</div>
 <div class="row">
-<button class="btn-p" onclick="renameAll()">নাম বদলান</button>
+<button class="btn-purple" onclick="renameAll()">নাম<br>বদলান</button>
 <span style="font-weight:700">বিষয় সংখ্যা:</span>
-<input class="inp" id="sc" type="number" value="5" onchange="changeCount(this.value)">
+<input class="inp-white" id="sc" type="number" value="6" onchange="changeCount(this.value)">
 </div>
-
 <div class="tbl-wrap"><table id="tbl"></table></div>
-<div class="total"><span id="tF">মোট পূর্ণমান: 500</span><span id="tG">মোট প্রাপ্ত: 0</span></div>
+<div class="total-bar"><span id="tF">মোট পূর্ণমান: 600</span><span id="tG">মোট প্রাপ্ত: 0</span></div>
 <div class="btn-row">
-<button style="background:#16a34a" onclick="saveAll()">💾 সেভ</button>
-<button style="background:#6b7280" onclick="render()">✏️ এডিট</button>
+<button class="b-gray" onclick="toggleEdit()" id="editBtn">✏️ এডিট</button>
+<button class="b-green" onclick="saveAll()">💾 সেভ</button>
 </div>
 <div class="btn-row">
-<button style="background:#334155;width:100%" onclick="window.print()">📄 PDF ডাউনলোড</button>
-<button style="background:#16a34a;width:100%" onclick="excel()">📊 Excel ডাউনলোড</button>
+<button class="b-dark" onclick="window.print()">📄 PDF</button>
+<button class="b-green" onclick="excel()">📊 Excel</button>
 </div>
 </div>
 </div>
-
 <script>
-let subjects=JSON.parse(localStorage.getItem('final_sub')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","সমাজ"]');
-let marks=JSON.parse(localStorage.getItem('final_marks')||'[0,0,0,0,0]');
-
-function changeCount(n){
- n=parseInt(n)||1; if(n>18)n=18;
- if(n>subjects.length){while(subjects.length<n){subjects.push("বিষয় "+(subjects.length+1)); marks.push("");}}
- else{subjects=subjects.slice(0,n); marks=marks.slice(0,n);}
- saveAll(); render();
-}
-function renameAll(){
- let cur=subjects.join(", ");
- let inp=prompt("সব বিষয়ের নাম কমা দিয়ে লিখুন:",cur);
- if(!inp)return;
- let arr=inp.split(",").map(s=>s.trim()).filter(Boolean);
- if(arr.length>0){subjects=arr.slice(0,18); marks=marks.slice(0,subjects.length); while(marks.length<subjects.length)marks.push(""); saveAll(); render();}
-}
-function saveAll(){localStorage.setItem('final_sub',JSON.stringify(subjects));localStorage.setItem('final_marks',JSON.stringify(marks));}
-function render(){
- let n=subjects.length; let full=100; let tF=n*full; let tG=marks.reduce((a,b)=>a+(+b||0),0);
- document.getElementById('sc').value=n;
- document.getElementById('cAll').textContent="1";
- document.getElementById('tF').textContent=`মোট পূর্ণমান: ${tF}`;
- document.getElementById('tG').textContent=`মোট প্রাপ্ত: ${tG}`;
- let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`;
- subjects.forEach((s,i)=>h+=`<th><div class="sub-pill" onclick="editSub(${i})">${s}</div></th>`);
- h+=`<th>প্রাপ্ত</th><th>%</th><th>গ্রেড</th></tr>`;
- // অটো পূর্ণমান লাইন
- h+=`<tr><td></td><td><b>পূর্ণমান</b></td><td></td>`;
- subjects.forEach(()=>h+=`<td class="yellow">${full}</td>`);
- let per=tF?(tG/tF*100):0; let gr=per>=80?'A+':per>=70?'A':per>=60?'A-':per>=50?'B':per>=40?'C':per>=33?'D':'F';
- h+=`<td class="yellow">${tF}</td><td class="yellow">${per.toFixed(1)}</td><td class="yellow">${gr}</td></tr>`;
- // মার্ক
- h+=`<tr><td>1</td><td>কালাম</td><td>202</td>`;
- subjects.forEach((s,i)=>h+=`<td><div class="mark-pill" onclick="editMark(${i})">${marks[i]||''}</div></td>`);
- h+=`<td class="yellow"><b>${tG}</b></td><td class="yellow"><b>${per.toFixed(1)}</b></td><td class="yellow"><b>${gr}</b></td></tr>`;
- document.getElementById('tbl').innerHTML=h;
-}
-function editSub(i){
- let nn=prompt(`বিষয় ${i+1} নাম বদলান:`,subjects[i]);
- if(nn!==null && nn.trim()!=""){subjects[i]=nn.trim(); saveAll(); render();}
-}
-function editMark(i){
- let nn=prompt(`${subjects[i]} এর মার্ক:`,marks[i]||"");
- if(nn!==null){marks[i]=nn.trim(); saveAll(); render();}
-}
-function addStu(){alert("এই ভার্সনে ১ জন ডেমো - মেইন লিস্টে শিক্ষার্থী যোগ হবে");}
-function excel(){
- let tF=subjects.length*100; let tG=marks.reduce((a,b)=>a+(+b||0),0);
- let per=tF?(tG/tF*100).toFixed(1):0;
- let gr=per>=80?'A+':per>=70?'A':per>=60?'A-':per>=50?'B':per>=40?'C':per>=33?'D':'F';
- let head=["ক্রম","নাম","রোল",...subjects,"প্রাপ্ত","%","গ্রেড"];
- let row1=["","","পূর্ণমান",...Array(subjects.length).fill(100),tF,"",""];
- let row2=[1,"কালাম","202",...marks,tG,per,gr];
- let ws=XLSX.utils.aoa_to_sheet([head,row1,row2]);
- let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Result");
- XLSX.writeFile(wb,"result.xlsx");
-}
+let subjects=JSON.parse(localStorage.getItem('final_sub_touch')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","ধর্ম","ICT"]');
+let marks=JSON.parse(localStorage.getItem('final_marks_touch')||'["","","","","",""]');
+let editMode=false; const FULL=100;
+function changeCount(n){ n=parseInt(n)||1; if(n>18)n=18; if(n>subjects.length){while(subjects.length<n){subjects.push("বিষয় "+(subjects.length+1)); marks.push("");}} else{subjects=subjects.slice(0,n); marks=marks.slice(0,n);} saveStorage(); render();}
+function renameAll(){ let txt=prompt("বিষয়ের নাম কমা দিয়ে লিখুন:",subjects.join(", ")); if(!txt)return; let arr=txt.split(",").map(s=>s.trim()).filter(Boolean); if(arr.length){subjects=arr.slice(0,18); if(marks.length<subjects.length){while(marks.length<subjects.length)marks.push("");}else marks=marks.slice(0,subjects.length); render(); saveStorage();}}
+function saveStorage(){ localStorage.setItem('final_sub_touch',JSON.stringify(subjects)); localStorage.setItem('final_marks_touch',JSON.stringify(marks));}
+function toggleEdit(){ editMode=!editMode; document.getElementById('editBtn').textContent=editMode?"👁️ দেখুন":"✏️ এডিট"; document.getElementById('editBtn').style.background=editMode?"#7c3aed":"#6b7280"; render(); if(editMode){ setTimeout(()=>{ let f=document.querySelector('.mark-input'); if(f) f.focus(); },100);} }
+function saveAll(){ if(editMode){ document.querySelectorAll('.mark-input').forEach((inp,i)=>{ marks[i]=inp.value.trim(); }); } saveStorage(); editMode=false; document.getElementById('editBtn').textContent="✏️ এডিট"; document.getElementById('editBtn').style.background="#6b7280"; render(); alert("✅ সেভ হয়েছে মামা!");}
+function render(){ let n=subjects.length; let tF=n*FULL; let tG=marks.reduce((a,b)=>a+(+b||0),0); document.getElementById('sc').value=n; document.getElementById('tF').textContent=`মোট পূর্ণমান: ${tF}`; document.getElementById('tG').textContent=`মোট প্রাপ্ত: ${tG}`; let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`; subjects.forEach(s=>h+=`<th><div class="sub-pill">${s}</div></th>`); h+=`</tr><tr><td></td><td style="font-weight:700">পূর্ণমান</td><td></td>`; subjects.forEach(()=>h+=`<td class="yellow-cell">${FULL}</td>`); h+=`</tr><tr><td>1</td><td>কালাম</td><td>202</td>`; subjects.forEach((s,i)=>{ if(editMode){ h+=`<td><input class="mark-input" type="number" value="${marks[i]||''}" placeholder=""></td>`;}else{ h+=`<td><div class="mark-view">${marks[i]||''}</div></td>`; } }); h+=`</tr>`; document.getElementById('tbl').innerHTML=h;}
+function excel(){ let tF=subjects.length*FULL; let tG=marks.reduce((a,b)=>a+(+b||0),0); let head=["ক্রম","নাম","রোল",...subjects,"মোট পূর্ণমান","মোট প্রাপ্ত"]; let row1=["","","পূর্ণমান",...Array(subjects.length).fill(FULL),tF,""]; let row2=[1,"কালাম",202,...marks,tF,tG]; let ws=XLSX.utils.aoa_to_sheet([head,row1,row2]); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Result"); XLSX.writeFile(wb,"result.xlsx");}
 render();
 </script>
 </body>
