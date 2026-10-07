@@ -1,159 +1,32 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ফলাফল সিট - ফাইনাল</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<style>
-*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
-body{background:#0a2e1e;padding:8px}
-.top{display:flex;gap:10px}
-.top div{flex:1;border-radius:18px;padding:14px 2px;text-align:center;font-weight:700;font-size:18px}
-.s-y{background:#ffcc00;color:#000}.s-g{background:#16a34a;color:#fff}.s-r{background:#ef4444;color:#fff}
-.s-p{background:#7c3aed;color:#fff;width:100%;border-radius:16px;padding:15px;text-align:center;font-weight:700;margin-top:10px;cursor:pointer;font-size:18px;user-select:none}
-.main{background:#fff;border-radius:24px;padding:12px;margin-top:10px}
-.box{border:2.5px solid #8b5cf6;border-radius:20px;padding:12px}
-.title{text-align:center;color:#7c3aed;font-weight:700;font-size:20px;margin-bottom:10px}
-.row{display:flex;gap:8px;align-items:center;margin:10px 0;flex-wrap:wrap}
-.btn{border:none;border-radius:12px;padding:12px 18px;font-weight:700;color:#fff;cursor:pointer}
-.b-p{background:#7c3aed}.b-blue{background:#0ea5e9}.b-green{background:#16a34a}.b-gray{background:#6b7280}
-.inp{border:2px solid #ddd;border-radius:12px;padding:11px;width:90px;text-align:center;font-weight:700}
-.inp-y{background:#fef9c3;border-color:#eab308;border-width:2.5px}
-.tbl-wrap{overflow:auto;border-radius:12px;border:1px solid #eee}
-table{width:100%;border-collapse:collapse;min-width:700px}
-th,td{border:1px solid #e5e7eb;text-align:center;padding:0}
-th{background:#f3e8ff;padding:12px 6px;font-size:14px}
-.mark{width:100%;border:none;background:transparent;padding:14px 4px;text-align:center;font-weight:700;outline:none;font-size:15px}
-.mark-y{background:#fef9c3!important}
-.cell{padding:12px;font-weight:700}
-.save-row{display:flex;gap:10px;margin-top:14px}
-.save-row button{flex:1;padding:14px;border-radius:14px;border:none;font-weight:700;color:#fff;font-size:16px}
-.dl-row{display:flex;gap:10px;margin-top:12px}
-.dl-row button{flex:1;padding:14px;border-radius:16px;border:none;font-weight:700;color:#fff;font-size:15px}
-.hidden{display:none}
-</style>
-</head>
 <body>
-
+<!-- উপরে ৩টা ঘর -->
 <div class="top">
-<div class="s-y">সবাই<br><span id="cAll">0</span></div>
-<div class="s-g">উপস্থিত<br><span id="cP">0</span></div>
-<div class="s-r">অনুপস্থিত<br><span id="cA">0</span></div>
+ <div class="s-y">সবাই<br><span id="cAll">0</span></div>
+ <div class="s-g">উপস্থিত<br>1</div>
+ <div class="s-r">অনুপস্থিত<br>0</div>
 </div>
-<div class="s-p" onclick="toggleResult()">ফলাফল - <span id="eye">👁️ লুকান</span></div>
 
+<!-- মাঝে শিক্ষার্থী তালিকা কার্ড (আগের মতো) -->
 <div class="main">
-<div class="box" id="resultBox">
-<div class="title">📋 ফলাফল সিট</div>
-
-<div class="row">
-<button class="btn b-p" onclick="renameSubs()">নাম বদলান</button>
-<span style="font-weight:700">বিষয় সংখ্যা:</span>
-<input id="subCount" class="inp" type="number" value="5" min="1" max="13">
+ <button class="add-btn">+ শিক্ষার্থী যোগ করুন</button>
+ <div class="list">...তালিকা...</div>
 </div>
 
-<div class="row">
-<span style="font-weight:700">পূর্ণমান:</span>
-<input id="fullMark" class="inp inp-y" type="number" value="50">
-<button class="btn b-blue" onclick="applyCounts()">পূর্ণমান সেট</button>
+<!-- নিচে আলাদা ফলাফল বার -->
+<div class="s-p" onclick="toggleResult()" style="margin-top:14px">
+ 🏆 ফলাফল - <span id="eye">👁️ লুকান</span>
 </div>
 
-<div class="tbl-wrap"><table id="tbl"></table></div>
-
-<div class="save-row">
-<button class="b-green" onclick="saveAll()">💾 সেভ</button>
-<button class="b-gray" onclick="document.activeElement.blur()">✏️ এডিট</button>
+<!-- ফলাফল বার এর নিচে ফলাফল সিট -->
+<div class="main" id="resultBox">
+ <div class="box">
+  <div class="title">📋 ফলাফল সিট <button class="add-sub" onclick="addSubject()">+ বিষয়</button></div>
+  <div class="tbl-wrap"><table id="tbl"></table></div>
+  <div class="save-row">
+   <button class="b-green" onclick="saveAll()">💾 সেভ</button>
+   <button class="b-gray" onclick="render()">✏️ রিফ্রেশ</button>
+  </div>
+  <button class="dl-btn" onclick="downloadExcel()">📊 রেজাল্ট Excel ডাউনলোড</button>
+ </div>
 </div>
-</div>
-
-<div class="dl-row">
-<button style="background:#334155" onclick="window.print()">📄 PDF ডাউনলোড</button>
-<button style="background:#16a34a" onclick="downloadExcel()">📊 Excel ডাউনলোড</button>
-</div>
-</div>
-
-<script>
-let allStudents=JSON.parse(localStorage.getItem('takrim_students')||'[{"name":"Kalam","roll":"1","marks":[75,80,78,80,80]},{"name":"Rahim","roll":"2","marks":[65,70,68,72,75]}]');
-let subjects=JSON.parse(localStorage.getItem('takrim_subjects')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","সামাজিক বিজ্ঞান"]');
-let fullMarks=JSON.parse(localStorage.getItem('takrim_fullmarks')||'[50,50,50,50,50]');
-let show=true;
-
-function toggleResult(){
- show=!show;
- document.getElementById('resultBox').classList.toggle('hidden',!show);
- document.getElementById('eye').textContent= show? '👁️ লুকান' : '👁️ দেখান';
-}
-function saveAll(){
- localStorage.setItem('takrim_students',JSON.stringify(allStudents));
- localStorage.setItem('takrim_subjects',JSON.stringify(subjects));
- localStorage.setItem('takrim_fullmarks',JSON.stringify(fullMarks));
- alert('✅ সেভ হয়েছে');
-}
-function render(){
- let n=subjects.length;
- document.getElementById('subCount').value=n;
- document.getElementById('cAll').textContent=allStudents.length;
- let totalFull=fullMarks.slice(0,n).reduce((a,b)=>a+(+b||0),0);
-
- let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`;
- subjects.forEach(s=>h+=`<th>${s}</th>`);
- h+=`<th>প্রাপ্ত</th><th>%</th><th>গ্রেড</th><th>🗑️</th></tr>`;
-
- // পূর্ণমান রো - হলুদ
- h+=`<tr><td></td><td style="font-weight:700">পূর্ণমান</td><td></td>`;
- fullMarks.slice(0,n).forEach((fm,i)=>h+=`<td style="background:#fef9c3"><input class="mark mark-y" type="number" value="${fm}" onchange="editFull(${i},this.value)"></td>`);
- h+=`<td class="cell" style="background:#fef9c3">${totalFull}</td><td class="cell">-</td><td class="cell">-</td><td></td></tr>`;
-
- allStudents.forEach((st,gi)=>{
-   if(!st.marks) st.marks=Array(n).fill('');
-   st.marks=st.marks.slice(0,n); while(st.marks.length<n) st.marks.push('');
-   let tot=st.marks.reduce((a,b)=>a+(+b||0),0);
-   let per= totalFull? (tot/totalFull*100) : 0;
-   let gr= per>=80?'A+':per>=70?'A':per>=60?'A-':per>=50?'B':per>=40?'C':per>=33?'D':'F';
-   h+=`<tr><td>${gi+1}</td><td style="text-align:left;padding-left:8px">${st.name}</td><td>${st.roll}</td>`;
-   st.marks.forEach((m,i)=>h+=`<td><input class="mark" type="number" value="${m}" oninput="editMark(${gi},${i},this.value)"></td>`);
-   h+=`<td class="cell" style="background:#fef9c3">${tot}</td><td class="cell">${per.toFixed(1)}</td><td class="cell">${gr}</td><td><button onclick="del(${gi})" style="border:none;background:#fee2e2;padding:6px 8px;border-radius:8px">🗑️</button></td></tr>`;
- });
- document.getElementById('tbl').innerHTML=h;
-}
-function editMark(gi,si,v){allStudents[gi].marks[si]=v; localStorage.setItem('takrim_students',JSON.stringify(allStudents)); render();}
-function editFull(i,v){fullMarks[i]=parseInt(v)||0; localStorage.setItem('takrim_fullmarks',JSON.stringify(fullMarks)); render();}
-function applyCounts(){
- let n=parseInt(document.getElementById('subCount').value)||5;
- let fm=parseInt(document.getElementById('fullMark').value)||50;
- if(n>13) n=13;
- subjects=Array.from({length:n},(_,i)=>subjects[i]||`বিষয় ${i+1}`);
- fullMarks=Array(n).fill(fm);
- allStudents.forEach(s=>{s.marks=Array.from({length:n},(_,i)=>s.marks?.[i]||'');});
- saveAll(); render();
-}
-function renameSubs(){
- let nm=prompt('বিষয় নাম কমা দিয়ে লেখো',subjects.join(','));
- if(!nm) return;
- subjects=nm.split(',').map(s=>s.trim()).filter(Boolean);
- fullMarks=fullMarks.slice(0,subjects.length);
- while(fullMarks.length<subjects.length) fullMarks.push(parseInt(document.getElementById('fullMark').value)||50);
- saveAll(); render();
-}
-function del(i){if(confirm('ডিলিট করবে?')){allStudents.splice(i,1); saveAll(); render();}}
-function downloadExcel(){
- let totalFull=fullMarks.reduce((a,b)=>a+(+b||0),0);
- let head=['ক্রম','নাম','রোল',...subjects,'প্রাপ্ত','%','গ্রেড'];
- let fullRow=['','','পূর্ণমান',...fullMarks, totalFull, '-', '-'];
- let rows=allStudents.map((st,i)=>{
-   let t=st.marks.reduce((a,b)=>a+(+b||0),0);
-   let p= totalFull? (t/totalFull*100).toFixed(1) : '0';
-   let gr= p>=80?'A+':p>=70?'A':p>=60?'A-':p>=50?'B':p>=40?'C':p>=33?'D':'F';
-   return [i+1, st.name, st.roll,...st.marks, t, p, gr];
- });
- let ws=XLSX.utils.aoa_to_sheet([head, fullRow,...rows]);
- let wb=XLSX.utils.book_new();
- XLSX.utils.book_append_sheet(wb,ws,'Result');
- XLSX.writeFile(wb,'result.xlsx');
-}
-render();
-</script>
 </body>
-</html>
