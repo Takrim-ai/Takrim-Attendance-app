@@ -1,32 +1,133 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takrim Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
+body{background:#0a2340;padding:10px}
+.top{display:flex;gap:10px;margin-bottom:10px}
+.top div{flex:1;border-radius:18px;padding:16px 4px;text-align:center;font-weight:700;font-size:19px;line-height:1.2}
+.s-y{background:#ffcc00;color:#000}.s-g{background:#16a34a;color:#fff}.s-r{background:#ef4444;color:#fff}
+.s-p{background:#7c3aed;color:#fff;width:100%;border-radius:16px;padding:15px;text-align:center;font-weight:700;margin:12px 0;cursor:pointer;font-size:18px;display:block}
+.main{background:#fff;border-radius:20px;padding:12px;margin-bottom:12px}
+.add-btn{width:100%;background:#7c3aed;color:#fff;border:none;border-radius:12px;padding:14px;font-weight:700;font-size:16px;margin-bottom:10px}
+.stu-item{display:flex;justify-content:space-between;align-items:center;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:10px;margin:6px 0}
+.box{border:2.5px solid #8b5cf6;border-radius:18px;padding:10px;overflow:hidden}
+.title{color:#7c3aed;font-weight:700;font-size:19px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.tbl-wrap{overflow:auto;border-radius:12px;border:1px solid #eee}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th{background:#f3e8ff;padding:8px 4px;font-size:13px;border:1px solid #e9d5ff;position:sticky;top:0}
+td{border:1px solid #e5e7eb;text-align:center;padding:5px;background:#fff}
+.sub-chip{position:relative;background:#fff;border:1px solid #ccc;border-radius:12px;padding:8px 18px 8px 6px;font-weight:700;width:95%;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.sub-chip input{border:none;background:transparent;width:80%;text-align:center;font-weight:700;outline:none}
+.sub-chip.x{position:absolute;right:4px;top:2px;cursor:pointer;color:#ef4444;font-size:18px}
+.mark-pill{background:#fff;border:2px solid #e5e7eb;border-radius:50px;width:85%;padding:6px;margin:3px auto}
+.mark-pill.yellow{background:#fef9c3;border-color:#facc15}
+.mark-input{border:none;background:transparent;width:100%;text-align:center;font-weight:700;outline:none;font-size:15px}
+.total-cell{background:#fef9c3!important;font-weight:700}
+.btn-row{display:flex;gap:10px;margin-top:12px}
+.btn-row button{flex:1;padding:13px;border-radius:12px;border:none;font-weight:700;color:#fff;font-size:16px}
+.b-green{background:#16a34a}.b-gray{background:#6b7280}.b-dark{background:#334155}
+.add-sub{background:#fff;border:2px dashed #7c3aed;border-radius:10px;padding:6px 12px;font-weight:700;color:#7c3aed;cursor:pointer}
+.hidden{display:none}
+</style>
+</head>
 <body>
-<!-- উপরে ৩টা ঘর -->
+
 <div class="top">
- <div class="s-y">সবাই<br><span id="cAll">0</span></div>
- <div class="s-g">উপস্থিত<br>1</div>
- <div class="s-r">অনুপস্থিত<br>0</div>
+<div class="s-y">সবাই<br><span id="cAll">0</span></div>
+<div class="s-g">উপস্থিত<br><span id="cPre">0</span></div>
+<div class="s-r">অনুপস্থিত<br><span id="cAbs">0</span></div>
 </div>
 
-<!-- মাঝে শিক্ষার্থী তালিকা কার্ড (আগের মতো) -->
-<div class="main">
- <button class="add-btn">+ শিক্ষার্থী যোগ করুন</button>
- <div class="list">...তালিকা...</div>
+<div class="main" id="stuBox">
+<button class="add-btn" onclick="addStudent()">+ শিক্ষার্থী যোগ করুন</button>
+<div id="stuList"></div>
 </div>
 
-<!-- নিচে আলাদা ফলাফল বার -->
-<div class="s-p" onclick="toggleResult()" style="margin-top:14px">
- 🏆 ফলাফল - <span id="eye">👁️ লুকান</span>
-</div>
+<div class="s-p" onclick="toggleResult()">🏆 ফলাফল - <span id="eye">👁️ লুকান</span></div>
 
-<!-- ফলাফল বার এর নিচে ফলাফল সিট -->
 <div class="main" id="resultBox">
- <div class="box">
-  <div class="title">📋 ফলাফল সিট <button class="add-sub" onclick="addSubject()">+ বিষয়</button></div>
-  <div class="tbl-wrap"><table id="tbl"></table></div>
-  <div class="save-row">
-   <button class="b-green" onclick="saveAll()">💾 সেভ</button>
-   <button class="b-gray" onclick="render()">✏️ রিফ্রেশ</button>
-  </div>
-  <button class="dl-btn" onclick="downloadExcel()">📊 রেজাল্ট Excel ডাউনলোড</button>
- </div>
+<div class="box">
+<div class="title">📋 ফলাফল সিট <button class="add-sub" onclick="addSubject()">+ বিষয়</button></div>
+<div class="tbl-wrap"><table id="tbl"></table></div>
+<div class="btn-row">
+<button class="b-green" onclick="saveAll()">💾 সেভ</button>
+<button class="b-gray" onclick="render()">✏️ রিফ্রেশ</button>
 </div>
+<div class="btn-row">
+<button class="b-dark" style="width:100%" onclick="downloadExcel()">📊 রেজাল্ট Excel ডাউনলোড</button>
+</div>
+</div>
+</div>
+
+<script>
+let defaultSubjects=["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","ধর্ম","ICT","কৃষি","শা.শি","বাংলা ২য়"];
+let allStudents=JSON.parse(localStorage.getItem('takrim_students')||'[{"name":"কালাম","roll":"201","marks":["","","","","","","","",""]}]');
+let subjects=JSON.parse(localStorage.getItem('takrim_subjects')||JSON.stringify(defaultSubjects));
+let fullMarks=JSON.parse(localStorage.getItem('takrim_fullmarks')||JSON.stringify(Array(subjects.length).fill(100)));
+let show=true;
+
+function toggleResult(){show=!show;document.getElementById('resultBox').classList.toggle('hidden',!show);document.getElementById('eye').textContent=show?'👁️ লুকান':'👁️ দেখান'}
+function saveAll(){
+ subjects=subjects.map(s=>s.trim()).filter(Boolean);
+ fullMarks=fullMarks.slice(0,subjects.length);
+ allStudents=allStudents.map(s=>{s.marks=s.marks.slice(0,subjects.length);while(s.marks.length<subjects.length)s.marks.push('');return s;});
+ localStorage.setItem('takrim_subjects',JSON.stringify(subjects));
+ localStorage.setItem('takrim_fullmarks',JSON.stringify(fullMarks));
+ localStorage.setItem('takrim_students',JSON.stringify(allStudents));
+ alert('✅ '+subjects.length+' টা বিষয় সেভ হয়েছে');
+ render();
+}
+function render(){
+ let n=subjects.length;
+ document.getElementById('cAll').textContent=allStudents.length;
+ document.getElementById('cPre').textContent=allStudents.length;
+ document.getElementById('cAbs').textContent=0;
+ let totalFull=fullMarks.slice(0,n).reduce((a,b)=>a+(+b||0),0);
+
+ let slist=''; allStudents.forEach((s,i)=>{slist+=`<div class="stu-item"><span>${i+1}. ${s.name} - ${s.roll}</span><span><button onclick="editStu(${i})">✏️</button> <button onclick="delStu(${i})">🗑️</button></span></div>`});
+ document.getElementById('stuList').innerHTML=slist||'...তালিকা...';
+
+ let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`;
+ subjects.forEach((s,i)=>h+=`<th><div class="sub-chip"><input value="${s}" onchange="editSub(${i},this.value)"><span class="x" onclick="removeSub(${i})">×</span></div></th>`);
+ h+=`<th>প্রাপ্ত</th><th>%</th><th>গ্রেড</th></tr>`;
+ h+=`<tr><td></td><td style="font-weight:700">পূর্ণমান</td><td></td>`;
+ fullMarks.slice(0,n).forEach((fm,i)=>h+=`<td class="total-cell"><div class="mark-pill yellow"><input class="mark-input" type="number" value="${fm}" onchange="editFull(${i},this.value)"></div></td>`);
+ h+=`<td class="total-cell"><b>${totalFull}</b></td><td>-</td><td>-</td></tr>`;
+ allStudents.forEach((st,gi)=>{
+   let tot=st.marks.reduce((a,b)=>a+(+b||0),0);
+   let per=totalFull?(tot/totalFull*100):0;
+   let gr=per>=80?'A+':per>=70?'A':per>=60?'A-':per>=50?'B':per>=40?'C':per>=33?'D':'F';
+   h+=`<tr><td>${gi+1}</td><td style="text-align:left">${st.name}</td><td>${st.roll}</td>`;
+   st.marks.forEach((m,i)=>h+=`<td><div class="mark-pill"><input class="mark-input" type="number" value="${m}" oninput="editMarkLive(${gi},${i},this.value)"></div></td>`);
+   h+=`<td class="total-cell" id="tot-${gi}"><b>${tot}</b></td><td id="per-${gi}"><b>${per.toFixed(1)}</b></td><td id="gr-${gi}"><b>${gr}</b></td></tr>`;
+ });
+ document.getElementById('tbl').innerHTML=h;
+}
+function editMarkLive(gi,si,v){
+ allStudents[gi].marks[si]=v;
+ localStorage.setItem('takrim_students',JSON.stringify(allStudents));
+ let n=subjects.length;let totalFull=fullMarks.slice(0,n).reduce((a,b)=>a+(+b||0),0);
+ let tot=allStudents[gi].marks.reduce((a,b)=>a+(+b||0),0);
+ let per=totalFull?(tot/totalFull*100):0;
+ let gr=per>=80?'A+':per>=70?'A':per>=60?'A-':per>=50?'B':per>=40?'C':per>=33?'D':'F';
+ document.getElementById(`tot-${gi}`).innerHTML=`<b>${tot}</b>`;
+ document.getElementById(`per-${gi}`).innerHTML=`<b>${per.toFixed(1)}</b>`;
+ document.getElementById(`gr-${gi}`).innerHTML=`<b>${gr}</b>`;
+}
+function editFull(i,v){fullMarks[i]=parseInt(v)||0;}
+function editSub(i,v){subjects[i]=v;}
+function removeSub(i){if(confirm(subjects[i]+' বাদ দিবে?')){subjects.splice(i,1);fullMarks.splice(i,1);allStudents=allStudents.map(s=>{s.marks.splice(i,1);return s;});render();}}
+function addSubject(){if(subjects.length>=18){alert('১৮টার বেশি না');return;}let nm=prompt('নতুন বিষয়ের নাম:','বিষয় '+(subjects.length+1));if(!nm)return;subjects.push(nm);fullMarks.push(100);allStudents=allStudents.map(s=>{s.marks.push('');return s;});render();}
+function addStudent(){let n=prompt('নাম:');if(!n)return;let r=prompt('রোল:');allStudents.push({name:n,roll:r||'',marks:Array(subjects.length).fill('')});saveAll();}
+function editStu(i){let n=prompt('নতুন নাম:',allStudents[i].name);if(n)allStudents[i].name=n;let r=prompt('নতুন রোল:',allStudents[i].roll);if(r!==null)allStudents[i].roll=r;saveAll();}
+function delStu(i){if(confirm('ডিলিট?')){allStudents.splice(i,1);saveAll();}}
+function downloadExcel(){let totalFull=fullMarks.reduce((a,b)=>a+(+b||0),0);let head=['ক্রম','নাম','রোল',...subjects,'প্রাপ্ত','%','গ্রেড'];let fullRow=['','','পূর্ণমান',...fullMarks,totalFull,'-','-'];let rows=allStudents.map((st,i)=>{let t=st.marks.reduce((a,b)=>a+(+b||0),0);let p=totalFull?(t/totalFull*100).toFixed(1):'0';let gr=p>=80?'A+':p>=70?'A':p>=60?'A-':p>=50?'B':p>=40?'C':p>=33?'D':'F';return [i+1,st.name,st.roll,...st.marks,t,p,gr];});let ws=XLSX.utils.aoa_to_sheet([head,fullRow,...rows]);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Result');XLSX.writeFile(wb,'result.xlsx');}
+render();
+</script>
 </body>
+</html>
