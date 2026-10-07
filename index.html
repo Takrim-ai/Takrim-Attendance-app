@@ -1,4 +1,97 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>২য় পাতা</title><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}body{margin:0;background:#082a1e;display:flex;flex-direction:column;align-items:center;padding:0}.top-head{width:100%;background:#0f3d2e;padding:12px 12px 32px;border-radius:0 0 28px 28px;display:flex;justify-content:center}.top-inner{background:#fff;border-radius:18px;padding:12px;width:100%;max-width:400px;display:flex;gap:10px;align-items:center}.card{background:#fff;margin-top:12px;border-radius:24px;padding:16px;width:95%;max-width:420px}.hidden{display:none!important}textarea{width:100%;padding:12px;border-radius:12px;border:1.8px solid #d1d5db}</style></head><body>
-<div class="top-head"><div class="top-inner"><img id="dashLogo" src="" style="width:56px;height:56px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover"><div><div id="dashBn" style="font-weight:700"></div><div id="dashAddr" style="font-size:11px"></div><div style="font-size:11px">EIIN: <b id="dashEIIN"></b> | <span id="dashCls"></span></div></div></div></div>
-<div class="card" style="margin:-22px 0 12px"><button style="width:100%;background:#ffcc00;border:none;border-radius:18px;padding:16px;font-weight:700" onclick="location.href='third-page.html'">👥 শিক্ষার্থীর তালিকা দেখুন</button><button onclick="document.getElementById('monthlyDiv').classList.toggle('hidden');renderMonthly()" style="width:100%;margin-top:10px;padding:14px;background:#fff;border:2.5px dashed #2563eb;border-radius:18px;font-weight:700;color:#2563eb">📋 মাসিক হাজিরা দেখুন</button><div id="monthlyDiv" class="hidden" style="margin-top:10px;border:2px dashed #2563eb;border-radius:16px;padding:10px;background:#fff"><div style="display:flex;justify-content:space-between"><div id="monthTitle" style="font-weight:700;font-size:12px"></div><button onclick="window.print()" style="background:#0f3d2e;color:#fff;border:none;padding:6px 12px;border-radius:8px">🖨️ প্রিন্ট</button></div><div style="overflow:auto"><table id="monthlyTable" border="1" style="border-collapse:collapse;font-size:10px;min-width:600px;width:100%;text-align:center"></table></div></div><label style="font-weight:700;margin-top:10px;display:block">📢 নোটিশ বোর্ড</label><textarea id="noticeText" rows="2" placeholder="নোটিশ..."></textarea><button style="width:100%;margin-top:8px;background:#16a34a;color:#fff;border:none;padding:14px;border-radius:14px;font-weight:700" onclick="shareReport()">📊 হাজিরা রিপোর্ট WhatsApp</button><button onclick="location.href='first-page.html'" style="width:100%;margin-top:8px;background:#333;color:#fff;border:none;padding:14px;border-radius:14px;font-weight:700">⬅️ লগআউট</button></div>
-<script>let ses=JSON.parse(localStorage.getItem('takrim_session')||'null');if(!ses){location.href='first-page.html';}let curInst=ses.inst;let curClass=ses.cls;document.getElementById('dashBn').textContent=curInst.bnName;document.getElementById('dashAddr').textContent=curInst.addr;document.getElementById('dashEIIN').textContent=curInst.eiin;document.getElementById('dashCls').textContent=curClass+" | "+ses.section+" | "+ses.shift;document.getElementById('dashLogo').src=curInst.logo;function key(n){return n+'_'+curInst.eiin+'_'+curClass}function renderMonthly(){let now=new Date();let y=now.getFullYear();let m=now.getMonth();let days=new Date(y,m+1,0).getDate();let bnM=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];document.getElementById('monthTitle').textContent=`${bnM[m]} ${y}`;let mk=`${y}-${m+1}`;let mAtt=JSON.parse(localStorage.getItem(key('monthly_'+mk))||'{}');let students=JSON.parse(localStorage.getItem(key('students'))||'[]');let head='<tr style="background:#fef9c3"><th>নাম</th>';for(let d=1;d<=days;d++)head+=`<th>${d}</th>`;head+='</tr>';let body='';students.forEach((s,idx)=>{body+=`<tr><td style="text-align:left;font-weight:700">${s.name}</td>`;for(let d=1;d<=days;d++){let st=mAtt[`${idx}_${d}`]||'-';let bg=st=='P'?'#dcfce7':st=='A'?'#fee2e2':'#fff';body+=`<td style="background:${bg}">${st}</td>`}body+='</tr>'});document.getElementById('monthlyTable').innerHTML=head+body;}function shareReport(){let students=JSON.parse(localStorage.getItem(key('students'))||'[]');let att=JSON.parse(localStorage.getItem(key('att'))||'{}');let t='হাজিরা রিপোর্ট\n';students.forEach((s,i)=>{t+=`${s.roll}. ${s.name} - ${att[i]=='absent'?'❌':'✅'}\n`});window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank')}</script></body></html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ড্যাশবোর্ড - Malek System</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{margin:0;background:#0a2e1e;min-height:100vh;padding:12px;display:flex;flex-direction:column;align-items:center}
+.top-card{width:380px;max-width:95%;background:#fff;border:5px solid #ffcc00;border-radius:28px;padding:14px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.top-card img{width:86px;height:86px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover}
+.top-card h2{margin:8px 0 2px;font-size:18px;color:#0a2e1e;line-height:1.2}
+.top-card p{margin:2px 0;font-size:13px;color:#333}
+.badge{display:inline-block;background:#eef2ff;border:1.5px solid #0d5bff;border-radius:10px;padding:4px 10px;margin:3px;font-size:12px;font-weight:700;color:#0d5bff}
+.btn{width:380px;max-width:95%;border:none;border-radius:22px;padding:18px 20px;margin-top:14px;font-size:18px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.yellow{background:#ffcc00;color:#0a2e1e}
+.white-dashed{background:#fff;border:2.5px dashed #0d5bff;color:#0d5bff}
+.notice-card{width:380px;max-width:95%;background:#fff;border-radius:22px;padding:16px;margin-top:14px}
+.small-btn{width:380px;max-width:95%;padding:14px;border:none;border-radius:14px;font-weight:700;margin-top:12px;cursor:pointer}
+.green{background:#0a7a42;color:#fff}.red-outline{background:#fff;border:2px solid #d61f1f;color:#d61f1f}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
+th,td{border:1px solid #ddd;padding:6px;text-align:center}
+th{background:#0a2e1e;color:#ffcc00}
+.P{color:green;font-weight:700}.A{color:red;font-weight:700}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="top-card">
+<img id="instLogo" src="logo.jpg" onerror="this.src='https://via.placeholder.com/86'">
+<h2 id="instName">প্রতিষ্ঠানের নাম</h2>
+<p id="instAddr">ঠিকানা</p>
+<p>EIIN: <span id="instEiin">-</span> | কোড: <span id="instCode">-</span></p>
+<div>
+<span class="badge" id="bCls">৩য় শ্রেণি</span>
+<span class="badge" id="bSec">ক</span>
+<span class="badge" id="bShift">প্রভাতি</span>
+</div>
+</div>
+
+<button class="btn yellow" onclick="location.href='third-page.html'">👥 শিক্ষার্থীর তালিকা দেখুন <span>➡️</span></button>
+
+<button class="btn white-dashed" onclick="document.getElementById('attBox').classList.toggle('hidden')">📋 মাসিক হাজিরা দেখুন <span>▼</span></button>
+<div id="attBox" class="notice-card hidden">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<b>📅 মাসিক হাজিরা রিপোর্ট</b>
+<button onclick="window.print()" style="background:#0a2e1e;color:#ffcc00;border:none;padding:6px 12px;border-radius:8px">🖨️ প্রিন্ট</button>
+</div>
+<div style="overflow:auto;max-height:350px">
+<table id="attTable"><thead><tr><th>রোল</th><th>নাম</th><th id="thDays">দিন</th><th>মোট P</th></tr></thead><tbody id="attBody"></tbody></table>
+</div>
+</div>
+
+<div class="notice-card">
+<b>📢 নোটিশ বোর্ড</b>
+<textarea id="noticeText" placeholder="এখানে নোটিশ লিখুন..." style="width:100%;height:80px;border-radius:12px;border:1.5px solid #ddd;padding:10px;margin-top:8px"></textarea>
+<button class="small-btn green" style="width:100%" onclick="saveNotice()">নোটিশ সেভ করুন</button>
+</div>
+
+<button class="small-btn green" onclick="sendWA()">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button>
+<button class="small-btn red-outline" onclick="logout()">⬅️ লগআউট</button>
+
+<script>
+let session = JSON.parse(localStorage.getItem('takrim_session')||'null');
+if(!session){alert('আগে লগইন করুন');location.href='first-page.html';}
+document.getElementById('instLogo').src = session.inst.logo || 'logo.jpg';
+document.getElementById('instName').textContent = session.inst.bnName;
+document.getElementById('instAddr').textContent = session.inst.addr;
+document.getElementById('instEiin').textContent = session.inst.eiin;
+document.getElementById('instCode').textContent = session.inst.schoolCode;
+document.getElementById('bCls').textContent = session.cls;
+document.getElementById('bSec').textContent = session.section;
+document.getElementById('bShift').textContent = session.shift;
+document.getElementById('noticeText').value = localStorage.getItem('takrim_notice')||'';
+
+function saveNotice(){localStorage.setItem('takrim_notice',document.getElementById('noticeText').value);alert('✅ নোটিশ সেভ হয়েছে');}
+
+function loadAttendance(){
+let allStudents = JSON.parse(localStorage.getItem('takrim_students')||'[]');
+let clsStudents = allStudents.filter(s=>s.cls===session.cls && s.section===session.section);
+let days = new Date().getDate();
+document.getElementById('thDays').innerHTML = Array.from({length:days},(_,i)=>`<span style="margin:1px">${i+1}</span>`).join(' ');
+let tbody = document.getElementById('attBody');
+tbody.innerHTML = clsStudents.map(st=>{
+let row = st.attendance || {}; let pCount=0;
+let dayCells = Array.from({length:days},(_,i)=>{let v=row[i+1]||'P'; if(v==='P')pCount++; return `<span class="${v}">${v}</span>`}).join(' ');
+return `<tr><td>${st.roll}</td><td style="text-align:left">${st.name}</td><td style="font-size:10px">${dayCells}</td><td>${pCount}</td></tr>`;
+}).join('') || '<tr><td colspan="4">কোনো শিক্ষার্থী নেই</td></tr>';
+}
+loadAttendance();
+
+function sendWA(){let text=`*${session.inst.bnName}* \nশ্রেণী: ${session.cls} | শাখা: ${session.section} \nমাসিক হাজিরা রিপোর্ট দেখুন`;window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');}
+function logout(){localStorage.removeItem('takrim_session');location.href='first-page.html';}
+</script>
+</body>
+</html>
