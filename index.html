@@ -2,81 +2,113 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Final Touch</title>
+<title>Final Student Add</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
 body{background:#0f2f1f;padding:10px}
-.top-title{color:#ffeb3b;text-align:center;font-weight:700;font-size:20px;margin:8px 0}
-.dash{display:block;margin:0 auto 10px;background:#fff;border:none;border-radius:20px;padding:8px 18px;font-weight:700}
-.card{background:#fff;border-radius:20px;padding:10px}
-.add{width:100%;border:2.5px dashed #16a34a;background:#f6fef8;border-radius:14px;padding:14px;font-weight:700;font-size:18px}
-.stats3{display:flex;gap:8px;margin:12px 0}
-.stats3 div{flex:1;border-radius:16px;padding:12px 2px;text-align:center;font-weight:700;color:#fff;font-size:15px}
+.card{background:#fff;border-radius:18px;padding:10px;max-width:1100px;margin:auto}
+.add{width:100%;border:2.5px dashed #16a34a;background:#f6fef8;border-radius:14px;padding:14px;font-weight:700;font-size:18px;cursor:pointer}
+.stats3{display:flex;gap:8px;margin:10px 0}
+.stats3 div{flex:1;border-radius:14px;padding:10px;text-align:center;font-weight:700;color:#fff}
 .s-y{background:#ffcc00;color:#000}.s-g{background:#16a34a}.s-r{background:#ef4444}
-.result-green{width:100%;background:#16a34a;color:#fff;border-radius:14px;padding:13px;text-align:center;font-weight:700;font-size:18px;margin-bottom:12px}
-.box{border:2.5px solid #8b5cf6;border-radius:16px;padding:8px}
-.title{color:#7c3aed;text-align:center;font-weight:700;font-size:19px;margin-bottom:8px}
-.row{display:flex;gap:8px;align-items:center;margin:8px 0}
-.btn-purple{background:#7c3aed;color:#fff;border:none;border-radius:12px;padding:12px 10px;font-weight:700;width:85px}
-.inp-white{flex:1;border:2px solid #e5e7eb;border-radius:12px;padding:11px;text-align:center;font-weight:700;font-size:16px}
-.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid #e5e7eb;margin-top:8px}
-table{width:100%;border-collapse:collapse;min-width:650px}
-th{background:#0f2f1f;color:#fff;padding:8px 4px;border:1px solid #1a4a2f;font-size:15px}
-td{border:1px solid #e5e7eb;padding:7px;text-align:center;background:#fff;font-weight:600}
-.sub-pill{background:#fff;color:#000;border-radius:12px;padding:12px 14px;min-width:110px;display:inline-block;font-weight:700}
-.mark-view{background:#fff;border:1.5px solid #cbd5e1;border-radius:30px;min-width:75px;height:44px;display:flex;align-items:center;justify-content:center;margin:auto}
-.mark-input{width:78px;height:44px;border:2px solid #16a34a;border-radius:30px;text-align:center;font-weight:700;font-size:17px;outline:none;background:#f0fdf4}
-.mark-input:focus{border-color:#7c3aed;background:#fff}
-.yellow-cell{background:#fef9c3!important;font-weight:700}
-.total-bar{background:#ffcc00;border-radius:12px;padding:12px;display:flex;justify-content:space-between;font-weight:700;margin-top:10px;font-size:16px}
-.btn-row{display:flex;gap:10px;margin-top:10px}
-.btn-row button{flex:1;padding:13px;border-radius:12px;border:none;font-weight:700;color:#fff;font-size:16px}
-.b-green{background:#16a34a}.b-gray{background:#6b7280}.b-dark{background:#334155}
+.resBtn{width:100%;background:#16a34a;color:#fff;border:none;border-radius:12px;padding:12px;font-weight:700;font-size:17px;margin-bottom:10px}
+.box{border:2px solid #8b5cf6;border-radius:14px;padding:8px;display:none}
+.box.show{display:block}
+.topS{display:flex;gap:6px;align-items:center;margin-bottom:8px}
+.btnS{background:#7c3aed;color:#fff;border:none;border-radius:10px;padding:6px 8px;font-size:13px;width:60px;font-weight:700}
+.inpS{width:60px;border:1.5px solid #ddd;border-radius:8px;padding:5px;text-align:center;font-weight:700}
+.wrap{overflow-x:auto;border:2px solid #0f2f1f;border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:1000px}
+th{background:#0f2f1f;color:#fff;padding:7px 3px;font-size:13px}
+td{border:1px solid #e5e7eb;padding:5px;text-align:center;font-size:13px;font-weight:600}
+.pill{background:#fff;border-radius:14px;padding:5px;display:inline-block;min-width:80px;font-size:12px;border:1px solid #eee;cursor:pointer}
+.mark{width:65px;height:36px;border:1.8px solid #cbd5e1;border-radius:18px;text-align:center;font-weight:700}
+.mark:focus{border-color:#16a34a;background:#f0fdf4;outline:none}
+.yellow{background:#fef9c3!important}
+.c1{background:#dcfce7!important}.c2{background:#dbeafe!important}.c3{background:#ffedd5!important}.c4{background:#f3e8ff!important}
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:99}
+.modal.show{display:flex}
+.modalBox{background:#fff;border-radius:16px;padding:14px;width:92%;max-width:380px}
+.modalBox h3{text-align:center;margin-bottom:10px;color:#0f2f1f}
+.modalBox input{width:100%;border:2px solid #e5e7eb;border-radius:10px;padding:11px;margin:6px 0;font-size:16px;font-weight:600;outline:none}
+.modalBox input:focus{border-color:#16a34a}
+.mBtns{display:flex;gap:8px;margin-top:10px}
+.mBtns button{flex:1;padding:12px;border-radius:10px;border:none;font-weight:700;color:#fff}
 </style>
 </head>
 <body>
-<div class="top-title">শ্রেণী: ১০ম শ্রেণি</div>
-<button class="dash">⬅️ ড্যাশবোর্ড</button>
 <div class="card">
-<button class="add">+ শিক্ষার্থী যোগ করুন</button>
+<button class="add" onclick="openAdd()">+ শিক্ষার্থী যোগ করুন</button>
 <div class="stats3">
-<div class="s-y">📋 সবাই<br><span id="cAll">1</span></div>
-<div class="s-g">✅ উপস্থিত<br>1</div>
-<div class="s-r">❌ অনুপস্থিত<br>0</div>
+<div class="s-y">📋 সবাই<br><span id="cAll">0</span></div>
+<div class="s-g">✅ উপস্থিত<br><span id="cPre">0</span></div>
+<div class="s-r">❌ অনুপস্থিত<br><span id="cAbs">0</span></div>
 </div>
-<div class="result-green">🏆 ফলাফল দেখুন</div>
-<div class="box">
-<div class="title">📋 ফলাফল সিট</div>
-<div class="row">
-<button class="btn-purple" onclick="renameAll()">নাম<br>বদলান</button>
-<span style="font-weight:700">বিষয় সংখ্যা:</span>
-<input class="inp-white" id="sc" type="number" value="6" onchange="changeCount(this.value)">
+<button class="resBtn" onclick="toggleRes()" id="rBtn">🏆 ফলাফল দেখুন ▼</button>
+<div class="box" id="rBox">
+<div class="topS">
+<button class="btnS" onclick="editSubs()">নাম<br>বদলান</button>
+<span style="font-weight:700;font-size:13px">বিষয়:</span>
+<input class="inpS" id="sc" type="number" onchange="changeCount(this.value)">
 </div>
-<div class="tbl-wrap"><table id="tbl"></table></div>
-<div class="total-bar"><span id="tF">মোট পূর্ণমান: 600</span><span id="tG">মোট প্রাপ্ত: 0</span></div>
-<div class="btn-row">
-<button class="b-gray" onclick="toggleEdit()" id="editBtn">✏️ এডিট</button>
-<button class="b-green" onclick="saveAll()">💾 সেভ</button>
-</div>
-<div class="btn-row">
-<button class="b-dark" onclick="window.print()">📄 PDF</button>
-<button class="b-green" onclick="excel()">📊 Excel</button>
+<div class="wrap"><table id="tbl"></table></div>
 </div>
 </div>
+
+<!-- Add Student Modal with 3 fields -->
+<div class="modal" id="modal">
+<div class="modalBox">
+<h3>👨‍🎓 নতুন শিক্ষার্থী</h3>
+<input id="fName" placeholder="নাম * যেমন: কালাম">
+<input id="fRoll" placeholder="রোল * যেমন: 202" type="number" inputmode="numeric">
+<input id="fMobile" placeholder="মোবাইল নাম্বার * যেমন: 017... " type="tel">
+<div class="mBtns">
+<button style="background:#6b7280" onclick="closeAdd()">বাতিল</button>
+<button style="background:#16a34a" onclick="saveStudent()">✅ যোগ করুন</button>
 </div>
+</div>
+</div>
+
 <script>
-let subjects=JSON.parse(localStorage.getItem('final_sub_touch')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","ধর্ম","ICT"]');
-let marks=JSON.parse(localStorage.getItem('final_marks_touch')||'["","","","","",""]');
-let editMode=false; const FULL=100;
-function changeCount(n){ n=parseInt(n)||1; if(n>18)n=18; if(n>subjects.length){while(subjects.length<n){subjects.push("বিষয় "+(subjects.length+1)); marks.push("");}} else{subjects=subjects.slice(0,n); marks=marks.slice(0,n);} saveStorage(); render();}
-function renameAll(){ let txt=prompt("বিষয়ের নাম কমা দিয়ে লিখুন:",subjects.join(", ")); if(!txt)return; let arr=txt.split(",").map(s=>s.trim()).filter(Boolean); if(arr.length){subjects=arr.slice(0,18); if(marks.length<subjects.length){while(marks.length<subjects.length)marks.push("");}else marks=marks.slice(0,subjects.length); render(); saveStorage();}}
-function saveStorage(){ localStorage.setItem('final_sub_touch',JSON.stringify(subjects)); localStorage.setItem('final_marks_touch',JSON.stringify(marks));}
-function toggleEdit(){ editMode=!editMode; document.getElementById('editBtn').textContent=editMode?"👁️ দেখুন":"✏️ এডিট"; document.getElementById('editBtn').style.background=editMode?"#7c3aed":"#6b7280"; render(); if(editMode){ setTimeout(()=>{ let f=document.querySelector('.mark-input'); if(f) f.focus(); },100);} }
-function saveAll(){ if(editMode){ document.querySelectorAll('.mark-input').forEach((inp,i)=>{ marks[i]=inp.value.trim(); }); } saveStorage(); editMode=false; document.getElementById('editBtn').textContent="✏️ এডিট"; document.getElementById('editBtn').style.background="#6b7280"; render(); alert("✅ সেভ হয়েছে মামা!");}
-function render(){ let n=subjects.length; let tF=n*FULL; let tG=marks.reduce((a,b)=>a+(+b||0),0); document.getElementById('sc').value=n; document.getElementById('tF').textContent=`মোট পূর্ণমান: ${tF}`; document.getElementById('tG').textContent=`মোট প্রাপ্ত: ${tG}`; let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`; subjects.forEach(s=>h+=`<th><div class="sub-pill">${s}</div></th>`); h+=`</tr><tr><td></td><td style="font-weight:700">পূর্ণমান</td><td></td>`; subjects.forEach(()=>h+=`<td class="yellow-cell">${FULL}</td>`); h+=`</tr><tr><td>1</td><td>কালাম</td><td>202</td>`; subjects.forEach((s,i)=>{ if(editMode){ h+=`<td><input class="mark-input" type="number" value="${marks[i]||''}" placeholder=""></td>`;}else{ h+=`<td><div class="mark-view">${marks[i]||''}</div></td>`; } }); h+=`</tr>`; document.getElementById('tbl').innerHTML=h;}
-function excel(){ let tF=subjects.length*FULL; let tG=marks.reduce((a,b)=>a+(+b||0),0); let head=["ক্রম","নাম","রোল",...subjects,"মোট পূর্ণমান","মোট প্রাপ্ত"]; let row1=["","","পূর্ণমান",...Array(subjects.length).fill(FULL),tF,""]; let row2=[1,"কালাম",202,...marks,tF,tG]; let ws=XLSX.utils.aoa_to_sheet([head,row1,row2]); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"Result"); XLSX.writeFile(wb,"result.xlsx");}
+let subjects = JSON.parse(localStorage.getItem('subs_final')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","ধর্ম"]');
+let students = JSON.parse(localStorage.getItem('studs_final')||'[]');
+let showRes=false;
+
+function openAdd(){ document.getElementById('modal').classList.add('show'); document.getElementById('fName').focus(); }
+function closeAdd(){ document.getElementById('modal').classList.remove('show'); document.getElementById('fName').value=""; document.getElementById('fRoll').value=""; document.getElementById('fMobile').value=""; }
+function saveStudent(){
+  let name=document.getElementById('fName').value.trim();
+  let roll=document.getElementById('fRoll').value.trim();
+  let mobile=document.getElementById('fMobile').value.trim();
+  if(!name||!roll||!mobile){ alert("মামা ৩টাই লিখতে হবে: নাম, রোল, মোবাইল"); return; }
+  students.push({name, roll, mobile, marks: subjects.map(()=>"")});
+  localStorage.setItem('studs_final',JSON.stringify(students));
+  closeAdd(); render();
+}
+function toggleRes(){ showRes=!showRes; document.getElementById('rBox').classList.toggle('show',showRes); document.getElementById('rBtn').textContent=showRes?"🏆 ফলাফল লুকান ▲":"🏆 ফলাফল দেখুন ▼"; if(showRes) render(); }
+function changeCount(n){ n=parseInt(n)||1; if(n>10)n=10; if(n>subjects.length){while(subjects.length<n){subjects.push("বিষয় "+(subjects.length+1));}}else{subjects=subjects.slice(0,n);} students.forEach(s=>{ if(s.marks.length<n){while(s.marks.length<n)s.marks.push("");}else s.marks=s.marks.slice(0,n);}); saveAll(); render();}
+function editSubs(){ let t=prompt("বিষয় নাম কমা দিয়ে:",subjects.join(", ")); if(!t)return; let a=t.split(",").map(x=>x.trim()).filter(Boolean); if(a.length){subjects=a.slice(0,10); students.forEach(s=>{if(s.marks.length<subjects.length){while(s.marks.length<subjects.length)s.marks.push("");}else s.marks=s.marks.slice(0,subjects.length);}); saveAll(); render();}}
+function saveAll(){ localStorage.setItem('subs_final',JSON.stringify(subjects)); localStorage.setItem('studs_final',JSON.stringify(students)); }
+function getGPA(p){ if(p>=80) return "5.00"; if(p>=70) return "4.00"; if(p>=60) return "3.50"; if(p>=50) return "3.00"; if(p>=40) return "2.00"; if(p>=33) return "1.00"; return "0.00"; }
+function render(){
+  document.getElementById('cAll').textContent=students.length;
+  document.getElementById('cPre').textContent=students.length;
+  document.getElementById('cAbs').textContent=0;
+  document.getElementById('sc').value=subjects.length;
+  let h=`<tr><th>নাম</th><th>রোল</th><th>মোবাইল</th>`; subjects.forEach((s,i)=>h+=`<th><div class="pill" onclick="let nn=prompt('নতুন নাম',subjects[${i}]); if(nn){subjects[${i}]=nn; saveAll(); render();}">${s}</div></th>`); h+=`<th>মোট</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr>`;
+  h+=`<tr><td>পূর্ণমান</td><td></td><td></td>`; subjects.forEach(()=>h+=`<td class="yellow">100</td>`); h+=`<td class="yellow">${subjects.length*100}</td><td>-</td><td>-</td><td>-</td></tr>`;
+  students.forEach((st, si)=>{
+    let obt=st.marks.reduce((a,b)=>a+(parseInt(b)||0),0); let tot=subjects.length*100; let per=tot?((obt/tot)*100).toFixed(1):0;
+    h+=`<tr><td>${st.name}</td><td>${st.roll}</td><td>${st.mobile}</td>`;
+    st.marks.forEach((m, mi)=>{ h+=`<td><input class="mark" type="number" value="${m}" oninput="students[${si}].marks[${mi}]=this.value; saveAll(); this.parentElement.nextElementSibling.nextElementSibling.textContent=this.value?'' : '' ; renderCalc()" onfocus="this.select()"></td>`; });
+    h+=`<td class="c1">${tot}</td><td class="c2">${obt}</td><td class="c3">${per}%</td><td class="c4">${getGPA(parseFloat(per))}</td></tr>`;
+  });
+  document.getElementById('tbl').innerHTML=h;
+}
+function renderCalc(){ /* live calc handled by full render on next type, keep simple */ render(); }
+if(students.length==0){ /* demo */ }
 render();
 </script>
 </body>
