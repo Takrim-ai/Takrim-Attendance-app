@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html lang="bn">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MALEK Monogram + Primary Hajira</title>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
-body{margin:0;background:#082a1e;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px}
-.monogram{
- width:400px;max-width:95%;border:4px solid #ffcc00;border-radius:22px;overflow:hidden;background:#000;box-shadow:0 8px 20px rgba(0,0,0,.5);
-}
-.monogram img{width:100%;height:240px;object-fit:cover;display:block}
-.green-box{
- width:400px;max-width:95%;background:#16a34a;border-radius:16px;padding:14px;margin-top:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.3);
-}
-.green-box span{
- background:#000;color:#fff;display:inline-block;padding:8px 22px;border-radius:30px;font-weight:700;font-size:18px;letter-spacing:.5px;
-}
-</style>
-</head>
-<body>
+<html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>প্রথম পাতা - MALEK FINAL</title><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}body{margin:0;background:#082a1e;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:10px}.main-banner{width:380px;max-width:95%;border:4px solid #ffcc00;border-radius:22px;overflow:hidden;margin-top:10px;background:#000}.main-banner img{width:100%;display:block;height:220px;object-fit:cover}
+.green-box{width:380px;max-width:95%;background:#16a34a;border-radius:16px;padding:12px;margin-top:12px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.3)}.green-box span{background:#000;color:#fff;display:inline-block;padding:8px 22px;border-radius:30px;font-weight:700;font-size:18px}
+.card{background:#fff;margin-top:12px;border-radius:24px;padding:16px;width:100%;max-width:430px;padding-bottom:30px;margin-bottom:10px}.menu{width:100%;max-width:430px;background:#fff;border:none;border-radius:16px;padding:16px;font-size:17px;font-weight:700;color:#0d5bff;margin-top:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.hidden{display:none!important}.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;margin-top:8px}.green{background:#0a7a42;color:#fff}.blue{background:#0d5bff;color:#fff}.red{background:#d61f1f;color:#fff}input,select{width:100%;padding:12px;border-radius:12px;border:1.8px solid #d1d5db;margin:5px 0}</style></head><body>
 
-<div class="monogram">
-  <img src="IMG-20261005-WA0019(3).jpg" onerror="this.src='https://via.placeholder.com/400x240?text=MALEK+ATTENDANCE'" alt="MALEK">
-</div>
+<!-- তোমার ছবিসহ মনোগ্রাম -->
+<div class="main-banner"><img id="mainBannerImg" src="IMG-20261005-WA0019(3).jpg" onerror="this.src='https://via.placeholder.com/400x220?text=MALEK+ATTENDANCE'"></div>
 
-<div class="green-box">
-  <span>প্রাথমিক বিদ্যালয় হাজিরা</span>
-</div>
+<!-- সবুজ সেটের ভিতর কালো কালারের লেখা -->
+<div class="green-box"><span>প্রাথমিক বিদ্যালয় হাজিরা</span></div>
 
-</body>
-</html>
+<button class="menu" onclick="document.getElementById('formBox').classList.toggle('hidden')">🏫 প্রতিষ্ঠান ফরম <span>▼</span></button>
+<div id="formBox" class="card hidden"><div style="text-align:center"><img id="logoPreview" src="IMG-20261005-WA0019(3).jpg" style="width:84px;height:84px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover" onerror="this.src='https://via.placeholder.com/80'"><br><button onclick="logoInput.click()" style="background:#ffcc00;border:none;padding:8px 14px;border-radius:10px;font-weight:700;margin:8px 0">🖼️ লোগো চেঞ্জ</button><input type="file" id="logoInput" accept="image/*" style="display:none"></div><input id="bnName" placeholder="প্রতিষ্ঠানের নাম"><input id="address" placeholder="ঠিকানা"><div style="display:flex;gap:6px"><input id="eiin" placeholder="EIIN"><input id="schoolCode" placeholder="Code"></div><div style="display:flex;gap:6px"><input id="mobile" placeholder="মোবাইল"><input id="email" placeholder="Email"></div><input id="pass1" type="password" placeholder="পাসওয়ার্ড"><button class="btn green" onclick="savePrimary()">সেভ করুন ✅</button></div>
+
+<button class="menu" onclick="document.getElementById('loginBox').classList.toggle('hidden')">🔐 লগইন <span>▼</span></button>
+<div id="loginBox" class="card hidden"><select id="loginInst"></select><div style="display:flex;gap:6px"><select id="shift"><option>🌅 প্রভাতি</option><option>দিবা</option></select><select id="cls"><option>১ম শ্রেণি</option><option>২য় শ্রেণি</option><option>৩য় শ্রেণি</option><option>৪র্থ শ্রেণি</option><option>৫ম শ্রেণি</option></select><select id="section"><option>ক</option><option>খ</option></select></div><input id="loginPass" type="password" placeholder="পাসওয়ার্ড"><button class="btn blue" onclick="primaryLogin()">🔒 প্রবেশ করুন</button><p id="loginMsg" style="color:red;text-align:center"></p></div>
+
+<button class="menu" onclick="document.getElementById('listBox').classList.toggle('hidden')">🔒 তালিকা <span>▼</span></button>
+<div id="listBox" class="card hidden"><button class="btn red" onclick="openListSecure()">🔓 তালিকা খুলুন</button><div id="instList" style="margin-top:10px"></div></div>
+
+<script>
+let insts=JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');let tempLogo=localStorage.getItem('takrim_temp_logo')||'';
+function refreshInstSelect(){document.getElementById('loginInst').innerHTML='<option value="">প্রতিষ্ঠান নির্বাচন</option>'+insts.map((x,i)=>`<option value="${i}">${x.bnName}</option>`).join('')}refreshInstSelect();
+document.getElementById('logoInput').addEventListener('change',function(){if(this.files&&this.files[0]){let r=new FileReader();r.onload=e=>{tempLogo=e.target.result;document.getElementById('logoPreview').src=tempLogo;document.getElementById('mainBannerImg').src=tempLogo;localStorage.setItem('takrim_temp_logo',tempLogo)};r.readAsDataURL(this.files[0])}});
+function savePrimary(){let obj={bnName:document.getElementById('bnName').value.trim(),addr:document.getElementById('address').value.trim(),eiin:document.getElementById('eiin').value.trim(),schoolCode:document.getElementById('schoolCode').value.trim(),mobile:document.getElementById('mobile').value.trim(),email:document.getElementById('email').value.trim(),pass:document.getElementById('pass1').value,logo:tempLogo||'IMG-20261005-WA0019(3).jpg'};if(!obj.bnName||!obj.pass) return alert('নাম ও পাস দিন');insts.push(obj);localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));localStorage.removeItem('takrim_temp_logo');alert('✅ সেভ');location.reload();}
+function primaryLogin(){let idx=document.getElementById('loginInst').value;if(idx==="")return document.getElementById('loginMsg').textContent='প্রতিষ্ঠান নির্বাচন';let ins=insts[idx];if(document.getElementById('loginPass').value!==ins.pass)return document.getElementById('loginMsg').textContent='❌ ভুল';localStorage.setItem('takrim_session',JSON.stringify({inst:ins,cls:document.getElementById('cls').value,shift:document.getElementById('shift').value,section:document.getElementById('section').value}));location.href='second-page.html';}
+function openListSecure(){let a=prompt('এডমিন নাম');let p=prompt('পাস');if(a!=='malek'||p!=='takrim2022')return alert('ভুল');document.getElementById('instList').innerHTML=insts.map((s,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><div><img src="${s.logo}" style="width:28px;height:28px;border-radius:50%"> <b>${s.bnName}</b></div><button onclick="insts.splice(${i},1);localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));refreshInstSelect();openListSecure()" style="background:#fee2e2;border:none;padding:6px;border-radius:6px">🗑️</button></div>`).join('')}
+let saved=localStorage.getItem('takrim_temp_logo');if(saved){document.getElementById('logoPreview').src=saved;document.getElementById('mainBannerImg').src=saved}
+</script></body></html>
