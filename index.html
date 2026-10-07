@@ -1,17 +1,49 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>প্রথম পাতা</title><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}body{margin:0;background:#082a1e;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:10px}.main-banner{width:380px;max-width:95%;border:4px solid #ffcc00;border-radius:22px;overflow:hidden;margin-top:10px;background:#000}.main-banner img{width:100%;display:block;height:220px;object-fit:cover}.card{background:#fff;margin-top:12px;border-radius:24px;padding:16px;width:100%;max-width:430px}.menu{width:100%;max-width:430px;background:#fff;border:none;border-radius:16px;padding:16px;font-size:17px;font-weight:700;color:#0d5bff;margin-top:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}.hidden{display:none!important}.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;margin-top:8px}.green{background:#0a7a42;color:#fff}.blue{background:#0d5bff;color:#fff}.red{background:#d61f1f;color:#fff}input,select{width:100%;padding:12px;border-radius:12px;border:1.8px solid #d1d5db;margin:5px 0}</style></head><body>
-<div class="main-banner"><img id="mainBannerImg" src="https://via.placeholder.com/400x220?text=MALEK"></div>
-<button class="menu" onclick="document.getElementById('formBox').classList.toggle('hidden')">🏫 প্রতিষ্ঠান ফরম <span>▼</span></button>
-<div id="formBox" class="card hidden"><div style="text-align:center"><img id="logoPreview" src="https://via.placeholder.com/80?text=LOGO" style="width:84px;height:84px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover"><br><button onclick="logoInput.click()" style="background:#ffcc00;border:none;padding:8px 14px;border-radius:10px;font-weight:700;margin:8px 0">🖼️ লোগো চেঞ্জ</button><input type="file" id="logoInput" accept="image/*" style="display:none"></div><input id="bnName" placeholder="প্রতিষ্ঠানের নাম"><input id="address" placeholder="ঠিকানা"><div style="display:flex;gap:6px"><input id="eiin" placeholder="EIIN"><input id="schoolCode" placeholder="Code"></div><div style="display:flex;gap:6px"><input id="mobile" placeholder="মোবাইল"><input id="email" placeholder="Email"></div><input id="pass1" type="password" placeholder="পাসওয়ার্ড"><button class="btn green" onclick="savePrimary()">সেভ করুন ✅</button></div>
-<button class="menu" onclick="document.getElementById('loginBox').classList.toggle('hidden')">🔐 লগইন <span>▼</span></button>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Malek Attendance System - Primary</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
+body{margin:0;background:#0a2e1e;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:12px}
+.banner-wrap{width:360px;max-width:92%;border:5px solid #ffcc00;border-radius:28px;overflow:hidden;background:#000}
+.banner-wrap img{width:100%;height:430px;object-fit:cover;display:block}
+.menu-btn{width:360px;max-width:92%;background:#fff;border:none;border-radius:22px;padding:18px 20px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.menu-btn span{color:#0d5bff;font-size:20px;font-weight:700}
+.menu-btn i{color:#0d5bff;font-style:normal}
+.card{background:#fff;width:360px;max-width:92%;border-radius:24px;padding:16px;margin-top:12px}
+.hidden{display:none!important}
+input,select{width:100%;padding:13px;border-radius:14px;border:1.8px solid #d1d5db;margin:6px 0;font-size:15px}
+.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:17px;font-weight:700;cursor:pointer;margin-top:10px}
+.green{background:#0a7a42;color:#fff}.blue{background:#0d5bff;color:#fff}.red{background:#d61f1f;color:#fff}
+</style>
+</head>
+<body>
+
+<div class="banner-wrap"><img id="mainBanner" src="logo.jpg" alt="MALEK"></div>
+
+<button class="menu-btn" onclick="document.getElementById('formBox').classList.toggle('hidden')"><span>🏫 প্রাইমারি প্রতিষ্ঠান ফরম</span><i>▼</i></button>
+<div id="formBox" class="card hidden">
+<div style="text-align:center"><img id="logoPreview" src="logo.jpg" style="width:88px;height:88px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover"><br>
+<button onclick="logoInput.click()" style="background:#ffcc00;border:none;padding:8px 16px;border-radius:10px;font-weight:700;margin:8px 0">🖼️ লোগো চেঞ্জ</button>
+<input type="file" id="logoInput" accept="image/*" style="display:none"></div>
+<input id="bnName" placeholder="প্রতিষ্ঠানের নাম"><input id="address" placeholder="ঠিকানা"><div style="display:flex;gap:6px"><input id="eiin" placeholder="EIIN"><input id="schoolCode" placeholder="কোড"></div><div style="display:flex;gap:6px"><input id="mobile" placeholder="মোবাইল"><input id="email" placeholder="ইমেইল"></div><input id="pass1" type="password" placeholder="পাসওয়ার্ড"><button class="btn green" onclick="savePrimary()">সেভ করুন ✅</button>
+</div>
+
+<button class="menu-btn" onclick="document.getElementById('loginBox').classList.toggle('hidden')"><span>🔓 প্রতিষ্ঠান লগইন</span><i>▼</i></button>
 <div id="loginBox" class="card hidden"><select id="loginInst"></select><div style="display:flex;gap:6px"><select id="shift"><option>🌅 প্রভাতি</option><option>দিবা</option></select><select id="cls"><option>১ম শ্রেণি</option><option>২য় শ্রেণি</option><option>৩য় শ্রেণি</option><option>৪র্থ শ্রেণি</option><option>৫ম শ্রেণি</option></select><select id="section"><option>ক</option><option>খ</option></select></div><input id="loginPass" type="password" placeholder="পাসওয়ার্ড"><button class="btn blue" onclick="primaryLogin()">🔒 প্রবেশ করুন</button><p id="loginMsg" style="color:red;text-align:center"></p></div>
-<button class="menu" onclick="document.getElementById('listBox').classList.toggle('hidden')">🔒 তালিকা <span>▼</span></button>
+
+<button class="menu-btn" onclick="document.getElementById('listBox').classList.toggle('hidden')"><span>🔒 প্রতিষ্ঠানের তালিকা</span><i>▼</i></button>
 <div id="listBox" class="card hidden"><button class="btn red" onclick="openListSecure()">🔓 তালিকা খুলুন</button><div id="instList" style="margin-top:10px"></div></div>
+
 <script>
 let insts=JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');let tempLogo=localStorage.getItem('takrim_temp_logo')||'';
-function refreshInstSelect(){document.getElementById('loginInst').innerHTML='<option value="">প্রতিষ্ঠান নির্বাচন</option>'+insts.map((x,i)=>`<option value="${i}">${x.bnName}</option>`).join('')}refreshInstSelect();
-document.getElementById('logoInput').addEventListener('change',function(){if(this.files&&this.files[0]){let r=new FileReader();r.onload=e=>{tempLogo=e.target.result;document.getElementById('logoPreview').src=tempLogo;document.getElementById('mainBannerImg').src=tempLogo;localStorage.setItem('takrim_temp_logo',tempLogo)};r.readAsDataURL(this.files[0])}});
-function savePrimary(){let obj={bnName:document.getElementById('bnName').value.trim(),addr:document.getElementById('address').value.trim(),eiin:document.getElementById('eiin').value.trim(),schoolCode:document.getElementById('schoolCode').value.trim(),mobile:document.getElementById('mobile').value.trim(),email:document.getElementById('email').value.trim(),pass:document.getElementById('pass1').value,logo:tempLogo||'https://via.placeholder.com/80?text=LOGO'};if(!obj.bnName||!obj.pass) return alert('নাম ও পাস দিন');insts.push(obj);localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));localStorage.removeItem('takrim_temp_logo');alert('✅ সেভ');location.reload();}
-function primaryLogin(){let idx=document.getElementById('loginInst').value;if(idx==="")return document.getElementById('loginMsg').textContent='প্রতিষ্ঠান নির্বাচন';let ins=insts[idx];if(document.getElementById('loginPass').value!==ins.pass)return document.getElementById('loginMsg').textContent='❌ ভুল';localStorage.setItem('takrim_session',JSON.stringify({inst:ins,cls:document.getElementById('cls').value,shift:document.getElementById('shift').value,section:document.getElementById('section').value}));location.href='second-page.html';}
-function openListSecure(){let a=prompt('এডমিন নাম');let p=prompt('পাস');if(a!=='malek'||p!=='takrim2022')return alert('ভুল');document.getElementById('instList').innerHTML=insts.map((s,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><div><img src="${s.logo}" style="width:28px;height:28px;border-radius:50%"> <b>${s.bnName}</b></div><button onclick="insts.splice(${i},1);localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));refreshInstSelect();openListSecure()" style="background:#fee2e2;border:none;padding:6px;border-radius:6px">🗑️</button></div>`).join('')}
-let saved=localStorage.getItem('takrim_temp_logo');if(saved){document.getElementById('logoPreview').src=saved;document.getElementById('mainBannerImg').src=saved}
-</script></body></html>
+function refresh(){document.getElementById('loginInst').innerHTML='<option value="">প্রতিষ্ঠান নির্বাচন</option>'+insts.map((x,i)=>`<option value="${i}">${x.bnName}</option>`).join('')}refresh();
+logoInput.addEventListener('change',function(){if(this.files[0]){let r=new FileReader();r.onload=e=>{tempLogo=e.target.result;logoPreview.src=tempLogo;mainBanner.src=tempLogo;localStorage.setItem('takrim_temp_logo',tempLogo)};r.readAsDataURL(this.files[0])}});
+function savePrimary(){let o={bnName:bnName.value.trim(),addr:address.value.trim(),eiin:eiin.value.trim(),schoolCode:schoolCode.value.trim(),mobile:mobile.value.trim(),email:email.value.trim(),pass:pass1.value,logo:tempLogo||logoPreview.src};if(!o.bnName||!o.pass)return alert('নাম ও পাস দিন');insts.push(o);localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));localStorage.removeItem('takrim_temp_logo');alert('✅ সেভ');location.reload()}
+function primaryLogin(){let idx=loginInst.value;if(idx==="")return loginMsg.textContent='নির্বাচন করুন';let ins=insts[idx];if(loginPass.value!==ins.pass)return loginMsg.textContent='❌ ভুল';localStorage.setItem('takrim_session',JSON.stringify({inst:ins,cls:cls.value,shift:shift.value,section:section.value}));location.href='second-page.html'}
+function openListSecure(){let a=prompt('এডমিন নাম');let p=prompt('পাস');if(a!=='malek'||p!=='takrim2022')return alert('ভুল');instList.innerHTML=insts.map((s,i)=>`<div style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee"><div><img src="${s.logo}" style="width:28px;height:28px;border-radius:50%"> <b>${s.bnName}</b></div><button onclick="insts.splice(${i},1);localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));refresh();openListSecure()" style="background:#fee2e2;border:none;padding:6px;border-radius:6px">🗑️</button></div>`).join('')}
+</script>
+</body>
+</html>
