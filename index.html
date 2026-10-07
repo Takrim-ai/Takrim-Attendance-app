@@ -7,156 +7,117 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
-body{background:#0a2e1e;padding:0}
-.top{text-align:center;color:#fff;padding:14px 10px}
-.top h1{font-size:26px}.top p{color:#ffcc00;font-size:13px;font-weight:700;margin-top:5px}
-.btn-dash{background:#fff;border:none;border-radius:20px;padding:7px 22px;font-weight:700;margin-top:10px}
-.main{background:#fff;border-radius:28px 28px 0 0;padding:12px;min-height:100vh}
-.box{border:2.5px solid #8b5cf6;border-radius:20px;padding:10px;margin-top:12px;background:#f9f5ff}
-.add{width:100%;border:2.5px dashed #16a34a;background:#e8f5e9;border-radius:16px;padding:15px;font-weight:700;font-size:16px}
-.stats{display:flex;gap:8px;margin-top:12px}
-.stats div{flex:1;border-radius:14px;padding:11px 2px;text-align:center;font-weight:700}
-.s-y{background:#ffcc00}.s-g{background:#16a34a;color:#fff}.s-r{background:#ef4444;color:#fff}.s-p{background:#7c3aed;color:#fff}
-.title{text-align:center;font-weight:700;font-size:18px;margin:10px 0;color:#7c3aed}
-.row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
-.btn{border:none;border-radius:12px;padding:12px 16px;font-weight:700;color:#fff;cursor:pointer}
-.b-purple{background:#7c3aed}.b-blue{background:#0ea5e9}.b-green{background:#16a34a}.b-gray{background:#6b7280}.b-red{background:#ef4444}
-.inp{border:2px solid #ddd;border-radius:12px;padding:10px;width:90px;text-align:center;font-weight:700}
-.inp-full{background:#fef9c3;border-color:#eab308}
-.mark{width:70px;border:2px solid #ddd;border-radius:12px;padding:10px;text-align:center;font-weight:700}
-.total-bar{background:#ffcc00;border-radius:12px;padding:10px;display:flex;justify-content:space-between;font-weight:700;margin-top:8px}
-.save-row{display:flex;gap:10px;margin-top:12px}
-.save-row button{flex:1;padding:14px;border-radius:14px;border:none;font-weight:700;color:#fff;cursor:pointer}
+body{background:#0a2e1e;padding:8px}
+.top-stats{display:flex;gap:8px}
+.top-stats div{flex:1;border-radius:16px;padding:12px 2px;text-align:center;font-weight:700;color:#fff}
+.s-y{background:#ffcc00;color:#000}.s-g{background:#16a34a}.s-r{background:#ef4444}.s-p{background:#7c3aed}
+.main{background:#fff;border-radius:26px;padding:12px;margin-top:10px;min-height:90vh}
+.box{border:2.5px solid #8b5cf6;border-radius:20px;padding:12px}
+.title{text-align:center;color:#7c3aed;font-weight:700;font-size:20px;margin:6px 0}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.btn{border:none;border-radius:12px;padding:12px 18px;font-weight:700;color:#fff;cursor:pointer}
+.b-p{background:#7c3aed}.b-blue{background:#0ea5e9}.b-green{background:#16a34a}.b-gray{background:#6b7280}.b-red{background:#ef4444}
+.inp{border:2px solid #ddd;border-radius:12px;padding:11px;width:90px;text-align:center;font-weight:700}
+.inp-y{background:#fef9c3;border-color:#eab308}
+table{width:100%;border-collapse:collapse;margin-top:8px;min-width:900px}
+th,td{border:1px solid #e5e7eb;padding:0;text-align:center}
+th{background:#f3e8ff;padding:10px}
+.mark{width:100%;border:none;padding:12px;text-align:center;font-weight:700;background:transparent;outline:none}
+.mark-y{background:#fef9c3!important}
+.cell{padding:10px;font-weight:700}
+.save-row{display:flex;gap:10px;margin-top:14px}
+.save-row button{flex:1;padding:14px;border-radius:14px;border:none;font-weight:700;color:#fff;font-size:16px}
 .dl-row{display:flex;gap:10px;margin-top:14px}
-.dl-row button{flex:1;padding:15px;border-radius:16px;border:none;font-weight:700;color:#fff;cursor:pointer}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;justify-content:center;align-items:center;z-index:99}
-.modal-box{background:#fff;border-radius:20px;padding:18px;width:360px;max-width:92%}
-.modal-box input{width:100%;padding:13px;border-radius:12px;border:1.8px solid #ddd;margin:7px 0}
-.hidden{display:none!important}
-table{width:100%;border-collapse:collapse;min-width:600px}
-th,td{border:1px solid #ddd;padding:7px;text-align:center;font-size:13px}
-th{background:#f3e8ff}
+.dl-row button{flex:1;padding:14px;border-radius:16px;border:none;font-weight:700;color:#fff}
 @media print{.no-print{display:none!important}}
 </style>
 </head>
 <body>
-<div class="top no-print">
-<h1>শিক্ষার্থীর তালিকা</h1>
-<p id="cInfo">শ্রেণী: কম্পিউটার টেকনোলজি | সেশন 2025-26 | সেমিষ্টার ০১</p>
-<button class="btn-dash" onclick="location.href='second-page.html'">ড্যাশবোর্ড</button>
-</div>
-
-<div class="main">
-<button class="add no-print" onclick="openModal()">শিক্ষার্থী যোগ করুন (+) - নাম, রোল, মোবাইল</button>
-
-<div class="stats no-print">
+<div class="top-stats no-print">
 <div class="s-y">সবাই<br><span id="cAll">0</span></div>
 <div class="s-g">উপস্থিত<br><span id="cP">0</span></div>
 <div class="s-r">অনুপস্থিত<br><span id="cA">0</span></div>
 <div class="s-p">ফলাফল</div>
 </div>
 
-<!-- ১. ফলাফল সিট টাইটেল -->
+<div class="main">
 <div class="box">
 <div class="title">📋 ফলাফল সিট</div>
 
-<!-- ২. নাম বদলান -->
 <div class="row no-print">
-<button class="btn b-purple" onclick="renameSubs()">নাম বদলান</button>
+<button class="btn b-p" onclick="renameSubs()">নাম বদলান</button>
 <span style="font-weight:700">বিষয় সংখ্যা:</span>
-<input id="subCount" class="inp" type="number" value="2">
+<input id="subCount" class="inp" type="number" value="5" min="1" max="13">
 </div>
 
-<!-- ৩. বিষয় পূর্ণমান -->
 <div class="row no-print">
 <span style="font-weight:700">পূর্ণমান:</span>
-<input id="fullMark" class="inp inp-full" type="number" value="100">
+<input id="fullMark" class="inp inp-y" type="number" value="50">
 <button class="btn b-blue" onclick="applyCounts()">পূর্ণমান সেট</button>
 </div>
 
-<!-- ৪. টোটাল ফলাফল সিট -->
-<div id="sheet" style="overflow:auto;margin-top:10px"></div>
-<div class="total-bar">
-<span>মোট পূর্ণমান: <span id="tFull">0</span></span>
-<span>মোট প্রাপ্ত: <span id="tGot">0</span></span>
-</div>
+<div id="sheet" style="overflow:auto"></div>
 
-<!-- ৫. নিচের সেভ এডিট -->
 <div class="save-row no-print">
 <button class="b-green" onclick="saveAll()">💾 সেভ</button>
-<button class="b-gray" onclick="alert('এখন এডিট করতে পারবে')">✏️ এডিট</button>
+<button class="b-gray" onclick="alert('এখন নম্বর ঘরে ট্যাপ করে এডিট করো')">✏️ এডিট</button>
 </div>
-<p id="msg" style="text-align:center;color:#16a34a;font-weight:700;margin-top:6px;display:none">✅ সেভ হয়েছে</p>
 </div>
 
-<!-- ৬. এক্সেল পিডিএফ ডাউনলোড - বক্সের বাইরে নিচে নিচে -->
 <div class="dl-row no-print">
 <button style="background:#334155" onclick="window.print()">📄 PDF ডাউনলোড</button>
-<button class="b-green" onclick="downloadExcel()">📊 Excel ডাউনলোড</button>
-</div>
-
-</div>
-
-<div id="addModal" class="modal hidden no-print">
-<div class="modal-box">
-<h3 style="text-align:center">নতুন শিক্ষার্থী - ৩টা ঘর</h3>
-<input id="sName" placeholder="নাম">
-<input id="sRoll" placeholder="রোল" type="number">
-<input id="sMobile" placeholder="মোবাইল নাম্বার">
-<div style="display:flex;gap:8px;margin-top:10px">
-<button class="btn b-blue" style="flex:1" onclick="saveStudent()">সেভ</button>
-<button class="btn b-red" style="flex:1" onclick="closeModal()">বাতিল</button>
-</div>
+<button style="background:#16a34a" onclick="downloadExcel()">📊 Excel ডাউনলোড</button>
 </div>
 </div>
 
 <script>
-let session=JSON.parse(localStorage.getItem('takrim_session')||'null');
-let allStudents=JSON.parse(localStorage.getItem('takrim_students')||'[]');
-let subjects=JSON.parse(localStorage.getItem('takrim_subjects')||'["বাংলা","ইংরেজি"]');
-let fullMarks=JSON.parse(localStorage.getItem('takrim_fullmarks')||'[100,100]');
-if(session) cInfo.textContent=`শ্রেণী: ${session.cls} | সেশন 2025-26 | সেমিষ্টার ${session.section}`;
+let allStudents=JSON.parse(localStorage.getItem('takrim_students')||'[{"name":"Kalam","roll":"1","marks":[75,80,78,80,80]}]');
+let subjects=JSON.parse(localStorage.getItem('takrim_subjects')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","সামাজিক বিজ্ঞান"]');
+let fullMarks=JSON.parse(localStorage.getItem('takrim_fullmarks')||'[50,50,50,50,50]');
 
 function saveAll(){
  localStorage.setItem('takrim_students',JSON.stringify(allStudents));
  localStorage.setItem('takrim_subjects',JSON.stringify(subjects));
  localStorage.setItem('takrim_fullmarks',JSON.stringify(fullMarks));
- msg.style.display='block'; setTimeout(()=>msg.style.display='none',2000);
+ alert('✅ সেভ হয়েছে');
 }
-function render(){
- cAll.textContent=allStudents.length;
- tFull.textContent=fullMarks.reduce((a,b)=>a+b,0);
- let totalGotAll=allStudents.reduce((s,st)=>s+st.marks.reduce((a,b)=>a+(+b||0),0),0);
- tGot.textContent=totalGotAll;
- subCount.value=subjects.length; fullMark.value=fullMarks[0]||100;
 
- let h=`<table><tr><th>ক্রম</th><th>নাম</th><th>রোল</th><th>মোবাইল</th>`;
+function render(){
+ let n=subjects.length;
+ document.getElementById('subCount').value=n;
+ let ft=fullMarks.slice(0,n).reduce((a,b)=>a+(+b||0),0);
+ document.getElementById('cAll').textContent=allStudents.length;
+
+ // হেডার - ছবির মত
+ let h=`<table><tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`;
  subjects.forEach(s=>h+=`<th>${s}</th>`);
- h+=`<th>প্রাপ্ত</th><th>%</th><th>গ্রেড</th><th>জিপিএ</th><th class="no-print">ডিলিট</th></tr>`;
- h+=`<tr><td></td><td></td><td>পূর্ণমান</td><td></td>${fullMarks.map((fm,i)=>`<td><input class="mark inp-full" value="${fm}" onchange="editFull(${i},this.value)"></td>`).join('')}<td colspan="4"></td><td class="no-print"></td></tr>`;
+ h+=`<th>প্রাপ্ত</th><th>%</th><th>গ্রেড</th><th class="no-print">🗑️</th></tr>`;
+
+ // পূর্ণমান রো - হলুদ - বাগ ফিক্স: এখন আর ০ / ১০০ / ১০০ আসবে না
+ h+=`<tr><td></td><td style="font-weight:700">পূর্ণমান</td><td></td>`;
+ fullMarks.slice(0,n).forEach((fm,i)=>h+=`<td style="background:#fef9c3"><input class="mark mark-y" value="${fm}" onchange="editFull(${i},this.value)"></td>`);
+ h+=`<td style="background:#fef9c3;font-weight:700">${ft}</td><td>-</td><td>-</td><td class="no-print"></td></tr>`;
 
  allStudents.forEach((st,gi)=>{
-   if(!st.marks || st.marks.length!=subjects.length) st.marks=Array.from({length:subjects.length},(_,i)=>st.marks?.[i]||'');
+   if(!st.marks) st.marks=Array(n).fill('');
+   st.marks=st.marks.slice(0,n); while(st.marks.length<n) st.marks.push('');
    let tot=st.marks.reduce((a,b)=>a+(+b||0),0);
-   let ft=fullMarks.reduce((a,b)=>a+b,0);
-   let per=ft?((tot/ft)*100).toFixed(1):0;
+   let per=ft? (tot/ft*100):0;
    let gr=per>=80?'A+':per>=70?'A':per>=60?'A-':per>=50?'B':per>=40?'C':per>=33?'D':'F';
-   let gp=per>=80?'5.00':per>=70?'4.00':per>=60?'3.50':per>=50?'3.00':per>=40?'2.00':per>=33?'1.00':'0.00';
-   h+=`<tr><td>${gi+1}</td><td style="text-align:left">${st.name}</td><td>${st.roll}</td><td>${st.mobile||''}</td>`;
-   st.marks.forEach((m,i)=>h+=`<td><input class="mark" value="${m}" oninput="editMark(${gi},${i},this.value)"></td>`);
-   h+=`<td><b>${tot}</b></td><td>${per}</td><td>${gr}</td><td>${gp}</td><td class="no-print"><button onclick="del(${gi})">🗑️</button></td></tr>`;
+   h+=`<tr><td>${gi+1}</td><td style="text-align:left;padding-left:8px">${st.name}</td><td>${st.roll}</td>`;
+   st.marks.forEach((m,i)=>h+=`<td><input class="mark" type="number" value="${m}" oninput="editMark(${gi},${i},this.value)"></td>`);
+   h+=`<td class="cell" style="background:#fef9c3">${tot}</td><td class="cell">${per.toFixed(1)}</td><td class="cell">${gr}</td><td class="no-print"><button onclick="del(${gi})" style="border:none;background:#fee2e2;padding:6px 8px;border-radius:8px">🗑️</button></td></tr>`;
  });
  h+=`</table>`;
  document.getElementById('sheet').innerHTML=h;
 }
-function editFull(i,v){fullMarks[i]=+v||0;saveAll();render();}
-function editMark(gi,si,v){allStudents[gi].marks[si]=v;saveAll();render();}
-function applyCounts(){let n=+subCount.value||2;if(n>13)n=13;let fm=+fullMark.value||100;let old=[...subjects];subjects=Array.from({length:n},(_,i)=>old[i]||`বিষয় ${i+1}`);fullMarks=Array.from({length:n},(_,i)=>fullMarks[i]||fm);saveAll();render();}
-function renameSubs(){let nm=prompt('বিষয় নাম কমা দিয়ে',subjects.join(','));if(!nm)return;subjects=nm.split(',').map(s=>s.trim());saveAll();render();}
-function openModal(){addModal.classList.remove('hidden')}function closeModal(){addModal.classList.add('hidden')}
-function saveStudent(){let n=sName.value.trim(),r=sRoll.value.trim(),m=sMobile.value.trim();if(!n||!r)return alert('নাম রোল দিন');allStudents.push({name:n,roll:r,mobile:m,cls:session?.cls||'১ম',section:session?.section||'ক',marks:Array(subjects.length).fill(''),present:true});saveAll();closeModal();sName.value='';sRoll.value='';sMobile.value='';render();}
+
+function editMark(gi,si,v){allStudents[gi].marks[si]=v; localStorage.setItem('takrim_students',JSON.stringify(allStudents)); render();}
+function editFull(i,v){fullMarks[i]=parseInt(v)||0; localStorage.setItem('takrim_fullmarks',JSON.stringify(fullMarks)); render();}
+function applyCounts(){let n=parseInt(subCount.value)||5;let fm=parseInt(fullMark.value)||50;if(n>13)n=13;subjects=Array.from({length:n},(_,i)=>subjects[i]||`বিষয় ${i+1}`);fullMarks=Array(n).fill(fm);allStudents.forEach(s=>s.marks=Array.from({length:n},(_,i)=>s.marks?.[i]||''));saveAll();render();}
+function renameSubs(){let nm=prompt('বিষয় নাম কমা দিয়ে',subjects.join(','));if(!nm)return;subjects=nm.split(',').map(s=>s.trim());fullMarks=fullMarks.slice(0,subjects.length);while(fullMarks.length<subjects.length)fullMarks.push(parseInt(fullMark.value)||50);saveAll();render();}
 function del(i){if(confirm('ডিলিট?')){allStudents.splice(i,1);saveAll();render();}}
-function downloadExcel(){let head=['ক্রম','নাম','রোল','মোবাইল',...subjects,'প্রাপ্ত','%','গ্রেড','জিপিএ'];let rows=allStudents.map((st,i)=>{let t=st.marks.reduce((a,b)=>a+(+b||0),0);let ft=fullMarks.reduce((a,b)=>a+b,0);let p=ft?((t/ft)*100).toFixed(1):0;return [i+1,st.name,st.roll,st.mobile||'',...st.marks,t,p];});let ws=XLSX.utils.aoa_to_sheet([head,...rows]);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Result');XLSX.writeFile(wb,'result.xlsx');}
+function downloadExcel(){let head=['ক্রম','নাম','রোল',...subjects,'প্রাপ্ত','%','গ্রেড'];let rows=allStudents.map((st,i)=>{let t=st.marks.reduce((a,b)=>a+(+b||0),0);let ft=fullMarks.reduce((a,b)=>a+b,0);let p=ft?(t/ft*100).toFixed(1):0;return [i+1,st.name,st.roll,...st.marks,t,p];});let ws=XLSX.utils.aoa_to_sheet([head,...rows]);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Result');XLSX.writeFile(wb,'result.xlsx');}
 render();
 </script>
 </body>
