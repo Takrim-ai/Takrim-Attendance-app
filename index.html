@@ -55,4 +55,76 @@ td{border:1px solid #e5e7eb;padding:6px;text-align:center}
 <div class="totBar"><span id="tF">মোট পূর্ণমান: 700</span><span id="tG">মোট প্রাপ্ত: 538</span></div>
 
 <div class="btns">
-<button style="background:#16a34a" onclick="saveData
+<button style="background:#16a34a" onclick="saveData()">💾 সেভ</button>
+<button style="background:#6b7280" onclick="toggleEdit()" id="editBtn">✏️ এডিট</button>
+<button style="background:#1e293b" onclick="downloadPDF()">📄 PDF</button>
+<button style="background:#16a34a" onclick="downloadExcel()">📊 Excel</button>
+</div>
+</div>
+</div>
+
+<script>
+let isEdit=false;
+let subs=JSON.parse(localStorage.getItem('s_final2')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","সমাজ","ধর্ম","কৃষি"]');
+let full=JSON.parse(localStorage.getItem('f_final2')||'[100,100,100,100,100,100,100]');
+let studs=JSON.parse(localStorage.getItem('st_final2')||'[{"name":"কালাম","roll":"202","marks":[70,80,75,60,80,90,83]},{"name":"কমল","roll":"203","marks":[82,75,80,70,85,88,0]}]');
+
+function getGPA(p){if(p>=80)return"5.00";if(p>=70)return"4.00";if(p>=60)return"3.50";if(p>=50)return"3.00";if(p>=40)return"2.00";if(p>=33)return"1.00";return"0.00";}
+function getGrade(p){if(p>=80)return"A+";if(p>=70)return"A";if(p>=60)return"A-";if(p>=50)return"B";if(p>=40)return"C";if(p>=33)return"D";return"F";}
+
+function render(){
+let hRow=document.getElementById('hRow');
+hRow.innerHTML=`<th>ক্রম</th><th>নাম</th><th>রোল</th>`+subs.map(s=>`<th>${s}</th>`).join('')+`<th>মোট</th><th>প্রাপ্ত</th><th>%</th><th>গ্রেড</th><th>GPA</th>`;
+
+let bRow=document.getElementById('bRow');bRow.innerHTML='';
+let fullRow=`<tr><td></td><td>পূর্ণমান</td><td></td>`+full.map(f=>`<td><input class="inp-sub" value="${f}" oninput="changeFull()"></td>`).join('')+`<td id="totAll">${full.reduce((a,b)=>a+(parseInt(b)||0),0)}</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>`;
+bRow.innerHTML+=fullRow;
+
+studs.forEach((st,i)=>{
+let tot=st.marks.reduce((a,b)=>a+(parseInt(b)||0),0);
+let fullTot=full.reduce((a,b)=>a+(parseInt(b)||0),0);
+let per=fullTot?((tot/fullTot)*100).toFixed(1):0;
+let tr=`<tr><td>${i+1}</td><td>${st.name}</td><td>${st.roll}</td>`+st.marks.map((m,j)=>`<td><input class="inp" data-i="${i}" data-j="${j}" value="${m}" oninput="calc()"></td>`).join('')+`<td>${fullTot}</td><td class="pt">${tot}</td><td class="pp">${per}</td><td class="gr">${getGrade(per)}</td><td class="gp">${getGPA(per)}</td></tr>`;
+bRow.innerHTML+=tr;
+});
+document.getElementById('cAll').textContent=studs.length;
+document.getElementById('subNum').value=subs.length;
+let tF=document.getElementById('tF');let tG=document.getElementById('tG');
+if(tF) tF.textContent="মোট পূর্ণমান: "+full.reduce((a,b)=>a+(parseInt(b)||0),0);
+}
+render();
+
+function calc(){
+document.querySelectorAll('.inp').forEach(inp=>{
+let i=inp.dataset.i,j=inp.dataset.j; studs[i].marks[j]=parseInt(inp.value)||0;
+});
+render();
+}
+function changeFull(){
+full=document.querySelectorAll('.inp-sub').forEach?[...document.querySelectorAll('.inp-sub')].map(e=>parseInt(e.value)||0):full;
+render();
+}
+function updateSubCount(v){
+v=parseInt(v)||1;if(v>10)v=10;if(v>subs.length){while(subs.length<v){subs.push("বিষয় "+(subs.length+1));full.push(100);studs.forEach(s=>s.marks.push(0))}}else{subs=subs.slice(0,v);full=full.slice(0,v);studs.forEach(s=>s.marks=s.marks.slice(0,v))}
+render();
+}
+function changeSubName(){
+let n=prompt("বিষয়ের নাম কমা দিয়ে:",subs.join(", "));if(!n)return;
+subs=n.split(",").map(s=>s.trim()).filter(s=>s);render();
+}
+function saveData(){
+localStorage.setItem('s_final2',JSON.stringify(subs));
+localStorage.setItem('f_final2',JSON.stringify(full));
+localStorage.setItem('st_final2',JSON.stringify(studs));
+alert("সেভ হয়েছে");
+}
+function toggleEdit(){
+isEdit=!isEdit;document.getElementById('editBtn').textContent=isEdit?"✅ সেভ মোড":"✏️ এডিট";
+document.querySelectorAll('.inp,.inp-sub').forEach(e=>e.disabled=!isEdit?false:false);
+}
+function toggleCard(){let c=document.getElementById('rCard');c.classList.toggle('hidden');c.style.display=c.style.display=='none'?'block':'none';}
+function downloadPDF(){const {jsPDF}=window.jspdf;const doc=new jsPDF();doc.text("Folafol Sheet",10,10);let y=20;studs.forEach(s=>{doc.text(`${s.roll} - ${s.name}`,10,y);y+=10});doc.save("result.pdf");}
+function downloadExcel(){let csv="ক্রম,নাম,রোল,"+subs.join(",")+",মোট,প্রাপ্ত,%,গ্রেড,GPA\n";studs.forEach((s,i)=>{let tot=s.marks.reduce((a,b)=>a+b,0);csv+=`${i+1},${s.name},${s.roll},${s.marks.join(",")},${full.reduce((a,b)=>a+b,0)},${tot}\n`});let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download="result.csv";a.click();}
+</script>
+</body>
+</html>
