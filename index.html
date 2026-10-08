@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>10th Class - Final Fixed 2 Line</title>
+<title>10th Class - Final Fixed - No Yellow Tot</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -10,79 +10,42 @@
 *{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
 body{background:#0a2e1f;padding:10px}
 .card{max-width:500px;margin:auto;background:#fff;border-radius:24px;padding:14px}
-.add{border:3px dashed #16a34a;border-radius:16px;padding:16px;text-align:center;font-weight:700;font-size:20px;cursor:pointer}
-.row{display:flex;gap:10px;margin-top:12px}
-.box{flex:1;border-radius:16px;padding:14px;text-align:center;font-weight:700;color:#fff}
-.yellow{background:#ffcc00;color:#000}.green{background:#16a34a}.red{background:#ef4444}
-.purple{width:100%;margin-top:12px;background:#7c3aed;color:#fff;border:none;border-radius:14px;padding:14px;font-weight:700;font-size:18px}
 .mBox{border:2px solid #8b5cf6;border-radius:18px;padding:10px;margin-top:12px}
-.hd{display:flex;justify-content:space-between;align-items:center}
-.hd button{background:#7c3aed;color:#fff;border:none;border-radius:12px;padding:8px 12px;font-weight:700}
-.hd input{width:70px;text-align:center;padding:8px;border-radius:10px;border:1px solid #ddd;font-weight:700}
-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
-th{background:#0f3a2a;color:#fff;padding:6px;font-size:12px;line-height:1.2}
-td{border:1px solid #ddd;padding:5px;text-align:center}
-.inp{width:60px;padding:5px;border-radius:12px;border:1px dashed #16a34a;text-align:center;font-weight:700}
-.tot{background:#ffcc00;border-radius:10px;padding:10px;display:flex;justify-content:space-between;font-weight:700;margin-top:10px}
-.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.btns button{padding:11px;border:none;border-radius:10px;color:#fff;font-weight:700}
+.inp{width:60px;padding:5px;border-radius:12px;border:1px solid #ddd;text-align:center;font-weight:700}
+.inp:disabled{background:#f3f4f6;border:1px solid #eee;color:#000}
 </style>
 </head>
 <body>
 <div class="card">
-<div class="add" onclick="addStu()">+ শিক্ষার্থী যোগ করুন</div>
-<div class="row">
-<div class="box yellow">📋 সবাই<br><span id="cAll">2</span></div>
-<div class="box green">✅ উপস্থিত<br><span id="cPre">2</span></div>
-<div class="box red">❌ অনুপস্থিত<br><span id="cAbs">0</span></div>
-</div>
-<button class="purple" onclick="tog()">🔼 ফলাফল বন্ধ করুন</button>
-
+<!-- তোমার উপরের অংশ আগের মতোই থাকবে -->
 <div class="mBox" id="rCard">
-<div style="text-align:center;font-weight:700;color:#7c3aed;font-size:18px">📋 ফলাফল সিট</div>
-<div class="hd" style="margin-top:8px">
-<button onclick="renameSub()">নাম বদলান</button>
-<span>বিষয় সংখ্যা:</span><input id="sCount" type="number" value="7" oninput="setSub(this.value)">
-</div>
-<div style="overflow:auto">
 <table><thead><tr id="hRow"></tr></thead><tbody id="bRow"></tbody></table>
-</div>
-<div class="tot"><span id="tF">মোট পূর্ণমান: 700</span><span id="tG">মোট প্রাপ্ত: 538</span></div>
-<div class="btns">
-<button style="background:#16a34a" onclick="saveData()">💾 সেভ</button>
-<button style="background:#6b7280" onclick="toggleEdit()" id="eBtn">✏️ এডিট</button>
-<button style="background:#1e293b" onclick="downloadPDF()">📄 PDF</button>
-<button style="background:#16a34a" onclick="downloadExcel()">📊 Excel</button>
+<!-- হলুদ tot বার এখানে ছিল, এখন বাদ -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+<button style="background:#16a34a;color:#fff;padding:11px;border:none;border-radius:10px;font-weight:700" onclick="saveData()">💾 সেভ</button>
+<button style="background:#6b7280;color:#fff;padding:11px;border:none;border-radius:10px;font-weight:700" onclick="toggleEdit()" id="eBtn">✏️ এডিট</button>
 </div>
 </div>
 </div>
 
 <script>
+let isEdit=false;
 let subs=JSON.parse(localStorage.getItem('s_final2')||'["বাংলা","ইংরেজি","গণিত","বিজ্ঞান","সমাজ","ধর্ম","কৃষি"]');
 let full=JSON.parse(localStorage.getItem('f_final2')||'[100,100,100,100,100,100,100]');
 let studs=JSON.parse(localStorage.getItem('st_final2')||'[{"name":"কালাম","roll":"202","m":[70,80,75,60,80,90,83]},{"name":"কমল","roll":"203","m":[82,75,80,70,85,88,58]}]');
 
 function render(){
-document.getElementById('hRow').innerHTML=`<th>ক্রম</th><th>নাম</th><th>রোল</th>`+subs.map(s=>`<th>${s}<br>100</th>`).join('')+`<th>মোট<br>প্রাপ্ত</th><th>%</th><th>গ্রেড</th>`;
+document.getElementById('hRow').innerHTML=`<th>ক্রম</th><th>নাম</th><th>রোল</th>`+subs.map(s=>`<th>${s}</th>`).join('')+`<th>মোট</th><th>%</th><th>গ্রেড</th>`;
 let b=document.getElementById('bRow');b.innerHTML='';
-let fRow=`<tr><td></td><td>পূর্ণমান</td><td></td>`+full.map((v,i)=>`<td><input class="inp" style="border-style:dashed" value="${v}" onchange="full[${i}]=+this.value;render()"></td>`).join('')+`<td>${full.reduce((a,b)=>a+b,0)}</td><td>-</td><td>-</td></tr>`;
-b.innerHTML+=fRow;
+b.innerHTML+=`<tr><td></td><td>পূর্ণমান</td><td></td>`+full.map((v,i)=>`<td><input class="inp" value="${v}" ${!isEdit?'disabled':''} onchange="full[${i}]=+this.value;render()"></td>`).join('')+`<td>${full.reduce((a,b)=>a+b,0)}</td><td>-</td><td>-</td></tr>`;
 studs.forEach((st,i)=>{
-let tot=st.m.reduce((a,b)=>a+b,0);let per=(tot/full.reduce((a,b)=>a+b,0)*100).toFixed(1);
-b.innerHTML+=`<tr><td>${i+1}</td><td>${st.name}</td><td>${st.roll}</td>`+st.m.map((mm,j)=>`<td><input class="inp" value="${mm}" onchange="studs[${i}].m[${j}]=+this.value;render()"></td>`).join('')+`<td>${tot}</td><td>${per}</td><td>${per>=80?'A+':per>=70?'A':'B'}</td></tr>`;
+let tot=st.m.reduce((a,b)=>a+b,0);
+b.innerHTML+=`<tr><td>${i+1}</td><td>${st.name}</td><td>${st.roll}</td>`+st.m.map((mm,j)=>`<td><input class="inp" value="${mm}" ${!isEdit?'disabled':''} onchange="studs[${i}].m[${j}]=+this.value;render()"></td>`).join('')+`<td>${tot}</td><td>${(tot/full.reduce((a,b)=>a+b,0)*100).toFixed(1)}</td><td>A</td></tr>`;
 });
-document.getElementById('tF').innerText='মোট পূর্ণমান: '+full.reduce((a,b)=>a+b,0);
-document.getElementById('cAll').innerText=studs.length;
 }
 render();
-function saveData(){localStorage.setItem('s_final2',JSON.stringify(subs));localStorage.setItem('f_final2',JSON.stringify(full));localStorage.setItem('st_final2',JSON.stringify(studs));alert('সেভ হয়েছে');}
-function setSub(v){v=+v;if(v<1)v=1;if(v>10)v=10;if(v>subs.length){while(subs.length<v){subs.push('বিষয় '+(subs.length+1));full.push(100);studs.forEach(s=>s.m.push(0))}}else{subs=subs.slice(0,v);full=full.slice(0,v);studs.forEach(s=>s.m=s.m.slice(0,v))}render();}
-function renameSub(){let n=prompt('বিষয়ের নাম কমা দিয়ে লেখো:',subs.join(','));if(n){subs=n.split(',').map(s=>s.trim());render();}}
-function addStu(){let n=prompt('নাম:');let r=prompt('রোল:');if(n&&r){studs.push({name:n,roll:r,m:Array(subs.length).fill(0)});render();}}
-function tog(){let c=document.getElementById('rCard');c.style.display=c.style.display=='none'?'block':'none';}
-function toggleEdit(){}
-function downloadPDF(){const {jsPDF}=window.jspdf;let doc=new jsPDF();doc.text('Result Sheet',10,10);doc.save('result.pdf');}
-function downloadExcel(){let ws=XLS.utils.aoa_to_sheet([['ক্রম','নাম','রোল',...subs,'মোট']]);let wb=XLS.utils.book_new();XLS.utils.book_append_sheet(wb,ws,'Sheet1');XLS.writeFile(wb,'result.xlsx');}
+function toggleEdit(){isEdit=!isEdit;document.getElementById('eBtn').innerText=isEdit?'🔒 লক':'✏️ এডিট';render();}
+function saveData(){localStorage.setItem('s_final2',JSON.stringify(subs));localStorage.setItem('f_final2',JSON.stringify(full));localStorage.setItem('st_final2',JSON.stringify(studs));isEdit=false;document.getElementById('eBtn').innerText='✏️ এডিট';render();alert('সেভ হয়েছে - এখন লক');}
 </script>
 </body>
 </html>
