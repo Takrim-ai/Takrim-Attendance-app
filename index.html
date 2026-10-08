@@ -74,7 +74,11 @@ function autoSave(){localStorage.setItem(SAVE_KEY, JSON.stringify({full,subNames
 function changeSubCount(n){
  n=parseInt(n); if(isNaN(n)||n<1) n=1; if(n>20) n=20;
  if(n > subNames.length){
-  for(let i=subNames.length;i<n;i++){ subNames.push("বিষয় "+(i+1)); full.push(100); students.forEach(s=>s.marks.push(0)); }
+  for(let i=subNames.length;i<n;i++){
+    subNames.push("বিষয় "+(i+1));
+    full.push(100);
+    students.forEach(s=>s.marks.push(0));
+  }
  } else if(n < subNames.length){
   subNames=subNames.slice(0,n); full=full.slice(0,n); students.forEach(s=>s.marks=s.marks.slice(0,n));
  }
@@ -96,6 +100,7 @@ function setFilter(f){
 function openModal(){document.getElementById('modal').classList.add('active');}function closeModal(){document.getElementById('modal').classList.remove('active');}
 function confirmAdd(){let n=document.getElementById('mName').value.trim(); let r=document.getElementById('mRoll').value.trim(); if(!n){alert('নাম লিখুন'); return;} if(!r){r=200+students.length+1;} students.push({name:n,roll:r,present:true,marks:full.map(()=>0)}); closeModal(); autoSave(); render();}
 function togBox(){resultVisible=!resultVisible; let b=document.getElementById('resultBox'); let t=document.getElementById('togBtn'); if(resultVisible){b.classList.add('show'); t.innerHTML='🔼 ফলাফল বন্ধ করুন';} else{b.classList.remove('show'); t.innerHTML='🏆 ফলাফল দেখুন';} autoSave();}
+
 function render(){
  let sc=document.getElementById('subCount');
  if(document.activeElement!== sc){ sc.value=subNames.length; }
@@ -130,13 +135,13 @@ function render(){
  document.getElementById('mainTable').style.minWidth = (350 + subNames.length*110) + 'px';
 
  let trFull=`<tr style="background:#f3f4f6;font-weight:bold"><td></td><td>পূর্ণমান</td><td></td>`;
- for(let j=0;j<full.length;j++) trFull+=`<td><input type="number" value="${full[j]}" ${edit?'':'disabled'} oninput="full[${j}]=Number(this.value)||0; autoSave(); render()"></td>`;
+ for(let j=0;j<full.length;j++) trFull+=`<td><input type="number" value="${full[j]}" ${edit?'':'disabled'} oninput="full[${j}]=Number(this.value)||0; autoSave();" onblur="autoSave(); render()" onchange="autoSave(); render()"></td>`;
  trFull+=`<td class="pra">${totalFull}</td><td class="pra">-</td><td class="per">100%</td><td class="gpa">-</td></tr>`; tb.innerHTML+=trFull;
  students.forEach((s,i)=>{
    if(s.marks.length < full.length){ for(let k=s.marks.length;k<full.length;k++) s.marks.push(0); }
    let prapto=0; for(let m of s.marks) prapto+=Number(m)||0; let per=totalFull>0?prapto/totalFull*100:0;
    let tr=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.roll}</td>`;
-   for(let j=0;j<full.length;j++){tr+=`<td><input type="number" value="${s.marks[j]}" ${edit?'':'disabled'} oninput="students[${i}].marks[${j}]=Number(this.value)||0; autoSave(); render()"></td>`;}
+   for(let j=0;j<full.length;j++){tr+=`<td><input type="number" value="${s.marks[j]}" ${edit?'':'disabled'} oninput="students[${i}].marks[${j}]=Number(this.value)||0; autoSave();" onblur="autoSave(); render()" onchange="autoSave(); render()"></td>`;}
    tr+=`<td class="pra">${totalFull}</td><td class="pra">${prapto}</td><td class="per">${per.toFixed(1)}%</td><td class="gpa">${getGPA(per)}<br><small>${getGrade(per)}</small></td></tr>`; tb.innerHTML+=tr;
  });
 }
