@@ -3,104 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Takrim - Blue Add Button</title>
+<title>Takrim - Separate Lists</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Kalpurush,Arial}
 body{background:#0a2e1f;padding:8px}
 .main{max-width:520px;margin:auto;background:#fff;border-radius:18px;padding:12px}
-/* ★ নীল কালার ★ */
-.add{width:100%;padding:14px;background:#2563eb;color:#fff;border:2px solid #1e40af;border-radius:12px;font-weight:bold;font-size:18px;cursor:pointer;margin-bottom:12px}
-.stu{background:#f3f4f6;display:flex;justify-content:space-between;padding:10px;border-radius:10px;margin-bottom:6px}
-#list{display:none}
-#list.show{display:block}
-.stats{display:flex;gap:6px;margin-bottom:10px}
-.s{flex:1;padding:12px;border-radius:12px;text-align:center;font-weight:bold;cursor:pointer}
-.s1{background:#ffcc00}.s2{background:#16a34a;color:#fff}.s3{background:#ef4444;color:#fff}
-.toggle{width:100%;padding:13px;background:#7c3aed;color:#fff;border:none;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-bottom:10px}
-.box{border:2px solid #a78bfa;border-radius:14px;padding:8px;display:none}
-.box.show{display:block}
-.wrap{overflow-x:auto;border:1px solid #ddd;border-radius:10px}
-table{width:100%;border-collapse:collapse;min-width:750px;font-size:13px}
-th{background:#0a2e1f;color:#fff;padding:8px;text-align:center}
-td{padding:6px;border:1px solid #ddd;text-align:center;background:#fff}
+.add{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-weight:bold;font-size:18px;cursor:pointer;margin-bottom:12px}
+.listBtn{width:100%;padding:14px;background:#ffcc00;color:#000;border:none;border-radius:12px;font-weight:bold;font-size:18px;cursor:pointer;margin-bottom:8px}
+#list{display:none;margin-bottom:10px}#list.show{display:block}
+.stu{background:#f3f4f6;display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;margin-bottom:6px;font-size:16px}
+.stats{display:flex;gap:8px;margin-bottom:10px}.s{flex:1;padding:14px;border-radius:12px;text-align:center;font-weight:bold;font-size:16px;cursor:pointer;border:2px solid transparent}.s.active{border-color:#000;transform:scale(0.97)}
+.s2{background:#16a34a;color:#fff}.s3{background:#ef4444;color:#fff}
+.toggle{width:100%;padding:14px;background:#7c3aed;color:#fff;border:none;border-radius:12px;font-weight:bold;font-size:18px;cursor:pointer;margin-bottom:10px}
+.box{border:2px solid #a78bfa;border-radius:14px;padding:8px;display:none}.box.show{display:block}
+.wrap{overflow-x:auto;border:1px solid #ddd;border-radius:10px}table{width:100%;border-collapse:collapse;min-width:750px;font-size:13px}th{background:#0a2e1f;color:#fff;padding:8px;text-align:center}td{padding:6px;border:1px solid #ddd;text-align:center;background:#fff}
 td input{width:70px;padding:7px;border:2px dashed #16a34a;border-radius:8px;text-align:center;font-weight:bold;background:#f3f4f6}
 .pra{background:#dcfce7;font-weight:bold}.per{background:#dbeafe;font-weight:bold}.gpa{background:#fef3c7;font-weight:bold}
-.row{display:flex;gap:8px;margin-top:8px}
-.row button{flex:1;padding:11px;border:none;border-radius:10px;font-weight:bold;color:#fff;cursor:pointer}
-.save{background:#16a34a}.edit{background:#6b7280}.pdf{background:#111827}.excel{background:#047857}
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:999}
-.modal.active{display:flex}
-.modalBox{background:#fff;width:90%;max-width:380px;border-radius:18px;padding:18px}
-.modalBox input{width:100%;padding:12px;margin-bottom:10px;border:2px solid #16a34a;border-radius:10px;font-size:16px}
-.modalBtns{display:flex;gap:10px}
-.modalBtns button{flex:1;padding:12px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
-.btnCancel{background:#e5e7eb}.btnOk{background:#2563eb;color:#fff}
+.row{display:flex;gap:8px;margin-top:8px}.row button{flex:1;padding:11px;border:none;border-radius:10px;font-weight:bold;color:#fff;cursor:pointer}.save{background:#16a34a}.edit{background:#6b7280}.pdf{background:#111827}.excel{background:#047857}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:999}.modal.active{display:flex}.modalBox{background:#fff;width:90%;max-width:380px;border-radius:18px;padding:18px}.modalBox input{width:100%;padding:12px;margin-bottom:10px;border:2px solid #16a34a;border-radius:10px;font-size:16px}.modalBtns{display:flex;gap:10px}.modalBtns button{flex:1;padding:12px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}.btnCancel{background:#e5e7eb}.btnOk{background:#2563eb;color:#fff}
 </style>
 </head>
 <body>
 <div class="main">
 <button class="add" onclick="openModal()">+ শিক্ষার্থী যোগ করুন</button>
+<button class="listBtn" id="listBtn" onclick="setFilter('all')">📋 শিক্ষার্থীর তালিকা দেখুন (2)</button>
 <div id="list"></div>
 <div class="stats">
-<div class="s s1" onclick="toggleStudentList()">📋 সবাই<br><span id="t1">0</span><br><small style="font-size:10px">চাপলে তালিকা</small></div>
-<div class="s s2" onclick="toggleStudentList()">✅ উপস্থিত<br><span id="t2">0</span></div>
-<div class="s s3" onclick="toggleStudentList()">❌ অনুপস্থিত<br><span id="t3">0</span></div>
+<div class="s s2" id="presentBox" onclick="setFilter('present')">✅ উপস্থিত<br><span id="t2">0</span></div>
+<div class="s s3" id="absentBox" onclick="setFilter('absent')">❌ অনুপস্থিত<br><span id="t3">0</span></div>
 </div>
 <button class="toggle" id="togBtn" onclick="togBox()">🏆 ফলাফল দেখুন</button>
-<div class="box" id="resultBox">
-<div class="wrap">
-<table><thead><tr><th>ক্রম</th><th>নাম</th><th>রোল</th><th>বাংলা 100</th><th>গণিত 100</th><th>পূর্ণমান</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr></thead><tbody id="tbody"></tbody></table>
-</div>
-<div class="row"><button class="save" onclick="saveNow()">💾 সেভ (অটো)</button><button class="edit" onclick="editNow()">✏️ এডিট</button></div>
-<div class="row"><button class="pdf" onclick="toPDF()">📄 PDF</button><button class="excel" onclick="toExcel()">📊 Excel</button></div>
-</div>
+<div class="box" id="resultBox"><div class="wrap"><table><thead><tr><th>ক্রম</th><th>নাম</th><th>রোল</th><th>বাংলা 100</th><th>গণিত 100</th><th>পূর্ণমান</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr></thead><tbody id="tbody"></tbody></table></div>
+<div class="row"><button class="save" onclick="saveNow()">💾 সেভ</button><button class="edit" onclick="editNow()">✏️ এডিট</button></div>
+<div class="row"><button class="pdf" onclick="toPDF_A4()">📄 PDF A4</button><button class="excel" onclick="toExcel()">📊 Excel</button></div></div>
 </div>
 <div class="modal" id="modal"><div class="modalBox"><h3 style="text-align:center;margin-bottom:10px">নতুন শিক্ষার্থী</h3><input id="mName" placeholder="নাম *"><input id="mRoll" placeholder="রোল *"><input id="mPhone" placeholder="মোবাইল (ঐচ্ছিক)"><div class="modalBtns"><button class="btnCancel" onclick="closeModal()">Cancel</button><button class="btnOk" onclick="confirmAdd()">OK</button></div></div></div>
 <script>
-const SAVE_KEY = 'takrim_final_v105';
-const UI_KEY = 'takrim_ui_v105';
-let full=[100,100];
-let students=[{name:"কালাম",roll:"202",present:true,marks:[78,80]},{name:"কমল",roll:"203",present:true,marks:[75,90]}];
-let edit=true;
-let resultVisible=false;
-let listVisible=false;
+const SAVE_KEY='takrim_final_v107';const UI_KEY='takrim_ui_v107';
+let full=[100,100];let students=[{name:"কালাম",roll:"202",present:true,marks:[78,80]},{name:"কমল",roll:"203",present:false,marks:[75,90]}];
+let edit=true;let resultVisible=false;let listVisible=false;let filter='all';
 function getGPA(per){if(per>=80)return "5.00";if(per>=70)return "4.00";if(per>=60)return "3.50";if(per>=50)return "3.00";if(per>=40)return "2.00";if(per>=33)return "1.00";return "0.00";}
 function getGrade(per){if(per>=80)return "A+";if(per>=70)return "A";if(per>=60)return "A-";if(per>=50)return "B";if(per>=40)return "C";if(per>=33)return "D";return "F";}
-try{let d=localStorage.getItem(SAVE_KEY); if(d){let o=JSON.parse(d); if(o.full) full=o.full; if(o.students) students=o.students;} let u=localStorage.getItem(UI_KEY); if(u){let ui=JSON.parse(u); resultVisible=ui.resultVisible||false; listVisible=ui.listVisible||false;}}catch(e){}
-function autoSave(){localStorage.setItem(SAVE_KEY, JSON.stringify({full,students})); localStorage.setItem(UI_KEY, JSON.stringify({resultVisible,listVisible}));}
-function toggleStudentList(){listVisible=!listVisible; document.getElementById('list').classList.toggle('show', listVisible); autoSave();}
-function openModal(){document.getElementById('modal').classList.add('active');}
-function closeModal(){document.getElementById('modal').classList.remove('active');}
+try{let d=localStorage.getItem(SAVE_KEY); if(d){let o=JSON.parse(d); if(o.full) full=o.full; if(o.students) students=o.students;} let u=localStorage.getItem(UI_KEY); if(u){let ui=JSON.parse(u); resultVisible=ui.resultVisible||false; listVisible=ui.listVisible||false; filter=ui.filter||'all';}}catch(e){}
+function autoSave(){localStorage.setItem(SAVE_KEY, JSON.stringify({full,students})); localStorage.setItem(UI_KEY, JSON.stringify({resultVisible,listVisible,filter}));}
+
+function setFilter(f){
+ if(filter===f && listVisible){ // same button again = hide
+   listVisible=false;
+ } else {
+   filter=f;
+   listVisible=true;
+ }
+ document.getElementById('list').classList.toggle('show', listVisible);
+ autoSave(); render();
+}
+function openModal(){document.getElementById('modal').classList.add('active');}function closeModal(){document.getElementById('modal').classList.remove('active');}
 function confirmAdd(){let n=document.getElementById('mName').value.trim(); let r=document.getElementById('mRoll').value.trim(); if(!n){alert('নাম লিখুন'); return;} if(!r){r=200+students.length+1;} students.push({name:n,roll:r,present:true,marks:full.map(()=>0)}); closeModal(); autoSave(); render();}
 function togBox(){resultVisible=!resultVisible; let b=document.getElementById('resultBox'); let t=document.getElementById('togBtn'); if(resultVisible){b.classList.add('show'); t.innerHTML='🔼 ফলাফল বন্ধ করুন';} else{b.classList.remove('show'); t.innerHTML='🏆 ফলাফল দেখুন';} autoSave();}
 function render(){
- let tb=document.getElementById('tbody'); tb.innerHTML='';
- let totalFull=0; for(let f of full) totalFull+=Number(f)||0;
- document.getElementById('t1').innerText=students.length;
- document.getElementById('t2').innerText=students.filter(x=>x.present).length;
- document.getElementById('t3').innerText=students.filter(x=>!x.present).length;
+ let tb=document.getElementById('tbody'); tb.innerHTML=''; let totalFull=0; for(let f of full) totalFull+=Number(f)||0;
+ document.getElementById('t2').innerText=students.filter(x=>x.present).length; document.getElementById('t3').innerText=students.filter(x=>!x.present).length;
+ document.getElementById('listBtn').innerHTML=`📋 শিক্ষার্থীর তালিকা দেখুন (${students.length})`;
+
+ // active border
+ document.getElementById('presentBox').classList.toggle('active', filter==='present' && listVisible);
+ document.getElementById('absentBox').classList.toggle('active', filter==='absent' && listVisible);
+ document.getElementById('listBtn').style.border = (filter==='all' && listVisible)? '2px solid #000' : 'none';
+
  let listDiv=document.getElementById('list'); listDiv.innerHTML='';
- students.forEach((s,i)=>{listDiv.innerHTML+=`<div class="stu"><span>${i+1}. ${s.name} (${s.roll}) - ${s.present?'✅':'❌'} ${s.marks.reduce((a,b)=>a+Number(b),0)} নম্বর</span><span><input type="checkbox" ${s.present?'checked':''} onchange="students[${i}].present=this.checked; autoSave(); render()"> <button onclick="if(confirm('ডিলিট?')){students.splice(${i},1); autoSave(); render();}">❌</button></span></div>`;});
+ let filtered = students.map((s,i)=>({...s, idx:i})).filter(s=>{
+   if(filter==='present') return s.present;
+   if(filter==='absent') return!s.present;
+   return true;
+ });
+ if(filtered.length===0){
+   listDiv.innerHTML=`<div class="stu" style="justify-content:center;background:#fff3cd">${filter==='present'?'কেউ উপস্থিত নেই':'কেউ অনুপস্থিত নেই'}</div>`;
+ } else {
+   filtered.forEach((s)=>{
+     let i=s.idx;
+     listDiv.innerHTML+=`<div class="stu"><span>${i+1}. ${s.name} (${s.roll}) ${s.present?'✅':'❌'}</span><span><input type="checkbox" ${s.present?'checked':''} onchange="students[${i}].present=this.checked; autoSave(); render()"> <button onclick="if(confirm('ডিলিট?')){students.splice(${i},1); autoSave(); render();}">❌</button></span></div>`;
+   });
+ }
  listDiv.classList.toggle('show', listVisible);
  let box=document.getElementById('resultBox'); let btn=document.getElementById('togBtn'); box.classList.toggle('show', resultVisible); btn.innerHTML=resultVisible?'🔼 ফলাফল বন্ধ করুন':'🏆 ফলাফল দেখুন';
- let trFull=`<tr style="background:#f3f4f6;font-weight:bold"><td></td><td>পূর্ণমান</td><td></td>`;
- for(let j=0;j<full.length;j++) trFull+=`<td><input type="number" value="${full[j]}" ${edit?'':'disabled'} oninput="full[${j}]=Number(this.value)||0; autoSave(); render()"></td>`;
- trFull+=`<td class="pra">${totalFull}</td><td class="pra">-</td><td class="per">100%</td><td class="gpa">-</td></tr>`;
- tb.innerHTML+=trFull;
- students.forEach((s,i)=>{
-  let prapto=0; for(let m of s.marks) prapto+=Number(m)||0;
-  let per=totalFull>0?prapto/totalFull*100:0;
-  let tr=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.roll}</td>`;
-  for(let j=0;j<full.length;j++){tr+=`<td><input type="number" value="${s.marks[j]}" ${edit?'':'disabled'} oninput="students[${i}].marks[${j}]=Number(this.value)||0; autoSave(); render()"></td>`;}
-  tr+=`<td class="pra">${totalFull}</td><td class="pra">${prapto}</td><td class="per">${per.toFixed(1)}%</td><td class="gpa">${getGPA(per)}<br><small>${getGrade(per)}</small></td></tr>`;
-  tb.innerHTML+=tr;
- });
+ let trFull=`<tr style="background:#f3f4f6;font-weight:bold"><td></td><td>পূর্ণমান</td><td></td>`; for(let j=0;j<full.length;j++) trFull+=`<td><input type="number" value="${full[j]}" ${edit?'':'disabled'} oninput="full[${j}]=Number(this.value)||0; autoSave(); render()"></td>`; trFull+=`<td class="pra">${totalFull}</td><td class="pra">-</td><td class="per">100%</td><td class="gpa">-</td></tr>`; tb.innerHTML+=trFull;
+ students.forEach((s,i)=>{let prapto=0; for(let m of s.marks) prapto+=Number(m)||0; let per=totalFull>0?prapto/totalFull*100:0; let tr=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.roll}</td>`; for(let j=0;j<full.length;j++){tr+=`<td><input type="number" value="${s.marks[j]}" ${edit?'':'disabled'} oninput="students[${i}].marks[${j}]=Number(this.value)||0; autoSave(); render()"></td>`;} tr+=`<td class="pra">${totalFull}</td><td class="pra">${prapto}</td><td class="per">${per.toFixed(1)}%</td><td class="gpa">${getGPA(per)}<br><small>${getGrade(per)}</small></td></tr>`; tb.innerHTML+=tr;});
 }
-function editNow(){edit=true;render();}
-function saveNow(){edit=false; autoSave(); render();}
-function toPDF(){let totalFull=0; for(let f of full) totalFull+=Number(f)||0; let html=`<html><head><meta charset="UTF-8"><style>table{width:100%;border-collapse:collapse} th,td{border:1px solid #000;padding:8px;text-align:center}</style></head><body><h2>Result Sheet</h2><table><tr><th>ক্রম</th><th>নাম</th><th>রোল</th><th>বাংলা</th><th>গণিত</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr>`; students.forEach((s,i)=>{let prapto=0; for(let m of s.marks) prapto+=Number(m)||0; let per=totalFull>0?prapto/totalFull*100:0; html+=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.roll}</td><td>${s.marks[0]}</td><td>${s.marks[1]}</td><td>${prapto}</td><td>${per.toFixed(1)}%</td><td>${getGPA(per)}</td></tr>`;}); html+=`</table></body></html>`; let win=window.open('','_blank'); win.document.write(html); win.document.close(); win.focus(); setTimeout(()=>{win.print();},500);}
-function toExcel(){let totalFull=0; for(let f of full) totalFull+=Number(f)||0; let data=[['ক্রম','নাম','রোল','বাংলা','গণিত','প্রাপ্ত','%','GPA']]; students.forEach((s,i)=>{let prapto=0; for(let m of s.marks) prapto+=Number(m)||0; let per=totalFull>0?prapto/totalFull*100:0; data.push([i+1,s.name,s.roll,s.marks[0],s.marks[1],prapto,per.toFixed(1)+'%',getGPA(per)]);}); let ws=XLSX.utils.aoa_to_sheet(data); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Result'); XLSX.writeFile(wb,'Result.xlsx');}
+function editNow(){edit=true;render();}function saveNow(){edit=false; autoSave(); render();}
+function toPDF_A4(){let totalFull=0; for(let f of full) totalFull+=Number(f)||0; let dateStr=new Date().toLocaleDateString('bn-BD'); let rows=''; students.forEach((s,i)=>{let prapto=0; for(let m of s.marks) prapto+=Number(m)||0; let per=totalFull>0?prapto/totalFull*100:0; rows+=`<tr><td>${i+1}</td><td style="text-align:left">${s.name}</td><td>${s.roll}</td><td>${s.marks[0]}</td><td>${s.marks[1]}</td><td>${totalFull}</td><td>${prapto}</td><td>${per.toFixed(1)}%</td><td>${getGPA(per)} (${getGrade(per)})</td></tr>`;}); let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Result A4</title><style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap');body{font-family:'Noto Sans Bengali',Kalpurush,Arial;padding:10px;color:#000}h2{text-align:center;margin:0}p{text-align:center;margin:5px 0 10px 0;font-size:12px}table{width:100%;border-collapse:collapse}th,td{border:1.5px solid #000;padding:6px;text-align:center;font-size:12px}th{background:#0a2e1f;color:#fff}@page{size:A4 portrait;margin:12mm}@media print{body{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body><h2>ফলাফল শীট - Takrim</h2><p>তারিখ: ${dateStr} | মোট: ${students.length} জন | A4</p><table><thead><tr><th>ক্রম</th><th>নাম</th><th>রোল</th><th>বাংলা</th><th>গণিত</th><th>পূর্ণমান</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr></thead><tbody>${rows}</tbody></table><script>window.onload=function(){setTimeout(function(){window.print()},900)}<\/script></body></html>`; let win=window.open('','_blank'); win.document.open(); win.document.write(html); win.document.close();}
+function toExcel(){let totalFull=0; for(let f of full) totalFull+=Number(f)||0; let data=[['ক্রম','নাম','রোল','বাংলা','গণিত','পূর্ণমান','প্রাপ্ত','%','GPA']]; students.forEach((s,i)=>{let prapto=0; for(let m of s.marks) prapto+=Number(m)||0; let per=totalFull>0?prapto/totalFull*100:0; data.push([i+1,s.name,s.roll,s.marks[0],s.marks[1],totalFull,prapto,per.toFixed(1)+'%',getGPA(per)]);}); let ws=XLSX.utils.aoa_to_sheet(data); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Result'); XLSX.writeFile(wb,'Result.xlsx');}
 render();
 </script>
 </body>
