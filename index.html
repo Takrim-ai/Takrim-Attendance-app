@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Page - Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
+body{background:#0a2e1e;min-height:100vh;padding:10px 10px 30px}
+.header-card{background:#fff;border-radius:22px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.header-card img{width:68px;height:68px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover}
+.header-card h2{font-size:15px;color:#0a3d8a;line-height:1.2}
+.header-card h3{font-size:12px;color:#d61f1f;margin-top:2px}
+.header-card p{font-size:12px;font-weight:700;margin-top:3px}
+.header-card small{color:#0d5bff;font-size:11px;cursor:pointer;font-weight:700}
+.class-bar{color:#fff;text-align:center;font-weight:700;font-size:18px;line-height:1.4;padding:18px 10px}
+.main-card{background:#fff;border-radius:28px;padding:16px 14px;margin-top:2px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.btn-full{width:100%;border:none;border-radius:16px;padding:16px;font-size:17px;font-weight:700;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px}
+.yellow{background:#ffcc00;color:#000}
+.dashed{border:2.5px dashed #0d5bff;background:#fff;color:#0d5bff;margin-top:12px}
+.label{font-size:20px;font-weight:700;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.input-notice{width:100%;border:2px solid #ddd;border-radius:18px;padding:16px;font-size:16px;outline:none}
+.row3{display:flex;gap:8px;margin-top:12px}
+.row3 button{flex:1;border:none;border-radius:14px;padding:14px 6px;font-size:15px;font-weight:700;cursor:pointer;color:#fff}
+.green{background:#16a34a}.orange{background:#ea580c}.yellow2{background:#ffcc00;color:#000}
+.btn-green-big{background:#22c55e;color:#fff;width:100%;border:none;border-radius:16px;padding:16px;font-size:16px;font-weight:700;margin-top:16px;cursor:pointer}
+.btn-logout{background:#6b7280;color:#fff;width:100%;border:none;border-radius:16px;padding:15px;font-size:17px;font-weight:700;margin-top:12px;cursor:pointer}
+.hidden{display:none!important}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}th,td{border:1px solid #ddd;padding:5px;text-align:center}th{background:#0a2e1e;color:#ffcc00}
+</style>
+</head>
+<body>
 
+<div class="header-card">
+<img id="logo" src="logo.jpg" onerror="this.src='https://via.placeholder.com/68'">
+<div>
+<h2 id="collegeName">মমতাজ উদ্দিন বিজনেস ম্যানেজমেন্ট কলেজ</h2>
+<h3 id="collegeNameEn">Mumtaz Uddin Business Management College</h3>
+<p>EIIN: <span id="eiin">132332</span> &nbsp; Code: <span id="code">50017</span></p>
+<small onclick="document.getElementById('logoInput').click()">লোগো চেঞ্জ</small>
+<input type="file" id="logoInput" accept="image/*" style="display:none">
+</div>
+</div>
+
+<div class="class-bar" id="classInfo">শ্রেণী: কম্পিউটার টেকনোলজি | সেশন 2025-26 | সেমিস্টার ০১</div>
+
+<div class="main-card">
+<button class="btn-full yellow" onclick="location.href='third-page.html'">👥 শিক্ষার্থীর তালিকা দেখুন</button>
+<button class="btn-full dashed" onclick="document.getElementById('monthlyBox').classList.toggle('hidden')">📋 মাসিক হাজিরা দেখুন</button>
+
+<div id="monthlyBox" class="hidden" style="margin-top:12px;overflow:auto;max-height:320px">
+<table><thead><tr><th>রোল</th><th>নাম</th><th>হাজিরা</th></tr></thead><tbody id="monthlyBody"></tbody></table>
+</div>
+
+<div class="label">📢 নোটিশ বোর্ড</div>
+<input class="input-notice" id="noticeInput" placeholder="নোটিশ লিখুন...">
+
+<div class="label">💬 SMS পাঠান</div>
+<div class="row3">
+<button class="green" onclick="sendSMS('present')">✅ উপস্থিত</button>
+<button class="orange" onclick="sendSMS('absent')">❌ অনুপস্থিত</button>
+<button class="yellow2" onclick="sendSMS('notice')">📢 নোটিশ</button>
+</div>
+
+<div class="label">📲 WhatsApp-এ পাঠান</div>
+<div class="row3">
+<button class="green" onclick="sendWA('present')">✅ উপস্থিত</button>
+<button class="orange" onclick="sendWA('absent')">❌ অনুপস্থিত</button>
+<button class="yellow2" onclick="sendWA('notice')">📢 নোটিশ</button>
+</div>
+
+<button class="btn-green-big" onclick="sendGroupReport()">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button>
+<button class="btn-logout" onclick="logout()">⬅️ লগআউট</button>
+</div>
+
+<script>
+let session = JSON.parse(localStorage.getItem('takrim_session')||'null');
+let insts = JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');
+if(session){
+document.getElementById('collegeName').textContent = session.inst.bnName || 'মমতাজ উদ্দিন বিজনেস ম্যানেজমেন্ট কলেজ';
+document.getElementById('collegeNameEn').textContent = session.inst.enName || 'Mumtaz Uddin Business Management College';
+document.getElementById('eiin').textContent = session.inst.eiin || '132332';
+document.getElementById('code').textContent = session.inst.schoolCode || '50017';
+document.getElementById('logo').src = session.inst.logo || 'logo.jpg';
+document.getElementById('classInfo').textContent = `শ্রেণী: ${session.cls} | সেশন 2025-26 | সেমিস্টার ${session.section}`;
+}
+document.getElementById('logoInput').addEventListener('change',function(){
+if(this.files[0]){let r=new FileReader();r.onload=e=>{let newLogo=e.target.result;document.getElementById('logo').src=newLogo;if(session){session.inst.logo=newLogo;localStorage.setItem('takrim_session',JSON.stringify(session));let idx=insts.findIndex(x=>x.eiin===session.inst.eiin);if(idx>-1){insts[idx].logo=newLogo;localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));}}};r.readAsDataURL(this.files[0])}
+});
+
+function sendSMS(type){let msg=document.getElementById('noticeInput').value||type;alert('SMS পাঠানো হবে: '+msg+' (API কানেক্ট করলে যাবে)');}
+function sendWA(type){
+let college=document.getElementById('collegeName').textContent;
+let notice=document.getElementById('noticeInput').value||'';
+let text=`*${college}*%0A${document.getElementById('classInfo').textContent}%0A%0A${type==='present'?'✅ উপস্থিত তালিকা':type==='absent'?'❌ অনুপস্থিত তালিকা':'📢 নোটিশ: '+notice}`;
+window.open('https://wa.me/?text='+text,'_blank');
+}
+function sendGroupReport(){
+let college=document.getElementById('collegeName').textContent;
+let text=`*${college}*%0A📊 আজকের হাজিরা রিপোর্ট%0A${document.getElementById('classInfo').textContent}`;
+window.open('https://wa.me/?text='+text,'_blank');
+}
+function logout(){localStorage.removeItem('takrim_session');location.href='first-page.html';}
+
+// মাসিক হাজিরা লোড
+let students=JSON.parse(localStorage.getItem('takrim_students')||'[]');
+if(session){
+let filtered=students.filter(s=>s.cls===session.cls && s.section===session.section);
+document.getElementById('monthlyBody').innerHTML=filtered.map(s=>`<tr><td>${s.roll}</td><td style="text-align:left">${s.name}</td><td>${s.attendance?'P':''}</td></tr>`).join('')||'<tr><td colspan="3">কোনো ছাত্র নেই</td></tr>';
+}
+</script>
+</body>
+</html>
