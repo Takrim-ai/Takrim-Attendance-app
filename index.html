@@ -2,86 +2,180 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Takrim Box</title>
+<title>Second Page - Dashboard + Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Kalpurush,Arial}
-body{background:#0a2540;padding:10px}
-.main{max-width:500px;margin:auto;background:#fff;border-radius:20px;padding:12px}
-.header{background:#0a3d2e;color:#fff;text-align:center;padding:14px;border-radius:14px;font-weight:bold;margin-bottom:12px;line-height:1.6}
-.card{border-radius:14px;margin-bottom:10px;overflow:hidden;transition:0.3s}
-.card-head{padding:14px;text-align:center;font-weight:bold;font-size:18px;cursor:pointer;color:#fff;display:flex;justify-content:center;align-items:center;gap:8px}
-.card-body{max-height:0;overflow:hidden;transition:max-height 0.4s ease;background:#fff;padding:0 10px}
-.card.active .card-body{max-height:500px;padding:10px}
-
-/* তোমার চাওয়া কালার */
-.blue{background:#2563eb}
-.red{background:#dc2626}
-.green{background:#16a34a}
-.yellow{background:#ffcc00;color:#000 !important}
-.card-head.yellow{color:#000}
-
-.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.btn-row button{flex:1;padding:12px;border:none;border-radius:12px;font-weight:bold;color:#fff;cursor:pointer}
-.b-green{background:#16a34a}.b-red{background:#ef4444}.b-yellow{background:#ffcc00;color:#000}
-textarea{width:100%;padding:12px;border:2px dashed #a78bfa;border-radius:12px;min-height:80px}
+*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
+body{background:#0a2e1e;min-height:100vh;padding:10px 10px 30px}
+.header-card{background:#fff;border-radius:22px;padding:12px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.header-card img{width:68px;height:68px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover}
+.header-card h2{font-size:15px;color:#0a3d8a;line-height:1.2}
+.header-card h3{font-size:12px;color:#d61f1f;margin-top:2px}
+.header-card p{font-size:12px;font-weight:700;margin-top:3px}
+.header-card small{color:#0d5bff;font-size:11px;cursor:pointer;font-weight:700}
+.class-bar{color:#fff;text-align:center;font-weight:700;font-size:18px;line-height:1.4;padding:18px 10px;white-space:nowrap}
+.main-card{background:#fff;border-radius:28px;padding:16px 14px;margin-top:2px;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.btn-full{width:100%;border:none;border-radius:16px;padding:16px;font-size:17px;font-weight:700;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;white-space:nowrap}
+.yellow{background:#ffcc00;color:#000}
+.dashed{border:2.5px dashed #0d5bff;background:#fff;color:#0d5bff;margin-top:12px}
+.label{font-size:20px;font-weight:700;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.input-notice{width:100%;border:2px solid #ddd;border-radius:18px;padding:16px;font-size:16px;outline:none}
+.row3{display:flex;gap:8px;margin-top:12px}
+.row3 button{flex:1;border:none;border-radius:14px;padding:14px 6px;font-size:15px;font-weight:700;cursor:pointer;color:#fff;white-space:nowrap}
+.green{background:#16a34a}.orange{background:#ea580c}.yellow2{background:#ffcc00;color:#000}
+.btn-green-big{background:#22c55e;color:#fff;width:100%;border:none;border-radius:16px;padding:16px;font-size:16px;font-weight:700;margin-top:16px;cursor:pointer;white-space:nowrap}
+.btn-logout{background:#6b7280;color:#fff;width:100%;border:none;border-radius:16px;padding:15px;font-size:17px;font-weight:700;margin-top:12px;cursor:pointer}
+.hidden{display:none!important}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}th,td{border:1px solid #ddd;padding:5px;text-align:center}th{background:#0a2e1e;color:#ffcc00}
+.attWrap,.resultWrap{overflow-x:auto;border:1px solid #ddd;border-radius:12px;margin-top:10px}
+.attWrap table{min-width:900px}.resultWrap table{min-width:850px}
+.attBtn{width:30px;height:26px;border:none;border-radius:7px;font-weight:900;font-size:11px;cursor:pointer}
+.resultWrap td input{width:62px;padding:5px;border:1.5px dashed #16a34a;border-radius:7px;text-align:center;font-weight:700;background:#f3f4f6}
+.pra{background:#dcfce7;font-weight:700}.gpa{background:#fef3c7;font-weight:700}
+.rowBtn{display:flex;gap:8px;margin-top:10px}.rowBtn button{flex:1;padding:11px;border:none;border-radius:12px;font-weight:700;color:#fff;cursor:pointer}
+.subBox{display:flex;align-items:center;gap:4px;background:#f3f4f6;padding:5px 8px;border-radius:20px;border:1px solid #ddd}
 </style>
 </head>
 <body>
-<div class="main">
-<div class="header">শ্রেণী: কম্পিউটার টেকনোলজি | সেশন 2025-26 | সেমিস্টার ০২</div>
 
-<!-- 1. মাসিক হাজিরা - নীল -->
-<div class="card blue" id="card1">
-<div class="card-head" onclick="toggleCard('card1')">📋 মাসিক হাজিরা দেখুন</div>
-<div class="card-body">
-<p style="text-align:center;padding:10px">এখানে মাসিক হাজিরার টেবিল আসবে</p>
-</div>
-</div>
-
-<!-- 2. নোটিশ - লাল -->
-<div class="card red" id="card2">
-<div class="card-head" onclick="toggleCard('card2')">📢 নোটিশ বোর্ড</div>
-<div class="card-body">
-<textarea placeholder="নোটিশ লিখুন..."></textarea>
-<div class="btn-row" style="margin-top:8px">
-<button class="b-yellow">📢 নোটিশ পাঠান</button>
-</div>
+<div class="header-card">
+<img id="logo" src="logo.jpg" onerror="this.src='https://via.placeholder.com/68'">
+<div>
+<h2 id="collegeName">মমতাজ উদ্দিন বিজনেস ম্যানেজমেন্ট কলেজ</h2>
+<h3 id="collegeNameEn">Mumtaz Uddin Business Management College</h3>
+<p>EIIN: <span id="eiin">132332</span> &nbsp; Code: <span id="code">50017</span></p>
+<small onclick="document.getElementById('logoInput').click()">লোগো চেঞ্জ</small>
+<input type="file" id="logoInput" accept="image/*" style="display:none">
 </div>
 </div>
 
-<!-- 3. SMS - সবুজ -->
-<div class="card green" id="card3">
-<div class="card-head" onclick="toggleCard('card3')">💬 SMS পাঠান</div>
-<div class="card-body">
-<div class="btn-row">
-<button class="b-green" onclick="alert('উপস্থিত SMS')">✅ উপস্থিত</button>
-<button class="b-red" onclick="alert('অনুপস্থিত SMS')">❌ অনুপস্থিত</button>
-<button class="b-yellow" onclick="alert('নোটিশ SMS')">📢 নোটিশ</button>
+<div class="class-bar" id="classInfo">শ্রেণী: কম্পিউটার টেকনোলজি | সেশন 2025-26 | সেমিস্টার ০১</div>
+
+<div class="main-card">
+<button class="btn-full yellow" onclick="location.href='third-page.html'">👥 শিক্ষার্থীর তালিকা দেখুন ( <span id="cnt">0</span> )</button>
+<button class="btn-full dashed" onclick="toggleBox('monthlyBox')">📋 মাসিক হাজিরা দেখুন</button>
+
+<div id="monthlyBox" class="hidden">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+<button onclick="changeMonth(-1)" style="padding:6px 12px;border:none;background:#0a2e1e;color:#ffcc00;border-radius:10px">◀</button>
+<b id="monthLabel"></b>
+<button onclick="changeMonth(1)" style="padding:6px 12px;border:none;background:#0a2e1e;color:#ffcc00;border-radius:10px">▶</button>
 </div>
-</div>
+<div class="attWrap"><table><thead id="monthlyHead"></thead><tbody id="monthlyBody"></tbody></table></div>
 </div>
 
-<!-- 4. WhatsApp - নীল -->
-<div class="card blue" id="card4">
-<div class="card-head" onclick="toggleCard('card4')">📱 WhatsApp-এ পাঠান</div>
-<div class="card-body">
-<div class="btn-row">
-<button class="b-green">✅ উপস্থিত</button>
-<button class="b-red">❌ অনুপস্থিত</button>
-<button class="b-yellow">📢 নোটিশ</button>
+<!-- 🏆 ফলাফল বাটন + বক্স -->
+<button class="btn-full dashed" style="background:#f5f0ff;border-color:#7c3aed;color:#7c3aed" onclick="toggleBox('resultBox')">🏆 ফলাফল দেখুন</button>
+
+<div id="resultBox" class="hidden">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;flex-wrap:wrap;gap:8px">
+<b style="color:#7c3aed">📋 ফলাফল সিট</b>
+<div style="display:flex;gap:6px;align-items:center">
+<button onclick="renameSubject()" style="padding:6px 12px;background:#7c3aed;color:#fff;border:none;border-radius:20px;font-size:12px;font-weight:700">নাম বদলান</button>
+<div class="subBox">
+<span style="font-size:12px;font-weight:700">বিষয়:</span>
+<button onclick="changeSubCount(subNames.length-1)" style="width:22px;height:22px;border:none;background:#16a34a;color:#fff;border-radius:50%;font-weight:900">-</button>
+<input id="subCount" type="number" min="1" max="20" value="4" style="width:40px;text-align:center;border:1px solid #a78bfa;border-radius:6px;font-weight:700" onchange="changeSubCount(this.value)">
+<button onclick="changeSubCount(subNames.length+1)" style="width:22px;height:22px;border:none;background:#16a34a;color:#fff;border-radius:50%;font-weight:900">+</button>
 </div>
-<button style="width:100%;padding:12px;background:#22c55e;color:#fff;border:none;border-radius:12px;font-weight:bold;margin-top:8px">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button>
 </div>
+</div>
+<div class="resultWrap"><table><thead id="resultHead"></thead><tbody id="resultBody"></tbody></table></div>
+<div class="rowBtn"><button style="background:#16a34a" onclick="saveResult()">💾 সেভ</button><button style="background:#6b7280" onclick="editResult()">✏️ এডিট</button></div>
+<div class="rowBtn"><button style="background:#111827" onclick="toPDF()">📄 PDF A4</button><button style="background:#047857" onclick="toExcel()">📊 Excel</button></div>
 </div>
 
+<div class="label">📢 নোটিশ বোর্ড</div>
+<input class="input-notice" id="noticeInput" placeholder="নোটিশ লিখুন...">
+
+<div class="label">💬 SMS পাঠান</div>
+<div class="row3">
+<button class="green" onclick="sendSMS('present')">✅ উপস্থিত</button>
+<button class="orange" onclick="sendSMS('absent')">❌ অনুপস্থিত</button>
+<button class="yellow2" onclick="sendSMS('notice')">📢 নোটিশ</button>
 </div>
+
+<div class="label">📲 WhatsApp-এ পাঠান</div>
+<div class="row3">
+<button class="green" onclick="sendWA('present')">✅ উপস্থিত</button>
+<button class="orange" onclick="sendWA('absent')">❌ অনুপস্থিত</button>
+<button class="yellow2" onclick="sendWA('notice')">📢 নোটিশ</button>
+</div>
+
+<button class="btn-green-big" onclick="sendGroupReport()">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button>
+<button class="btn-logout" onclick="logout()">⬅️ লগআউট</button>
+</div>
+
 <script>
-function toggleCard(id){
- document.querySelectorAll('.card').forEach(c=>{
-   if(c.id===id) c.classList.toggle('active');
-   else c.classList.remove('active');
- });
+let session = JSON.parse(localStorage.getItem('takrim_session')||'null');
+let insts = JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');
+if(session){
+document.getElementById('collegeName').textContent = session.inst.bnName || 'মমতাজ উদ্দিন বিজনেস ম্যানেজমেন্ট কলেজ';
+document.getElementById('eiin').textContent = session.inst.eiin || '132332';
+document.getElementById('code').textContent = session.inst.schoolCode || '50017';
+document.getElementById('logo').src = session.inst.logo || 'logo.jpg';
+document.getElementById('classInfo').textContent = `শ্রেণী: ${session.cls} | সেশন 2025-26 | সেমিস্টার ${session.section}`;
 }
+document.getElementById('logoInput').addEventListener('change',function(){
+if(this.files[0]){let r=new FileReader();r.onload=e=>{let newLogo=e.target.result;document.getElementById('logo').src=newLogo;if(session){session.inst.logo=newLogo;localStorage.setItem('takrim_session',JSON.stringify(session));let idx=insts.findIndex(x=>x.eiin===session.inst.eiin);if(idx>-1){insts[idx].logo=newLogo;localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));}}};r.readAsDataURL(this.files[0])}
+});
+
+let students = JSON.parse(localStorage.getItem('takrim_students')||'null') || JSON.parse(localStorage.getItem('students_f')||'null') || JSON.parse(localStorage.getItem('students')||'[]');
+if(students.length===0) students=[{name:"কালাম",roll:"202",phone:"01700000001",present:true,marks:[78,80,0,0]},{name:"কমল",roll:"203",phone:"01700000002",present:false,marks:[75,90,0,0]}];
+let subNames=JSON.parse(localStorage.getItem('subNames')||'null')||["বাংলা","গণিত","ইংরেজি","বিজ্ঞান"];
+let full=JSON.parse(localStorage.getItem('full')||'null')||[100,100,100,100];
+let attData = JSON.parse(localStorage.getItem('att')||'{}');
+let curYear = new Date().getFullYear(), curMonth = new Date().getMonth(), edit=true;
+
+function saveAll(){localStorage.setItem('takrim_students',JSON.stringify(students));localStorage.setItem('students',JSON.stringify(students));localStorage.setItem('subNames',JSON.stringify(subNames));localStorage.setItem('full',JSON.stringify(full));localStorage.setItem('att',JSON.stringify(attData));}
+document.getElementById('cnt').textContent = students.length;
+
+function toggleBox(id){document.getElementById(id).classList.toggle('hidden');if(id==='monthlyBox')renderMonthly();if(id==='resultBox')renderResult();}
+
+function changeMonth(d){curMonth+=d;if(curMonth<0){curMonth=11;curYear--;}if(curMonth>11){curMonth=0;curYear++;}renderMonthly();}
+function attKey(i,d){return `${curYear}-${curMonth}-${d}-${i}`;}
+function toggleAtt(i,d){let k=attKey(i,d);attData[k]=!attData[k];saveAll();renderMonthly();}
+function renderMonthly(){
+let days=new Date(curYear,curMonth+1,0).getDate();
+document.getElementById('monthLabel').innerText=new Date(curYear,curMonth).toLocaleDateString('bn-BD',{month:'long',year:'numeric'});
+let h=`<tr><th>রোল</th><th>নাম</th>`;for(let d=1;d<=days;d++)h+=`<th>${d}</th>`;h+=`<th>মোট</th></tr>`;
+document.getElementById('monthlyHead').innerHTML=h;
+let b='';students.forEach((s,i)=>{
+let c=0, r=`<tr><td>${s.roll}</td><td style="text-align:left">${s.name}</td>`;
+for(let d=1;d<=days;d++){let k=attKey(i,d);if(attData[k])c++;r+=`<td><button class="attBtn" style="background:${attData[k]?'#dcfce7':'#fee2e2'};color:${attData[k]?'#16a34a':'#dc2626'}" onclick="toggleAtt(${i},${d})">${attData[k]?'P':'A'}</button></td>`;}
+r+=`<td><b>${c}/${days}</b></td></tr>`;b+=r;
+});
+document.getElementById('monthlyBody').innerHTML=b||'<tr><td colspan="33">কোনো ছাত্র নেই</td></tr>';
+}
+
+function getGPA(p){if(p>=80)return"5.00";if(p>=70)return"4.00";if(p>=60)return"3.50";if(p>=50)return"3.00";if(p>=40)return"2.00";if(p>=33)return"1.00";return"0.00";}
+function changeSubCount(n){n=parseInt(n);if(isNaN(n)||n<1)n=1;if(n>20)n=20;if(n>subNames.length){for(let i=subNames.length;i<n;i++){subNames.push("বিষয় "+(i+1));full.push(100);students.forEach(s=>{if(!s.marks)s.marks=[];s.marks.push(0);});}}else{subNames=subNames.slice(0,n);full=full.slice(0,n);students.forEach(s=>{s.marks=s.marks.slice(0,n);});}saveAll();renderResult();}
+function renameSubject(){for(let i=0;i<subNames.length;i++){let nm=prompt((i+1)+" নং বিষয়:",subNames[i]);if(nm===null)return;if(nm.trim())subNames[i]=nm.trim();}saveAll();renderResult();}
+function saveResult(){edit=false;saveAll();renderResult();}function editResult(){edit=true;renderResult();}
+function renderResult(){
+let totalFull=full.reduce((a,b)=>a+b,0);
+let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`;for(let i=0;i<subNames.length;i++)h+=`<th>${subNames[i]}<br>${full[i]}</th>`;h+=`<th>পূর্ণ</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr>`;
+document.getElementById('resultHead').innerHTML=h;
+let tb=document.getElementById('resultBody');tb.innerHTML='';
+let trFull=`<tr style="background:#f3f4f6;font-weight:700"><td></td><td>পূর্ণমান</td><td></td>`;for(let j=0;j<full.length;j++)trFull+=`<td><input type="number" value="${full[j]}" ${edit?'':'disabled'} oninput="full[${j}]=Number(this.value)||0;saveAll()"></td>`;trFull+=`<td class="pra">${totalFull}</td><td class="pra">-</td><td>100%</td><td class="gpa">-</td></tr>`;tb.innerHTML+=trFull;
+students.forEach((s,i)=>{
+if(!s.marks)s.marks=full.map(()=>0);if(s.marks.length<full.length){for(let k=s.marks.length;k<full.length;k++)s.marks.push(0);}
+let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);let per=totalFull>0?pr/totalFull*100:0;
+let tr=`<tr><td>${i+1}</td><td style="text-align:left">${s.name}</td><td>${s.roll}</td>`;for(let j=0;j<full.length;j++)tr+=`<td><input type="number" value="${s.marks[j]}" ${edit?'':'disabled'} oninput="students[${i}].marks[${j}]=Number(this.value)||0;saveAll()"></td>`;tr+=`<td class="pra">${totalFull}</td><td class="pra">${pr}</td><td>${per.toFixed(1)}%</td><td class="gpa">${getGPA(per)}</td></tr>`;tb.innerHTML+=tr;
+});
+document.getElementById('subCount').value=subNames.length;
+}
+
+function getF(t){if(t==='present')return students.filter(s=>s.present);if(t==='absent')return students.filter(s=>!s.present);return students;}
+function sendSMS(type){let notice=document.getElementById('noticeInput').value;if(type==='notice'){if(!notice)return alert('নোটিশ লিখুন');location.href=`sms:${students.map(s=>s.phone||'').join(',')}?body=${encodeURIComponent('📢 নোটিশ: '+notice)}`;return;}let l=getF(type);if(!l.length)return alert('কেউ নেই');location.href=`sms:${l.map(s=>s.phone||'').join(',')}?body=${encodeURIComponent((type==='present'?'✅ উপস্থিত: ':'❌ অনুপস্থিত: ')+l.map(s=>s.name).join(', '))}`;}
+function sendWA(type){let notice=document.getElementById('noticeInput').value||'';let list=getF(type);let text='';if(type==='notice') text=`📢 নোটিশ: ${notice}`;else text=`${type==='present'?'✅ উপস্থিত':'❌ অনুপস্থিত'}: ${list.map(s=>s.name).join(', ')}`;window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');}
+function sendGroupReport(){let p=students.filter(s=>s.present).length,a=students.filter(s=>!s.present).length;window.open('https://wa.me/?text='+encodeURIComponent(`📊 হাজিরা রিপোর্ট - উপস্থিত ${p} জন, অনুপস্থিত ${a} জন`),'_blank');}
+function logout(){localStorage.removeItem('takrim_session');location.href='first-page.html';}
+function toPDF(){let tot=full.reduce((a,b)=>a+b,0);let rows='';students.forEach((s,i)=>{let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);rows+=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.roll}</td>`+s.marks.map(m=>`<td>${m}</td>`).join('')+`<td>${tot}</td><td>${pr}</td></tr>`;});let w=window.open('','_blank');w.document.write(`<html><head><style>table{width:100%;border-collapse:collapse}th,td{border:1px solid #000;padding:6px;text-align:center}@page{size:A4 landscape}</style></head><body><h2 style="text-align:center">ফলাফল শীট</h2><table><tr><th>ক্রম</th><th>নাম</th><th>রোল</th>${subNames.map(n=>`<th>${n}</th>`).join('')}<th>পূর্ণ</th><th>প্রাপ্ত</th></tr>${rows}</table><script>window.print()<\/script></body></html>`);w.document.close();}
+function toExcel(){let header=['ক্রম','নাম','রোল',...subNames,'পূর্ণ','প্রাপ্ত','%','GPA'];let data=[header];let tot=full.reduce((a,b)=>a+b,0);students.forEach((s,i)=>{let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);let per=tot>0?pr/tot*100:0;data.push([i+1,s.name,s.roll,...s.marks,tot,pr,per.toFixed(1)+'%',getGPA(per)]);});let ws=XLSX.utils.aoa_to_sheet(data);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Result');XLSX.writeFile(wb,'Result.xlsx');}
+
+renderMonthly();renderResult();
 </script>
 </body>
 </html>
