@@ -2,103 +2,107 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Final - Column Wise</title>
+<title>8 Column Fixed</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
 body{background:#0a2342;padding:10px}
-.main{max-width:420px;margin:0 auto;background:#fff;border-radius:28px;padding:12px}
-.hdr{background:#0a3d2e;color:#fff;text-align:center;padding:16px;border-radius:20px;font-weight:700;font-size:17px;margin-bottom:12px;line-height:1.6}
+.main{max-width:430px;margin:0 auto;background:#fff;border-radius:28px;padding:12px}
+.hdr{background:#0a3d2e;color:#fff;text-align:center;padding:16px;border-radius:20px;font-weight:700;font-size:17px;line-height:1.6;margin-bottom:12px}
 .card{border-radius:20px;margin-bottom:12px;overflow:hidden}
-.head{width:100%;border:none;padding:18px;border-radius:18px;font-weight:700;font-size:20px;color:#fff;display:flex;justify-content:center;gap:10px;cursor:pointer;white-space:nowrap}
-.body{max-height:0;overflow:hidden;transition:max-height.5s;background:#f9fafb}
-.card.active.body{max-height:20000px;padding:12px}
+.head{width:100%;border:none;padding:18px;border-radius:20px;font-size:20px;font-weight:700;color:#fff;display:flex;justify-content:center;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}
+.body{display:none;background:#f9fafb;padding:12px;border-radius:0 0 20px 20px}
+.card.active.body{display:block}
 .blue{background:#2563eb}.yellow{background:#ffcc00;color:#000!important}.green{background:#16a34a}.red{background:#ef4444}.purple{background:#7c3aed}
-.stu{background:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;margin-bottom:8px;font-weight:700;font-size:14px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.stu{background:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:12px;margin-bottom:8px;font-weight:700;font-size:14px;box-shadow:0 1px 2px rgba(0,0,0,.1)}
 .in{width:100%;padding:12px;margin-bottom:10px;border:2px solid #16a34a;border-radius:12px}
-.row3{display:flex;gap:8px}.row3 button{flex:1;padding:13px;border:none;border-radius:14px;font-weight:700;color:#fff;cursor:pointer}
+.btn3{display:flex;gap:8px}.btn3 button{flex:1;padding:13px;border:none;border-radius:14px;font-weight:700;color:#fff;cursor:pointer}
 .wrap{overflow-x:auto;border:1px solid #ddd;border-radius:12px;margin-top:10px;background:#fff}.wrap table{min-width:900px;border-collapse:collapse;font-size:12px}th,td{border:1px solid #ddd;padding:6px;text-align:center}th{background:#0a2e1e;color:#ffcc00}
 .inp{width:60px;padding:5px;border:1.5px dashed #16a34a;border-radius:7px;text-align:center;font-weight:700}
 .att{width:30px;height:26px;border:none;border-radius:7px;font-weight:900;font-size:11px;cursor:pointer}
-.stat{display:flex;gap:10px;margin-bottom:10px}.sBox{flex:1;padding:14px;border-radius:16px;text-align:center;color:#fff;font-weight:700;font-size:18px}
+.stat{display:flex;gap:10px;margin-bottom:10px}.sBox{flex:1;padding:14px;border-radius:16px;text-align:center;color:#fff;font-weight:700;font-size:16px}
 </style>
 </head>
 <body>
 <div class="main">
 <div class="hdr">শ্রেণী: কম্পিউটার টেকনোলজি | সেশন<br>2025-26 | সেমিস্টার ০২</div>
 
-<!-- 1 নং কলাম -->
+<!-- ১ নং কলাম -->
 <div class="card" id="c1"><button class="head blue" onclick="tog('c1')">+ শিক্ষার্থী যোগ করুন</button><div class="body">
-<input id="n1" class="in" placeholder="নাম *"><input id="r1" class="in" placeholder="রোল *"><input id="p1" class="in" placeholder="মোবাইল 017..."><button class="head blue" onclick="addStu()">OK - যোগ করুন</button>
+<input id="aName" class="in" placeholder="নাম *">
+<input id="aRoll" class="in" placeholder="রোল *">
+<input id="aPhone" class="in" placeholder="মোবাইল নম্বর">
+<button class="head blue" style="width:100%" onclick="addStu()">OK - যোগ করুন</button>
 </div></div>
 
-<!-- 2 নং কলাম -->
-<div class="card" id="c2"><button class="head yellow" onclick="tog('c2')">📋 শিক্ষার্থীর তালিকা দেখুন (<span id="cnt">2</span>)</button><div class="body"><div id="list"></div></div></div>
+<!-- ২ নং কলাম -->
+<div class="card" id="c2"><button class="head yellow" onclick="tog('c2')">📋 শিক্ষার্থীর তালিকা দেখুন (<span id="cnt">2</span>)</button><div class="body"><div id="listBox"></div></div></div>
 
-<!-- 3 নং কলাম -->
-<div class="card" id="c3"><button class="head green" onclick="tog('c3')">✅ উপস্থিত <span id="cp">1</span> | ❌ অনুপস্থিত <span id="ca">1</span> দেখুন</button><div class="body">
-<div class="stat"><div class="sBox green">✅ উপস্থিত<br><span id="cp2">1</span> জন</div><div class="sBox red">❌ অনুপস্থিত<br><span id="ca2">1</span> জন</div></div>
-<div style="display:flex;gap:8px;margin-bottom:10px"><button class="head green" style="flex:1;font-size:16px;padding:12px" onclick="filter='present';render()">উপস্থিত লিস্ট</button><button class="head red" style="flex:1;font-size:16px;padding:12px" onclick="filter='absent';render()">অনুপস্থিত লিস্ট</button></div>
-<div id="filterBox"></div>
+<!-- ৩ নং কলাম -->
+<div class="card" id="c3"><button class="head green" onclick="tog('c3')">✅ উপস্থিত <span id="cp">1</span> | ❌ অনুপস্থিত <span id="ca">1</span></button><div class="body">
+<div class="stat"><div class="sBox green">✅ উপস্থিত<br><span id="cp2">1</span> জন<br><small>কালাম</small></div><div class="sBox red">❌ অনুপস্থিত<br><span id="ca2">1</span> জন<br><small>কমল</small></div></div>
+<div class="btn3"><button style="background:#16a34a" onclick="filter='present';renderList()">উপস্থিত লিস্ট</button><button style="background:#ef4444" onclick="filter='absent';renderList()">অনুপস্থিত লিস্ট</button><button style="background:#0a3d2e" onclick="filter='all';renderList()">সব</button></div>
+<div id="filterBox" style="margin-top:10px"></div>
 </div></div>
 
-<!-- 4 নং কলাম -->
+<!-- ৪ নং কলাম -->
 <div class="card" id="c4"><button class="head red" onclick="tog('c4')">📢 নোটিশ বোর্ড</button><div class="body">
-<textarea id="notice" style="width:100%;padding:12px;border:2px dashed #a78bfa;border-radius:14px;min-height:80px" placeholder="নোটিশ লিখুন..."></textarea>
-<button class="head yellow" style="margin-top:10px" onclick="location.href='sms:'+students.map(s=>s.phone).join(',')+'?body='+encodeURIComponent(notice.value)">📢 নোটিশ SMS পাঠান</button>
-<button class="head green" onclick="window.open('https://wa.me/?text='+encodeURIComponent(notice.value),'_blank')">📱 নোটিশ WhatsApp পাঠান</button>
+<textarea id="noticeTxt" style="width:100%;padding:12px;border:2px dashed #a78bfa;border-radius:14px;min-height:80px" placeholder="নোটিশ লিখুন..."></textarea>
+<button class="head yellow" style="width:100%;margin-top:10px" onclick="sendSMS('notice')">📢 নোটিশ SMS পাঠান</button>
+<button class="head blue" style="width:100%;margin-top:8px" onclick="sendWA('notice')">📱 নোটিশ WhatsApp পাঠান</button>
 </div></div>
 
-<!-- 5 নং কলাম -->
-<div class="card" id="c5"><button class="head green" onclick="tog('c5')">💬 SMS পাঠান</button><div class="body"><div class="row3">
-<button style="background:#16a34a" onclick="send('sms','present')">✅ উপস্থিত</button>
-<button style="background:#ef4444" onclick="send('sms','absent')">❌ অনুপস্থিত</button>
-<button style="background:#ffcc00;color:#000" onclick="send('sms','notice')">📢 নোটিশ</button>
+<!-- ৫ নং কলাম -->
+<div class="card" id="c5"><button class="head green" onclick="tog('c5')">💬 SMS পাঠান</button><div class="body"><div class="btn3">
+<button style="background:#16a34a" onclick="sendSMS('present')">✅ উপস্থিত SMS</button>
+<button style="background:#ef4444" onclick="sendSMS('absent')">❌ অনুপস্থিত SMS</button>
+<button style="background:#ffcc00;color:#000" onclick="sendSMS('notice')">📢 নোটিশ SMS</button>
 </div></div></div>
 
-<!-- 6 নং কলাম -->
-<div class="card" id="c6"><button class="head blue" onclick="tog('c6')">📱 WhatsApp-এ পাঠান</button><div class="body"><div class="row3">
-<button style="background:#16a34a" onclick="send('wa','present')">✅ উপস্থিত</button>
-<button style="background:#ef4444" onclick="send('wa','absent')">❌ অনুপস্থিত</button>
-<button style="background:#ffcc00;color:#000" onclick="send('wa','notice')">📢 নোটিশ</button>
-</div><button class="head green" style="margin-top:12px" onclick="send('wa','report')">📊 হাজিরা রিপোর্ট WhatsApp গ্রুপে দিন</button></div></div>
+<!-- ৬ নং কলাম -->
+<div class="card" id="c6"><button class="head blue" onclick="tog('c6')">📱 WhatsApp-এ পাঠান</button><div class="body"><div class="btn3">
+<button style="background:#16a34a" onclick="sendWA('present')">✅ উপস্থিত</button>
+<button style="background:#ef4444" onclick="sendWA('absent')">❌ অনুপস্থিত</button>
+<button style="background:#ffcc00;color:#000" onclick="sendWA('notice')">📢 নোটিশ</button>
+</div><button class="head green" style="width:100%;margin-top:10px" onclick="sendWA('report')">📊 হাজিরা রিপোর্ট গ্রুপে দিন</button></div></div>
 
-<!-- 7 নং কলাম -->
+<!-- ৭ নং কলাম -->
 <div class="card" id="c7"><button class="head blue" onclick="tog('c7')">📋 মাসিক হাজিরা দেখুন</button><div class="body">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><button onclick="chM(-1)" style="padding:6px 12px;background:#0a2e1e;color:#ffcc00;border:none;border-radius:10px">◀</button><b id="ml"></b><button onclick="chM(1)" style="padding:6px 12px;background:#0a2e1e;color:#ffcc00;border:none;border-radius:10px">▶</button></div>
 <div class="wrap"><table><thead id="mh"></thead><tbody id="mb"></tbody></table></div>
 </div></div>
 
-<!-- 8 নং কলাম -->
+<!-- ৮ নং কলাম -->
 <div class="card" id="c8"><button class="head purple" onclick="tog('c8')">🔽 ফলাফল দেখুন</button><div class="body">
-<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px"><b style="color:#7c3aed">📋 ফলাফল সিট</b><div style="display:flex;gap:6px;align-items:center"><button onclick="ren()" style="padding:6px 12px;background:#7c3aed;color:#fff;border:none;border-radius:20px;font-size:12px">নাম বদলান</button><span style="display:flex;gap:4px;align-items:center;background:#fff;padding:4px 8px;border-radius:20px;border:1px solid #ddd"><button onclick="chS(sub.length-1)" style="width:22px;height:22px;border:none;background:#16a34a;color:#fff;border-radius:50%">-</button><input id="sc" type="number" style="width:40px;text-align:center;border:1px solid #a78bfa;border-radius:6px;font-weight:700" onchange="chS(this.value)"><button onclick="chS(sub.length+1)" style="width:22px;height:22px;border:none;background:#16a34a;color:#fff;border-radius:50%">+</button></span></div></div>
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px"><b style="color:#7c3aed">ফলাফল সিট</b><div style="display:flex;gap:6px;align-items:center"><button onclick="renameSub()" style="padding:6px 12px;background:#7c3aed;color:#fff;border:none;border-radius:20px;font-size:12px">নাম বদলান</button><span style="display:flex;gap:4px;align-items:center;background:#fff;padding:4px 8px;border-radius:20px;border:1px solid #ddd"><button onclick="chS(sub.length-1)" style="width:22px;height:22px;border:none;background:#16a34a;color:#fff;border-radius:50%">-</button><input id="sc" type="number" style="width:40px;text-align:center;border-radius:6px;font-weight:700" onchange="chS(this.value)"><button onclick="chS(sub.length+1)" style="width:22px;height:22px;border:none;background:#16a34a;color:#fff;border-radius:50%">+</button></span></div></div>
 <div class="wrap"><table><thead id="rh"></thead><tbody id="rb"></tbody></table></div>
-<div style="display:flex;gap:8px;margin-top:10px"><button style="flex:1;padding:11px;background:#16a34a;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="edit=false;save();renR()">💾 সেভ</button><button style="flex:1;padding:11px;background:#6b7280;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="edit=true;renR()">✏️ এডিট</button></div>
-<div style="display:flex;gap:8px;margin-top:8px"><button style="flex:1;padding:11px;background:#111827;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="toPDF()">📄 PDF A4</button><button style="flex:1;padding:11px;background:#047857;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="toX()">📊 Excel</button></div>
+<div style="display:flex;gap:8px;margin-top:10px"><button style="flex:1;padding:11px;background:#16a34a;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="edit=false;saveAll();renR()">💾 সেভ</button><button style="flex:1;padding:11px;background:#6b7280;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="edit=true;renR()">✏️ এডিট</button></div>
+<div style="display:flex;gap:8px;margin-top:8px"><button style="flex:1;padding:11px;background:#111827;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="toPDF()">📄 PDF A4</button><button style="flex:1;padding:11px;background:#047857;color:#fff;border:none;border-radius:10px;font-weight:700" onclick="toExcel()">📊 Excel</button></div>
 </div></div>
 
 </div>
 <script>
-function tog(id){let el=document.getElementById(id);let a=el.classList.contains('active');document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));if(!a)el.classList.add('active');}
+function tog(id){let e=document.getElementById(id);let w=e.classList.contains('active');document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));if(!w)e.classList.add('active');}
 let sub=JSON.parse(localStorage.getItem('subNames')||'null')||["বাংলা","গণিত","ইংরেজি","বিজ্ঞান"];
 let full=JSON.parse(localStorage.getItem('full')||'null')||[100,100,100,100];
 let students=JSON.parse(localStorage.getItem('students')||'null')||[{name:"কালাম",roll:"202",phone:"01700000001",present:true,marks:[78,80,60,70]},{name:"কমল",roll:"203",phone:"01700000002",present:false,marks:[75,90,65,80]}];
 let att=JSON.parse(localStorage.getItem('att')||'{}');let cy=new Date().getFullYear(),cm=new Date().getMonth(),filter='all',edit=true;
-function save(){localStorage.setItem('students',JSON.stringify(students));localStorage.setItem('subNames',JSON.stringify(sub));localStorage.setItem('full',JSON.stringify(full));localStorage.setItem('att',JSON.stringify(att));}
-function addStu(){let n=n1.value.trim(),r=r1.value.trim(),p=p1.value.trim();if(!n)return alert('নাম দিন');students.push({name:n,roll:r||200+students.length+1,phone:p||'01700000000',present:true,marks:full.map(()=>0)});n1.value='';r1.value='';p1.value='';save();render();}
-function getF(t){if(t==='present')return students.filter(s=>s.present);if(t==='absent')return students.filter(s=>!s.present);return students;}
-function send(type,t){let nt=notice.value;let l=getF(t);if(t==='notice'){if(!nt)return alert('নোটিশ লিখুন');if(type==='sms')location.href='sms:'+students.map(s=>s.phone).join(',')+'?body='+encodeURIComponent(nt);else window.open('https://wa.me/?text='+encodeURIComponent(nt),'_blank');return;}if(t==='report'){let pr=students.filter(s=>s.present).length,ab=students.filter(s=>!s.present).length;window.open('https://wa.me/?text='+encodeURIComponent(`📊 রিপোর্ট: উপস্থিত ${pr} জন, অনুপস্থিত ${ab} জন`),'_blank');return;}if(!l.length)return alert('কেউ নেই');let msg=(t==='present'?'✅ উপস্থিত: ':'❌ অনুপস্থিত: ')+l.map(s=>s.name).join(', ');if(type==='sms')location.href='sms:'+l.map(s=>s.phone).join(',')+'?body='+encodeURIComponent(msg);else window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function saveAll(){localStorage.setItem('students',JSON.stringify(students));localStorage.setItem('subNames',JSON.stringify(sub));localStorage.setItem('full',JSON.stringify(full));localStorage.setItem('att',JSON.stringify(att));}
+function addStu(){let n=aName.value.trim(),r=aRoll.value.trim(),p=aPhone.value.trim();if(!n)return alert('নাম দিন');students.push({name:n,roll:r||202+students.length,phone:p||'01700000000',present:true,marks:full.map(()=>0)});aName.value='';aRoll.value='';aPhone.value='';saveAll();render();}
+function sendSMS(t){let txt=noticeTxt.value;let list=t==='present'?students.filter(s=>s.present):t==='absent'?students.filter(s=>!s.present):students;if(t==='notice'){if(!txt)return alert('নোটিশ লিখুন');location.href='sms:'+students.map(s=>s.phone).join(',')+'?body='+encodeURIComponent(txt);return;}if(!list.length)return alert('কেউ নেই');location.href='sms:'+list.map(s=>s.phone).join(',')+'?body='+encodeURIComponent((t==='present'?'✅ উপস্থিত: ':'❌ অনুপস্থিত: ')+list.map(s=>s.name).join(', '));}
+function sendWA(t){let txt=noticeTxt.value;let list=t==='present'?students.filter(s=>s.present):t==='absent'?students.filter(s=>!s.present):students;if(t==='notice'){if(!txt)return alert('নোটিশ লিখুন');window.open('https://wa.me/?text='+encodeURIComponent(txt),'_blank');return;}if(t==='report'){let p=students.filter(s=>s.present).length,a=students.filter(s=>!s.present).length;window.open('https://wa.me/?text='+encodeURIComponent(`📊 হাজিরা রিপোর্ট: উপস্থিত ${p} জন, অনুপস্থিত ${a} জন`),'_blank');return;}if(!list.length)return alert('কেউ নেই');window.open('https://wa.me/?text='+encodeURIComponent((t==='present'?'✅ উপস্থিত: ':'❌ অনুপস্থিত: ')+list.map(s=>s.name).join(', ')),'_blank');}
 function chM(d){cm+=d;if(cm<0){cm=11;cy--;}if(cm>11){cm=0;cy++;}renM();}
-function aK(i,d){return `${cy}-${cm}-${d}-${i}`;}function togA(i,d){let k=aK(i,d);att[k]=!att[k];if(cy==new Date().getFullYear()&&cm==new Date().getMonth()&&d==new Date().getDate())students[i].present=att[k];save();renM();render();}
+function aK(i,d){return `${cy}-${cm}-${d}-${i}`;}function togA(i,d){let k=aK(i,d);att[k]=!att[k];if(cy==new Date().getFullYear()&&cm==new Date().getMonth()&&d==new Date().getDate())students[i].present=att[k];saveAll();renM();render();}
 function renM(){let days=new Date(cy,cm+1,0).getDate();ml.innerText=new Date(cy,cm).toLocaleDateString('bn-BD',{month:'long',year:'numeric'});let h=`<tr><th>রোল</th><th>নাম</th>`;for(let d=1;d<=days;d++)h+=`<th>${d}</th>`;h+=`<th>মোট</th></tr>`;mh.innerHTML=h;let b='';students.forEach((s,i)=>{let c=0,r=`<tr><td>${s.roll}</td><td style="text-align:left">${s.name}</td>`;for(let d=1;d<=days;d++){let k=aK(i,d);if(att[k])c++;r+=`<td><button class="att" style="background:${att[k]?'#dcfce7':'#fee2e2'};color:${att[k]?'#16a34a':'#dc2626'}" onclick="togA(${i},${d})">${att[k]?'P':'A'}</button></td>`;}r+=`<td><b>${c}/${days}</b></td></tr>`;b+=r;});mb.innerHTML=b;}
 function gpa(p){if(p>=80)return"5.00";if(p>=70)return"4.00";if(p>=60)return"3.50";if(p>=50)return"3.00";if(p>=40)return"2.00";if(p>=33)return"1.00";return"0.00";}
-function chS(n){n=parseInt(n);if(n<1)n=1;if(n>20)n=20;if(n>sub.length){for(let i=sub.length;i<n;i++){sub.push("বিষয় "+(i+1));full.push(100);students.forEach(s=>s.marks.push(0));}}else{sub=sub.slice(0,n);full=full.slice(0,n);students.forEach(s=>s.marks=s.marks.slice(0,n));}save();renR();}
-function ren(){for(let i=0;i<sub.length;i++){let nm=prompt((i+1)+" নং বিষয়:",sub[i]);if(nm===null)return;if(nm.trim())sub[i]=nm.trim();}save();renR();}
-function render(){cnt.innerText=students.length;cp.innerText=students.filter(s=>s.present).length;ca.innerText=students.filter(s=>!s.present).length;cp2.innerText=cp.innerText;ca2.innerText=ca.innerText;let div=list;div.innerHTML='';students.forEach((s,i)=>{div.innerHTML+=`<div class="stu"><span>${i+1}. ${s.name} (${s.roll}) ${s.present?'✅':'❌'}</span><span><input type="checkbox" ${s.present?'checked':''} onchange="students[${i}].present=this.checked;save();render();renM()"> <button onclick="if(confirm('ডিলিট?')){students.splice(${i},1);save();render();}" style="border:none;background:none">❌</button></span></div>`;});let fDiv=filterBox;fDiv.innerHTML='';let filtered=students.map((s,i)=>({...s,idx:i})).filter(s=>{if(filter==='present')return s.present;if(filter==='absent')return!s.present;return true;});filtered.forEach(s=>{fDiv.innerHTML+=`<div class="stu"><span>${s.idx+1}. ${s.name} (${s.roll})</span><span>${s.present?'✅':'❌'}</span></div>`;});renM();renR();}
-function renR(){let tot=full.reduce((a,b)=>a+b,0);let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`;for(let i=0;i<sub.length;i++)h+=`<th>${sub[i]}<br>${full[i]}</th>`;h+=`<th>পূর্ণ</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr>`;rh.innerHTML=h;let tb=rb;tb.innerHTML='';let tr=`<tr style="background:#f3f4f6;font-weight:700"><td></td><td>পূর্ণমান</td><td></td>`;for(let j=0;j<full.length;j++)tr+=`<td><input class="inp" type="number" value="${full[j]}" ${edit?'':'disabled'} oninput="full[${j}]=Number(this.value)||0;save()"></td>`;tr+=`<td style="background:#dcfce7">${tot}</td><td>-</td><td>100%</td><td>-</td></tr>`;tb.innerHTML+=tr;students.forEach((s,i)=>{if(s.marks.length<full.length){for(let k=s.marks.length;k<full.length;k++)s.marks.push(0);}let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);let per=tot?pr/tot*100:0;let r=`<tr><td>${i+1}</td><td style="text-align:left">${s.name}</td><td>${s.roll}</td>`;for(let j=0;j<full.length;j++)r+=`<td><input class="inp" type="number" value="${s.marks[j]}" ${edit?'':'disabled'} oninput="students[${i}].marks[${j}]=Number(this.value)||0;save()"></td>`;r+=`<td style="background:#dcfce7">${tot}</td><td style="background:#dcfce7">${pr}</td><td>${per.toFixed(1)}%</td><td style="background:#fef3c7">${gpa(per)}</td></tr>`;tb.innerHTML+=r;});sc.value=sub.length;}
+function chS(n){n=parseInt(n);if(n<1)n=1;if(n>20)n=20;if(n>sub.length){for(let i=sub.length;i<n;i++){sub.push("বিষয় "+(i+1));full.push(100);students.forEach(s=>s.marks.push(0));}}else{sub=sub.slice(0,n);full=full.slice(0,n);students.forEach(s=>s.marks=s.marks.slice(0,n));}saveAll();renR();}
+function renameSub(){for(let i=0;i<sub.length;i++){let nm=prompt((i+1)+" নং বিষয়:",sub[i]);if(nm===null)return;if(nm.trim())sub[i]=nm.trim();}saveAll();renR();}
+function render(){cnt.innerText=students.length;cp.innerText=students.filter(s=>s.present).length;ca.innerText=students.filter(s=>!s.present).length;cp2.innerText=cp.innerText;ca2.innerText=ca.innerText;renderList();renM();renR();}
+function renderList(){listBox.innerHTML='';students.forEach((s,i)=>{listBox.innerHTML+=`<div class="stu"><span>${i+1}. ${s.name} (${s.roll}) ${s.present?'✅':'❌'}</span><span><input type="checkbox" ${s.present?'checked':''} onchange="students[${i}].present=this.checked;saveAll();render()"> <button onclick="if(confirm('ডিলিট?')){students.splice(${i},1);saveAll();render();}" style="border:none;background:none">❌</button></span></div>`;});filterBox.innerHTML='';let f=students.map((s,i)=>({...s,idx:i})).filter(s=>{if(filter==='present')return s.present;if(filter==='absent')return!s.present;return true;});f.forEach(s=>{filterBox.innerHTML+=`<div class="stu"><span>${s.idx+1}. ${s.name} (${s.roll})</span><span>${s.present?'✅ উপস্থিত':'❌ অনুপস্থিত'}</span></div>`;});}
+function renR(){let tot=full.reduce((a,b)=>a+b,0);let h=`<tr><th>ক্রম</th><th>নাম</th><th>রোল</th>`;for(let i=0;i<sub.length;i++)h+=`<th>${sub[i]}<br>${full[i]}</th>`;h+=`<th>পূর্ণ</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th></tr>`;rh.innerHTML=h;rb.innerHTML='';let tr=`<tr style="background:#f3f4f6;font-weight:700"><td></td><td>পূর্ণমান</td><td></td>`;for(let j=0;j<full.length;j++)tr+=`<td><input class="inp" type="number" value="${full[j]}" ${edit?'':'disabled'} oninput="full[${j}]=Number(this.value)||0;saveAll()"></td>`;tr+=`<td style="background:#dcfce7">${tot}</td><td>-</td><td>100%</td><td>-</td></tr>`;rb.innerHTML+=tr;students.forEach((s,i)=>{if(s.marks.length<full.length)for(let k=s.marks.length;k<full.length;k++)s.marks.push(0);let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);let per=tot?pr/tot*100:0;let r=`<tr><td>${i+1}</td><td style="text-align:left">${s.name}</td><td>${s.roll}</td>`;for(let j=0;j<full.length;j++)r+=`<td><input class="inp" type="number" value="${s.marks[j]}" ${edit?'':'disabled'} oninput="students[${i}].marks[${j}]=Number(this.value)||0;saveAll()"></td>`;r+=`<td style="background:#dcfce7">${tot}</td><td style="background:#dcfce7">${pr}</td><td>${per.toFixed(1)}%</td><td style="background:#fef3c7">${gpa(per)}</td></tr>`;rb.innerHTML+=r;});sc.value=sub.length;}
 function toPDF(){let tot=full.reduce((a,b)=>a+b,0);let rows='';students.forEach((s,i)=>{let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);rows+=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.roll}</td>`+s.marks.map(m=>`<td>${m}</td>`).join('')+`<td>${tot}</td><td>${pr}</td></tr>`;});let w=window.open('','_blank');w.document.write(`<table border=1 style="width:100%;border-collapse:collapse;text-align:center"><tr><th>ক্রম</th><th>নাম</th><th>রোল</th>${sub.map(n=>`<th>${n}</th>`).join('')}<th>পূর্ণ</th><th>প্রাপ্ত</th></tr>${rows}</table>`);w.print();}
-function toX(){let header=['ক্রম','নাম','রোল',...sub,'পূর্ণ','প্রাপ্ত','%','GPA'];let data=[header];let tot=full.reduce((a,b)=>a+b,0);students.forEach((s,i)=>{let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);let per=tot?pr/tot*100:0;data.push([i+1,s.name,s.roll,...s.marks,tot,pr,per.toFixed(1)+'%',gpa(per)]);});let ws=XLSX.utils.aoa_to_sheet(data);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Result');XLSX.writeFile(wb,'Result.xlsx');}
+function toExcel(){let header=['ক্রম','নাম','রোল',...sub,'পূর্ণ','প্রাপ্ত','%','GPA'];let data=[header];let tot=full.reduce((a,b)=>a+b,0);students.forEach((s,i)=>{let pr=s.marks.reduce((a,b)=>a+(Number(b)||0),0);let per=tot?pr/tot*100:0;data.push([i+1,s.name,s.roll,...s.marks,tot,pr,per.toFixed(1)+'%',gpa(per)]);});let ws=XLSX.utils.aoa_to_sheet(data);let wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Result');XLSX.writeFile(wb,'Result.xlsx');}
 render();
 </script>
 </body>
