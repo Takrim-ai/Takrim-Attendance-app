@@ -1,1 +1,93 @@
-https://takrim-ai.github.io/Takrim-Attendance-app/?v=fixyellow
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Takrim Final - Save Fixed - No Yellow</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0a2e1f;padding:8px}
+.main{max-width:500px;margin:auto;background:#fff;border-radius:20px;padding:12px}
+.top{background:#0a3d24;color:#fff;display:flex;justify-content:space-between;padding:14px;border-radius:12px;font-weight:bold;margin-bottom:12px}
+.add{width:100%;padding:14px;border:3px dashed #0a8a4b;background:#fff;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer;margin-bottom:12px}
+.stats{display:flex;gap:8px;margin-bottom:12px}
+.s{flex:1;padding:12px;border-radius:12px;text-align:center;font-weight:bold}
+.s1{background:#ffcc00}.s2{background:#16a34a;color:#fff}.s3{background:#ef4444;color:#fff}
+.toggle{width:100%;padding:13px;background:#7c3aed;color:#fff;border:none;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-bottom:12px}
+.box{border:2px solid #a78bfa;border-radius:14px;padding:10px}
+.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.title{color:#7c3aed;font-weight:bold;font-size:18px}
+.small{background:#7c3aed;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-size:13px;cursor:pointer}
+.wrap{overflow-x:auto;border:1px solid #ddd;border-radius:8px}
+table{width:100%;border-collapse:collapse;min-width:600px;font-size:14px}
+th{background:#0a3d24;color:#fff;padding:8px;text-align:center}
+td{padding:6px;border:1px solid #ddd;text-align:center}
+td input{width:65px;padding:7px;border:2px dashed #0a8a4b;border-radius:8px;text-align:center;font-weight:bold}
+td input:disabled{background:#e5e7eb;border:1px solid #ccc}
+.row{display:flex;gap:8px;margin-top:10px}
+.row button{flex:1;padding:11px;border:none;border-radius:10px;font-weight:bold;cursor:pointer}
+.save{background:#16a34a;color:#fff}.edit{background:#6b7280;color:#fff}.pdf{background:#111827;color:#fff}.excel{background:#047857;color:#fff}
+.stu{display:flex;justify-content:space-between;background:#f3f4f6;padding:8px;border-radius:8px;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="main">
+<div class="top"><span>শ্রেণী: <select id="cls" style="background:transparent;color:#fff;border:none;font-weight:bold"><option>৬ষ্ঠ</option><option selected>৭ম</option><option>৮ম</option><option>৯ম</option><option>১০ম</option></select></span><span>শাখা: <select id="br" style="background:transparent;color:#fff;border:none;font-weight:bold"><option selected>ক</option><option>খ</option><option>গ</option></select></span><span>বিষয়: <span id="subCount">3</span></span></div>
+<button class="add" onclick="addStu()">+ শিক্ষার্থী যোগ করুন</button>
+<div id="list"></div>
+<div class="stats"><div class="s s1">📋 সবাই<br><span id="t1">0</span></div><div class="s s2">✅ উপস্থিত<br><span id="t2">0</span></div><div class="s s3">❌ অনুপস্থিত<br><span id="t3">0</span></div></div>
+<button class="toggle" id="tog" onclick="togBox()">🏆 ফলাফল দেখুন</button>
+<div class="box" id="box" style="display:block">
+<div class="head"><span class="title">📋 ফলাফল সিট</span><button class="small" onclick="renameSub()">নাম বদলান</button></div>
+<div class="wrap">
+<table>
+<thead><tr><th>ক্রম</th><th>নাম</th><th>রোল</th><th id="h1">বাংলা<br>100</th><th id="h2">বিষয় 2<br>100</th><th id="h3">বিষয় 3<br>100</th><th>মোট</th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<div class="row"><button class="save" onclick="saveNow()">💾 সেভ</button><button class="edit" onclick="editNow()">✏️ এডিট</button></div>
+<div class="row"><button class="pdf" onclick="toPDF()">📄 PDF</button><button class="excel" onclick="toExcel()">📊 Excel</button></div>
+</div>
+</div>
+<script>
+let subs=["বাংলা","বিষয় 2","বিষয় 3"];
+let full=[100,100,100];
+let students=[];
+let edit=true;
+try{
+ let d=localStorage.getItem('takrim_final_fixed');
+ if(d){let o=JSON.parse(d); if(o.students&&o.students.length){students=o.students; subs=o.subs||subs; full=o.full||full;}}
+}catch(e){}
+if(students.length==0){students=[{name:"কালাম",roll:"202",present:true,marks:[70,0,0]},{name:"কমল",roll:"203",present:true,marks:[82,0,0]}];}
+function render(){
+ let l=document.getElementById('list'); l.innerHTML='';
+ students.forEach((s,i)=>{l.innerHTML+=`<div class="stu"><span>${i+1}. ${s.name} (${s.roll})</span><span><input type="checkbox" ${s.present?'checked':''} onchange="toggleP(${i})"> <button onclick="del(${i})">❌</button></span></div>`;});
+ document.getElementById('t1').innerText=students.length;
+ document.getElementById('t2').innerText=students.filter(x=>x.present).length;
+ document.getElementById('t3').innerText=students.filter(x=>!x.present).length;
+ document.getElementById('subCount').innerText=subs.length;
+ for(let i=0;i<3;i++){let el=document.getElementById('h'+(i+1)); if(el) el.innerHTML=subs[i]+'<br>'+full[i];}
+ let tb=document.getElementById('tbody'); tb.innerHTML='';
+ tb.innerHTML+=`<tr style="background:#f3f4f6;font-weight:bold"><td colspan="3">পূর্ণমান</td><td><input type="number" value="${full[0]}" ${edit?'':'disabled'} onchange="cf(0,this.value)"></td><td><input type="number" value="${full[1]}" ${edit?'':'disabled'} onchange="cf(1,this.value)"></td><td><input type="number" value="${full[2]}" ${edit?'':'disabled'} onchange="cf(2,this.value)"></td><td>${full.reduce((a,b)=>a+b,0)}</td></tr>`;
+ students.forEach((s,i)=>{
+  let tot=s.marks.reduce((a,b)=>a+(parseInt(b)||0),0);
+  tb.innerHTML+=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.roll}</td><td><input type="number" value="${s.marks[0]}" ${edit?'':'disabled'} onchange="cm(${i},0,this.value)"></td><td><input type="number" value="${s.marks[1]}" ${edit?'':'disabled'} onchange="cm(${i},1,this.value)"></td><td><input type="number" value="${s.marks[2]}" ${edit?'':'disabled'} onchange="cm(${i},2,this.value)"></td><td>${tot}</td></tr>`;
+ });
+}
+function addStu(){let n=prompt('নাম:'); if(!n) return; let r=prompt('রোল:')||(200+students.length+1); students.push({name:n,roll:r,present:true,marks:[0,0,0]}); render(); saveNow();}
+function del(i){if(confirm('ডিলেট?')){students.splice(i,1); render(); saveNow();}}
+function toggleP(i){students[i].present=!students[i].present; render();}
+function cf(i,v){full[i]=parseInt(v)||0; render();}
+function cm(ri,ci,v){students[ri].marks[ci]=parseInt(v)||0; render();}
+function editNow(){edit=true; render(); alert('এডিট চালু');}
+function saveNow(){edit=false; localStorage.setItem('takrim_final_fixed',JSON.stringify({subs,full,students})); render(); alert('✅ সেভ হয়েছে! রিলোড দিলেও থাকবে');}
+function togBox(){let b=document.getElementById('box'); let t=document.getElementById('tog'); if(b.style.display=='none'){b.style.display='block'; t.innerText='🔼 ফলাফল বন্ধ করুন';} else {b.style.display='none'; t.innerText='🏆 ফলাফল দেখুন';}}
+function renameSub(){let a=prompt('বিষয়ের নাম কমা দিয়ে:',subs.join(',')); if(a){subs=a.split(',').map(x=>x.trim()); render(); saveNow();}}
+function toPDF(){const {jsPDF}=window.jspdf; let doc=new jsPDF(); doc.text('Takrim Result Sheet',10,10); let y=20; students.forEach((s,i)=>{let tot=s.marks.reduce((a,b)=>a+b,0); doc.text((i+1)+'. '+s.name+' ('+s.roll+') - '+tot,10,y); y+=8;}); doc.save('Result.pdf');}
+function toExcel(){let data=[['ক্রম','নাম','রোল',...subs,'মোট']]; data.push(['','','পূর্ণমান',...full,full.reduce((a,b)=>a+b,0)]); students.forEach((s,i)=>{data.push([i+1,s.name,s.roll,...s.marks,s.marks.reduce((a,b)=>a+b,0)]);}); let ws=XLSX.utils.aoa_to_sheet(data); let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Sheet1'); XLSX.writeFile(wb,'Result.xlsx');}
+render();
+</script>
+</body>
+</html>
