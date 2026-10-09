@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Second Page - Dashboard</title>
+<title>Dashboard - All in One</title>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif;margin:0}
@@ -26,7 +26,9 @@ body{background:#0a2e1e;min-height:100vh;padding:10px 10px 30px}
 .btn-green-big{background:#22c55e;color:#fff;width:100%;border:none;border-radius:16px;padding:16px;font-size:16px;font-weight:700;margin-top:16px;cursor:pointer}
 .btn-logout{background:#6b7280;color:#fff;width:100%;border:none;border-radius:16px;padding:15px;font-size:17px;font-weight:700;margin-top:12px;cursor:pointer}
 .hidden{display:none!important}
-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}th,td{border:1px solid #ddd;padding:5px;text-align:center}th{background:#0a2e1e;color:#ffcc00}
+.box-wrap{margin-top:12px;border:2px solid #e5e7eb;border-radius:16px;padding:10px;max-height:420px;overflow:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #ddd;padding:7px;text-align:center}th{background:#0a2e1e;color:#ffcc00;position:sticky;top:0}
+.search{width:100%;border:2px solid #ddd;border-radius:12px;padding:12px;margin-bottom:10px;outline:none}
 </style>
 </head>
 <body>
@@ -45,11 +47,20 @@ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}th,td{b
 <div class="class-bar" id="classInfo">শ্রেণী: কম্পিউটার টেকনোলজি | সেশন 2025-26 | সেমিস্টার ০১</div>
 
 <div class="main-card">
-<button class="btn-full yellow" onclick="location.href='third-page.html'">👥 শিক্ষার্থীর তালিকা দেখুন</button>
-<button class="btn-full dashed" onclick="document.getElementById('monthlyBox').classList.toggle('hidden')">📋 মাসিক হাজিরা দেখুন</button>
+<!-- ২টা বাটন এক পাতাতেই -->
+<button class="btn-full yellow" onclick="toggleStudentList()">👥 শিক্ষার্থীর তালিকা দেখুন (৩য় পাতা)</button>
+<button class="btn-full dashed" onclick="toggleMonthly()">📋 মাসিক হাজিরা দেখুন (২য় পাতা)</button>
 
-<div id="monthlyBox" class="hidden" style="margin-top:12px;overflow:auto;max-height:320px">
-<table><thead><tr><th>রোল</th><th>নাম</th><th>হাজিরা</th></tr></thead><tbody id="monthlyBody"></tbody></table>
+<!-- ৩য় পাতার অংশ - শিক্ষার্থীর তালিকা -->
+<div id="studentListBox" class="box-wrap hidden">
+<input id="searchInput" class="search" placeholder="🔍 রোল বা নাম দিয়ে খুঁজুন..." oninput="loadStudents()">
+<table><thead><tr><th>রোল</th><th>নাম</th><th>হাজিরা</th></tr></thead><tbody id="studentBody"></tbody></table>
+<div style="text-align:center;margin-top:8px;font-size:12px;color:#666" id="totalCount"></div>
+</div>
+
+<!-- ২য় পাতার অংশ - মাসিক হাজিরা -->
+<div id="monthlyBox" class="box-wrap hidden">
+<table><thead><tr><th>রোল</th><th>নাম</th><th>%</th><th>স্ট্যাটাস</th></tr></thead><tbody id="monthlyBody"></tbody></table>
 </div>
 
 <div class="label">📢 নোটিশ বোর্ড</div>
@@ -74,40 +85,81 @@ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}th,td{b
 </div>
 
 <script>
-let session = JSON.parse(localStorage.getItem('takrim_session')||'null');
-let insts = JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');
-if(session){
-document.getElementById('collegeName').textContent = session.inst.bnName || 'মমতাজ উদ্দিন বিজনেস ম্যানেজমেন্ট কলেজ';
-document.getElementById('collegeNameEn').textContent = session.inst.enName || 'Mumtaz Uddin Business Management College';
-document.getElementById('eiin').textContent = session.inst.eiin || '132332';
-document.getElementById('code').textContent = session.inst.schoolCode || '50017';
-document.getElementById('logo').src = session.inst.logo || 'logo.jpg';
-document.getElementById('classInfo').textContent = `শ্রেণী: ${session.cls} | সেশন 2025-26 | সেমিস্টার ${session.section}`;
+let session=null; try{session=JSON.parse(localStorage.getItem('takrim_session')||'null')}catch(e){}
+let insts=JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');
+if(session && session.inst){
+ document.getElementById('collegeName').textContent=session.inst.bnName||'মমতাজ উদ্দিন বিজনেস ম্যানেজমেন্ট কলেজ';
+ document.getElementById('collegeNameEn').textContent=session.inst.enName||'Mumtaz Uddin Business Management College';
+ document.getElementById('eiin').textContent=session.inst.eiin||'132332';
+ document.getElementById('code').textContent=session.inst.schoolCode||'50017';
+ if(session.inst.logo) document.getElementById('logo').src=session.inst.logo;
+ document.getElementById('classInfo').textContent=`শ্রেণী: ${session.cls} | সেশন 2025-26 | সেমিস্টার ${session.section}`;
 }
-document.getElementById('logoInput').addEventListener('change',function(){
-if(this.files[0]){let r=new FileReader();r.onload=e=>{let newLogo=e.target.result;document.getElementById('logo').src=newLogo;if(session){session.inst.logo=newLogo;localStorage.setItem('takrim_session',JSON.stringify(session));let idx=insts.findIndex(x=>x.eiin===session.inst.eiin);if(idx>-1){insts[idx].logo=newLogo;localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));}}};r.readAsDataURL(this.files[0])}
-});
+document.getElementById('logoInput').addEventListener('change',function(){if(this.files[0]){let r=new FileReader();r.onload=e=>{document.getElementById('logo').src=e.target.result};r.readAsDataURL(this.files[0])}});
 
-function sendSMS(type){let msg=document.getElementById('noticeInput').value||type;alert('SMS পাঠানো হবে: '+msg+' (API কানেক্ট করলে যাবে)');}
+function toggleStudentList(){document.getElementById('studentListBox').classList.toggle('hidden');loadStudents();}
+function toggleMonthly(){document.getElementById('monthlyBox').classList.toggle('hidden');loadMonthly();}
+
+function getAllStudents(){
+ let s=JSON.parse(localStorage.getItem('takrim_students')||'[]');
+ if(s.length===0){
+   let old=JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');
+   // fallback
+ }
+ return s;
+}
+
+function loadStudents(){
+ let students=getAllStudents();
+ let q=document.getElementById('searchInput').value.toLowerCase();
+ let filtered=students;
+ if(session && students.some(x=>x.cls)) filtered=students.filter(x=>x.cls===session.cls && x.section===session.section);
+ if(filtered.length===0) filtered=students;
+ if(q) filtered=filtered.filter(x=>(x.roll+'').toLowerCase().includes(q) || (x.name||'').toLowerCase().includes(q));
+
+ document.getElementById('totalCount').textContent=`মোট শিক্ষার্থী: ${filtered.length} জন`;
+ let tbody=document.getElementById('studentBody');
+ if(filtered.length===0) tbody.innerHTML='<tr><td colspan="3">কোনো ছাত্র নেই</td></tr>';
+ else tbody.innerHTML=filtered.map(s=>`<tr><td>${s.roll||''}</td><td style="text-align:left">${s.name||''}</td><td><input type="checkbox" ${s.attendance||s.present?'checked':''} onchange="toggleAtt('${s.roll}')"></td></tr>`).join('');
+}
+
+function loadMonthly(){
+ let students=getAllStudents();
+ let filtered=students;
+ if(session && students.some(x=>x.cls)) filtered=students.filter(x=>x.cls===session.cls && x.section===session.section);
+ if(filtered.length===0) filtered=students;
+
+ // ডেমো পার্সেন্ট ক্যালকুলেশন - ৩০ দিনের মধ্যে
+ let tbody=document.getElementById('monthlyBody');
+ if(filtered.length===0) tbody.innerHTML='<tr><td colspan="4">কোনো ছাত্র নেই</td></tr>';
+ else tbody.innerHTML=filtered.map(s=>{
+   let present = s.attendance||s.present? 24 : 18; // ডেমো: তোমার রিয়েল ডাটা থাকলে এখানে s.totalPresent ব্যবহার করবে
+   let percent = Math.round((present/30)*100);
+   return `<tr><td>${s.roll||''}</td><td style="text-align:left">${s.name||''}</td><td>${percent}%</td><td>${percent>=75?'✅':'❌'}</td></tr>`;
+ }).join('');
+}
+
+function toggleAtt(roll){
+ let students=getAllStudents();
+ let idx=students.findIndex(x=>x.roll==roll);
+ if(idx>-1){students[idx].attendance=!students[idx].attendance;students[idx].present=students[idx].attendance;localStorage.setItem('takrim_students',JSON.stringify(students));}
+}
+
+function sendSMS(type){let msg=document.getElementById('noticeInput').value||type;alert('SMS: '+msg);}
 function sendWA(type){
-let college=document.getElementById('collegeName').textContent;
-let notice=document.getElementById('noticeInput').value||'';
-let text=`*${college}*%0A${document.getElementById('classInfo').textContent}%0A%0A${type==='present'?'✅ উপস্থিত তালিকা':type==='absent'?'❌ অনুপস্থিত তালিকা':'📢 নোটিশ: '+notice}`;
-window.open('https://wa.me/?text='+text,'_blank');
+ let college=document.getElementById('collegeName').textContent;
+ let notice=document.getElementById('noticeInput').value||'';
+ let text=`*${college}*%0A${document.getElementById('classInfo').textContent}%0A%0A${type==='present'?'✅ উপস্থিত':type==='absent'?'❌ অনুপস্থিত':'📢 নোটিশ: '+notice}`;
+ window.open('https://wa.me/?text='+text,'_blank');
 }
 function sendGroupReport(){
-let college=document.getElementById('collegeName').textContent;
-let text=`*${college}*%0A📊 আজকের হাজিরা রিপোর্ট%0A${document.getElementById('classInfo').textContent}`;
-window.open('https://wa.me/?text='+text,'_blank');
+ let college=document.getElementById('collegeName').textContent;
+ let text=`*${college}*%0A📊 আজকের হাজিরা রিপোর্ট%0A${document.getElementById('classInfo').textContent}`;
+ window.open('https://wa.me/?text='+text,'_blank');
 }
 function logout(){localStorage.removeItem('takrim_session');location.href='first-page.html';}
 
-// মাসিক হাজিরা লোড
-let students=JSON.parse(localStorage.getItem('takrim_students')||'[]');
-if(session){
-let filtered=students.filter(s=>s.cls===session.cls && s.section===session.section);
-document.getElementById('monthlyBody').innerHTML=filtered.map(s=>`<tr><td>${s.roll}</td><td style="text-align:left">${s.name}</td><td>${s.attendance?'P':''}</td></tr>`).join('')||'<tr><td colspan="3">কোনো ছাত্র নেই</td></tr>';
-}
+loadStudents();
 </script>
 </body>
 </html>
