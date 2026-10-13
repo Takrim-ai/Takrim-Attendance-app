@@ -5,40 +5,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>প্রাথমিক বিদ্যালয় হাজিরা</title>
 <style>
-*{box-sizing:border-box;font-family:SolaimanLipi,'Noto Sans Bengali'}
+*{box-sizing:border-box;font-family:SolaimanLipi,'Noto Sans Bengali',sans-serif}
 body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 .main{width:400px;max-width:100vw;min-height:100vh;background:#0a2e1f;padding:12px}
 .banner{width:100%;border-radius:22px;overflow:hidden;border:4px solid #facc15;background:#000}
-.banner img{width:100%;display:block;min-height:200px}
+.banner img{width:100%;display:block}
 .greenBox{background:#16a34a;border-radius:18px;padding:12px;margin-top:14px;display:flex;justify-content:center}
 .blackPill{background:#000;color:#fff;padding:12px 32px;border-radius:28px;font-size:20px;font-weight:900}
 .card{width:100%;background:#fff;border-radius:16px;padding:14px 16px;margin-top:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .card b{color:#1d4ed8;font-size:18px}
 .drop{display:none;background:#fff;border-radius:16px;margin-top:8px;padding:14px}
 .drop.open{display:block}
-.input{width:100%;padding:13px;border:2px solid #ccc;border-radius:12px;margin-top:10px}
 .yellowBtn{width:100%;padding:13px;background:#facc15;border:none;border-radius:12px;font-weight:900}
+.input{width:100%;padding:13px;border:2px solid #ccc;border-radius:12px;margin-top:10px;font-size:15px}
 .blueBtn{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:12px}
 .greenBtn{width:100%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-weight:900}
 .redBtn{width:100%;padding:14px;background:#dc2626;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:10px}
 .step{background:#eef2ff;border-radius:10px;padding:8px;margin-top:10px}
 .lbl{color:#1d4ed8;font-weight:800;font-size:13px}
+.logoC{width:80px;height:80px;border-radius:50%;border:3px solid #facc15;margin:10px auto;overflow:hidden;display:none}
+.logoC img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
 <div class="main">
 
-<!-- ব্যানার - তোমার GitHub ছবি FIX -->
+<!-- ব্যানার - তোমার ছবি, রিনেম ছাড়া -->
 <div class="banner">
 <img id="bannerImg" alt="MALEK Banner">
 </div>
 
 <div class="greenBox"><div class="blackPill">প্রাথমিক বিদ্যালয় হাজিরা</div></div>
 
-<div class="card" onclick="tog('f1')"><div>🏫 <b>প্রতিষ্ঠান ফরম</b></div><div>▼</div></div>
+<div class="card" onclick="tog('f1','a1')"><div>🏫 <b>প্রতিষ্ঠান ফরম</b></div><div id="a1">▼</div></div>
 <div id="f1" class="drop">
 <button onclick="logoIn.click()" class="yellowBtn">🖼️ লোগো চেঞ্জ</button>
 <input type="file" id="logoIn" accept="image/*" hidden>
+<div id="logoBox" class="logoC"><img id="logoImg"></div>
 <input id="bn" class="input" placeholder="বাংলা নাম">
 <input id="thikana" class="input" placeholder="ঠিকানা">
 <div style="display:flex;gap:8px"><input id="eiin" class="input" placeholder="EIIN"><input id="code" class="input" placeholder="Code"></div>
@@ -46,20 +49,20 @@ body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 <button id="saveBtn" class="greenBtn">সেভ করুন ✅</button>
 </div>
 
-<div class="card" onclick="tog('f2')"><div>🔑 <b>লগইন</b></div><div>▼</div></div>
+<div class="card" onclick="tog('f2','a2')"><div>🔑 <b>লগইন</b></div><div id="a2">▼</div></div>
 <div id="f2" class="drop">
 <select id="instSel" class="input"><option>-- কোনো প্রতিষ্ঠান নেই --</option></select>
 <div class="step"><div class="lbl">ধাপ ১: শিফট</div><select id="shift" class="input"><option>প্রভাতি</option><option>দিবা</option></select></div>
 <div class="step"><div class="lbl">ধাপ ২: শ্রেণি</div><select id="sreni" class="input"><option>প্রাক-প্রাথমিক</option><option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option><option>৮ম</option></select></div>
 <div class="step"><div class="lbl">ধাপ ৩: শাখা</div><select id="shakha" class="input"><option>N/A</option><option>ক</option><option>খ</option></select></div>
-<div class="step"><div class="lbl">ধাপ ৪: পাসওয়ার্ড</div><input id="loginPass" type="password" class="input" placeholder="প্রতিষ্ঠানের পাসওয়ার্ড"></div>
+<div class="step"><div class="lbl">ধাপ ৪: পাসওয়ার্ড</div><input id="loginPass" type="password" class="input" placeholder="পাসওয়ার্ড"></div>
 <button id="loginBtn" class="blueBtn">🔒 প্রবেশ করুন</button>
 </div>
 
-<div class="card" onclick="tog('f3')"><div>🔒 <b>তালিকা</b></div><div>▼</div></div>
+<div class="card" onclick="tog('f3','a3')"><div>🔒 <b>তালিকা</b></div><div id="a3">▼</div></div>
 <div id="f3" class="drop">
-<input id="adminName" class="input" placeholder="এডমিন নাম">
-<input id="adminPass" type="password" class="input" placeholder="এডমিন পাসওয়ার্ড">
+<input id="adminName" class="input" placeholder="এডমিন takrim">
+<input id="adminPass" type="password" class="input" placeholder="পাস takrim2022">
 <button id="adminBtn" class="redBtn">🔒 তালিকা খুলুন</button>
 <div id="adminBox" style="display:none;margin-top:10px"><div id="allList"></div></div>
 </div>
@@ -67,16 +70,24 @@ body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 </div>
 
 <script>
-// ১. ব্যানার লোড - ব্র্যাকেটের জন্য encodeURI ব্যবহার
-const imgName = "IMG-20261005-WA0019(3).jpg";
-const baseURL = "https://takrim-ai.github.io/Takrir/";
-document.getElementById('bannerImg').src = baseURL + encodeURIComponent(imgName);
+// তোমার ছবি - যেমন আছে তেমন, রিনেম না
+const imgFile = "IMG-20261005-WA0019(3).jpg";
+const imgURL = "https://takrim-ai.github.io/Takrir/" + encodeURIComponent(imgFile);
+document.getElementById("bannerImg").src = imgURL;
 
-// যদি না আসে, raw github থেকে চেষ্টা
-document.getElementById('bannerImg').onerror = function(){
-  this.src = "https://raw.githubusercontent.com/Takrim-ai/Takrir/main/" + encodeURIComponent(imgName);
-  this.onerror = function(){ this.style.background="#001a33"; this.alt="ছবি পাওয়া যায়নি - নাম বদলে banner.jpg করুন"; }
+// fallback - raw github
+document.getElementById("bannerImg").onerror = function(){
+  this.src = "https://raw.githubusercontent.com/Takrim-ai/Takrir/main/" + encodeURIComponent(imgFile);
 };
 
-function tog(id){ document.getElementById(id).classList.toggle('open'); }
-let insts=JSON.parse(localStorage.getItem('
+function tog(id,a){let d=document.getElementById(id);let o=d.classList.contains('open');document.querySelectorAll('.drop').forEach(x=>x.classList.remove('open'));document.querySelectorAll('[id^=a]').forEach(x=>x.innerText='▼');if(!o){d.classList.add('open');document.getElementById(a).innerText='▲';}}
+let insts=JSON.parse(localStorage.getItem('malek_v4')||'[]');let logins=JSON.parse(localStorage.getItem('malek_log_v4')||'[]');
+function render(){instSel.innerHTML=insts.length?insts.map(x=>`<option value="${x.code}">${x.bn} (${x.code})</option>`).join(''):'<option>-- কোনো প্রতিষ্ঠান নেই --</option>';allList.innerHTML=logins.map(l=>`<div style="border:1px solid #ddd;padding:8px;border-radius:10px;margin-top:6px">🏫 <b>${l.bn}</b><br>🔑 কোড:<b>${l.code}</b> | পাস:<b>${l.passUsed}</b> <button onclick="delL('${l.code}')" style="background:#dc2626;color:#fff;border:none;padding:2px 8px;border-radius:6px;float:right">🗑️</button></div>`).join('')||'নেই';}
+function delL(c){if(!confirm('ডিলিট?'))return;insts=insts.filter(x=>x.code!==c);logins=logins.filter(x=>x.code!==c);localStorage.setItem('malek_v4',JSON.stringify(insts));localStorage.setItem('malek_log_v4',JSON.stringify(logins));render();}
+saveBtn.onclick=()=>{let b=bn.value.trim(),a=thikana.value.trim(),e=eiin.value.trim(),c=code.value.trim(),p=pass.value.trim();if(!b||!e||!c||!p)return alert('সব পূরণ করুন');if(insts.some(x=>x.code===c))return alert('কোড আগে আছে');insts.push({bn:b,addr:a,eiin:e,code:c,pass:p});localStorage.setItem('malek_v4',JSON.stringify(insts));render();alert('সেভ ✅');}
+loginBtn.onclick=()=>{let s=insts.find(x=>x.code===instSel.value);if(!s)return alert('নেই');if(loginPass.value!==s.pass)return alert('পাস ভুল');let entry={bn:s.bn,addr:s.addr,eiin:s.eiin,code:s.code,passUsed:loginPass.value,shift:shift.value,sreni:sreni.value,shakha:shakha.value,time:new Date().toLocaleString('bn-BD')};logins=logins.filter(x=>x.code!==s.code);logins.unshift(entry);localStorage.setItem('malek_log_v4',JSON.stringify(logins));localStorage.setItem('malek_current',JSON.stringify(entry));render();alert('প্রবেশ সফল ✅');}
+adminBtn.onclick=()=>{if(adminName.value!=='takrim'||adminPass.value!=='takrim2022')return alert('ভুল');adminBox.style.display='block';render();}
+render();
+</script>
+</body>
+</html>
