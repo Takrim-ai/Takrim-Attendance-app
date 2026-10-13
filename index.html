@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MALEK PRIMARY - FIXED</title>
+<title>MALEK - LOGIN FIX</title>
 <style>
-*{box-sizing:border-box;font-family:'Hind Siliguri',SolaimanLipi,sans-serif}
+*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
 body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 .main{width:400px;max-width:100vw;min-height:100vh;background:#0a2e1f;padding:12px 14px}
 .main-banner{width:100%;border:4px solid #ffcc00;border-radius:22px;overflow:hidden;background:#000;line-height:0}
@@ -17,31 +17,26 @@ body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 .section-head b{color:#0d5bff;font-size:18px}
 .section-body{display:none;padding:0 14px 16px 14px}
 .section-body.open{display:block}
-.yellowBtn{width:100%;padding:12px;background:#facc15;border:none;border-radius:10px;font-weight:900;font-size:15px}
-.input{width:100%;padding:12px;border-radius:12px;border:2px solid #d1d5db;margin-top:10px;font-size:15px;background:#fff;color:#000}
+.yellowBtn{width:100%;padding:12px;background:#facc15;border:none;border-radius:10px;font-weight:900}
+.input{width:100%;padding:12px;border-radius:12px;border:2px solid #d1d5db;margin-top:10px;font-size:15px}
 .half{display:flex;gap:8px}
-.greenBtn{width:100%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:12px;font-size:16px}
-.blueBtn{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:12px;font-size:16px}
-.redBtn{width:100%;padding:14px;background:#dc2626;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:10px;font-size:16px}
+.greenBtn{width:100%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:12px}
+.blueBtn{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:12px}
+.redBtn{width:100%;padding:14px;background:#dc2626;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:10px}
 .step{background:#eef2ff;border-radius:10px;padding:8px;margin-top:10px}
 .lbl{color:#1d4ed8;font-weight:800;font-size:13px}
 .logoC{width:80px;height:80px;border-radius:50%;border:3px solid #facc15;margin:10px auto;overflow:hidden;display:none}
 .logoC img{width:100%;height:100%;object-fit:cover}
-#cnt{text-align:right;font-size:12px;color:#000;margin-top:6px;font-weight:700}
-#msg{text-align:center;color:#dc2626;font-weight:800;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="main">
-
-<div class="main-banner"><img id="mainBannerImg" alt="MALEK ATTENDANCE"></div>
+<div class="main-banner"><img id="mainBannerImg"></div>
 <div class="greenBox"><div class="blackPill">প্রাথমিক বিদ্যালয় হাজিরা</div></div>
 
-<!-- ১ -->
 <div class="section">
 <div class="section-head" onclick="tog('f1','a1')"><div>🏫 <b>প্রতিষ্ঠান ফরম</b></div><div id="a1">▼</div></div>
 <div id="f1" class="section-body">
-<div style="text-align:center;color:#1d4ed8;font-weight:900;margin-bottom:8px">🏫 নতুন প্রতিষ্ঠান ফরম</div>
 <button onclick="logoIn.click()" class="yellowBtn">🖼️ লোগো চেঞ্জ</button>
 <input type="file" id="logoIn" accept="image/*" hidden>
 <div id="logoBox" class="logoC"><img id="logoImg"></div>
@@ -49,12 +44,11 @@ body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 <input id="thikana" class="input" placeholder="ঠিকানা">
 <div class="half"><input id="eiin" class="input" placeholder="EIIN"><input id="code" class="input" placeholder="Code"></div>
 <input id="pass" type="password" class="input" placeholder="🔑 পাসওয়ার্ড দিন">
-<button id="saveBtn" class="greenBtn">সেভ করুন ✅</button>
-<div id="cnt"></div>
+<button id="saveBtn" type="button" class="greenBtn">সেভ করুন ✅</button>
+<div id="cnt" style="font-size:12px;text-align:right;margin-top:6px;font-weight:700"></div>
 </div>
 </div>
 
-<!-- ২ -->
 <div class="section">
 <div class="section-head" onclick="tog('f2','a2')"><div>🔑 <b>লগইন</b></div><div id="a2">▼</div></div>
 <div id="f2" class="section-body">
@@ -64,57 +58,99 @@ body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 <div class="step"><div class="lbl">ধাপ ২: শ্রেণি</div><select id="sreni" class="input"><option>প্রাক-প্রাথমিক</option><option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option><option>৬ষ্ঠ</option><option>৭ম</option><option>৮ম</option></select></div>
 <div class="step"><div class="lbl">ধাপ ৩: শাখা</div><select id="shakha" class="input"><option>N/A</option><option>ক</option><option>খ</option><option>গ</option></select></div>
 <div class="step"><div class="lbl">ধাপ ৪: পাসওয়ার্ড</div><input id="loginPass" type="password" class="input" placeholder="প্রতিষ্ঠানের পাসওয়ার্ড"></div>
-<button id="loginBtn" class="blueBtn">🔒 প্রবেশ করুন</button>
-<div id="msg">আগে প্রতিষ্ঠান যোগ করুন!</div>
+<button id="loginBtn" type="button" class="blueBtn">🔒 প্রবেশ করুন</button>
+<div id="msg" style="text-align:center;color:#dc2626;font-weight:800;margin-top:10px"></div>
 </div>
 </div>
 
-<!-- ৩ -->
 <div class="section">
 <div class="section-head" onclick="tog('f3','a3')"><div>🔒 <b>তালিকা</b></div><div id="a3">▼</div></div>
 <div id="f3" class="section-body">
-<div style="text-align:center;color:#1d4ed8;font-weight:900">🔒 প্রতিষ্ঠানের তালিকা দেখুন</div>
 <input id="adminName" class="input" placeholder="এডমিন takrim">
 <input id="adminPass" type="password" class="input" placeholder="পাস takrim2022">
-<button id="adminBtn" class="redBtn">🔒 তালিকা খুলুন</button>
+<button id="adminBtn" type="button" class="redBtn">🔒 তালিকা খুলুন</button>
 <div id="adminBox" style="display:none;margin-top:12px"><hr><div id="allList" style="font-size:13px"></div></div>
 </div>
 </div>
-
 </div>
 
 <script>
-// ব্যানার - তোমার ছবি যেমন আছে তেমনই, রিনেম ছাড়া
+// ব্যানার - তোমার ছবি রিনেম ছাড়া
 const fileName = "IMG-20261005-WA0019(3).jpg";
 const banner = document.getElementById("mainBannerImg");
-banner.src = "./" + encodeURIComponent(fileName);
-banner.onerror = () => {
-  banner.src = "https://takrim-ai.github.io/Takrir/" + encodeURIComponent(fileName);
-  banner.onerror = () => {
-    banner.src = "https://raw.githubusercontent.com/Takrim-ai/Takrir/main/" + encodeURIComponent(fileName);
-  }
-};
+banner.src = "./"+encodeURIComponent(fileName);
+banner.onerror=()=>{banner.src="https://takrim-ai.github.io/Takrir/"+encodeURIComponent(fileName)};
 
-function tog(id,arr){
- let d=document.getElementById(id);
- let o=d.classList.contains('open');
- document.querySelectorAll('.section-body').forEach(x=>x.classList.remove('open'));
- document.querySelectorAll('[id^=a]').forEach(x=>x.innerText='▼');
- if(!o){ d.classList.add('open'); document.getElementById(arr).innerText='▲'; }
+function tog(id,a){let d=document.getElementById(id);let o=d.classList.contains('open');document.querySelectorAll('.section-body').forEach(x=>x.classList.remove('open'));document.querySelectorAll('[id^=a]').forEach(x=>x.innerText='▼');if(!o){d.classList.add('open');document.getElementById(a).innerText='▲';}}
+
+let logoData='';logoIn.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{logoData=r.result;logoImg.src=logoData;logoBox.style.display='block';};r.readAsDataURL(f);}
+
+// === পুরনো সব ডাটা পড়া - এইটাই ফিক্স ===
+function getOld(keyList){
+  for(let k of keyList){
+    let v=localStorage.getItem(k);
+    if(v){ try{ let a=JSON.parse(v); if(a.length>0) return a; }catch(e){} }
+  }
+  return [];
 }
-let logoData=''; logoIn.onchange=e=>{ let f=e.target.files[0]; if(!f)return; let r=new FileReader(); r.onload=()=>{logoData=r.result; logoImg.src=logoData; logoBox.style.display='block';}; r.readAsDataURL(f); }
-let insts=JSON.parse(localStorage.getItem('malek_v4')||'[]');
-let logins=JSON.parse(localStorage.getItem('malek_log_v4')||'[]');
+let insts = getOld(['malek_v4','malek_insts_v3','malek_insts_v2','malek_v3']);
+let logins = getOld(['malek_log_v4','malek_logins_v3','malek_log_v3']);
+
+function saveAll(){
+  localStorage.setItem('malek_v4',JSON.stringify(insts));
+  localStorage.setItem('malek_insts_v3',JSON.stringify(insts));
+  localStorage.setItem('malek_log_v4',JSON.stringify(logins));
+  localStorage.setItem('malek_logins_v3',JSON.stringify(logins));
+}
+
 function render(){
- instSel.innerHTML=insts.length?insts.map(x=>`<option value="${x.code}">${x.bn} (${x.code})</option>`).join(''):'<option>-- কোনো প্রতিষ্ঠান নেই --</option>';
- msg.innerText=insts.length?'লগইন করুন':'আগে প্রতিষ্ঠান যোগ করুন!';
- cnt.innerText=`মোট: ${insts.length} / 585`;
- allList.innerHTML=logins.map(l=>`<div style="border:1px solid #ddd;padding:8px;border-radius:10px;margin-top:6px;background:#fff">🏫 <b>${l.bn}</b><br>🔑 কোড:<b>${l.code}</b> | পাস:<b>${l.passUsed}</b> <button onclick="delL('${l.code}')" style="background:#dc2626;color:#fff;border:none;padding:2px 8px;border-radius:6px;float:right">🗑️</button></div>`).join('')||'নেই';
+  instSel.innerHTML = insts.length? insts.map(x=>`<option value="${x.code}">${x.bn} (${x.code})</option>`).join('') : '<option>-- কোনো প্রতিষ্ঠান নেই --</option>';
+  msg.innerText = insts.length? `লগইন করুন - মোট ${insts.length} টি` : 'আগে প্রতিষ্ঠান যোগ করুন!';
+  cnt.innerText = `মোট: ${insts.length} / 585`;
+  // তালিকায় প্রতিষ্ঠান + লগইন ২টাই দেখাবে
+  let html = '';
+  if(insts.length){
+    html += `<div style="font-weight:900;margin-bottom:6px">🏫 মোট প্রতিষ্ঠান: ${insts.length}</div>`;
+    html += insts.map(l=>`<div style="border:1px solid #ddd;padding:8px;border-radius:10px;margin-top:6px;background:#f9fff9">🏫 <b>${l.bn}</b><br>📍 ${l.addr||''} | EIIN:${l.eiin}<br>🔑 কোড:<b>${l.code}</b> | পাস:<b>${l.pass}</b> <button onclick="delL('${l.code}')" style="background:#dc2626;color:#fff;border:none;padding:2px 8px;border-radius:6px;float:right">🗑️</button></div>`).join('');
+  }
+  if(logins.length){
+    html += `<div style="font-weight:900;margin-top:12px">📋 লগইন হিস্ট্রি:</div>`;
+    html += logins.map(l=>`<div style="border:1px solid #ddd;padding:8px;border-radius:10px;margin-top:6px;background:#eef2ff">🏫 ${l.bn} | ${l.shift} | ${l.sreni} | ${l.shakha}<br>🕒 ${l.time||''}</div>`).join('');
+  }
+  if(!html) html='কোনো প্রতিষ্ঠান নেই - আগে ফরম পূরণ করুন';
+  allList.innerHTML=html;
 }
-function delL(c){ if(!confirm('ডিলিট?'))return; insts=insts.filter(x=>x.code!==c); logins=logins.filter(x=>x.code!==c); localStorage.setItem('malek_v4',JSON.stringify(insts)); localStorage.setItem('malek_log_v4',JSON.stringify(logins)); render(); }
-saveBtn.onclick=()=>{ let b=bn.value.trim(), a=thikana.value.trim(), e=eiin.value.trim(), c=code.value.trim(), p=pass.value.trim(); if(!b||!e||!c||!p)return alert('সব পূরণ করুন'); if(insts.some(x=>x.code===c))return alert('কোড আগে আছে'); insts.push({bn:b,addr:a,eiin:e,code:c,pass:p,logo:logoData}); localStorage.setItem('malek_v4',JSON.stringify(insts)); bn.value=thikana.value=eiin.value=code.value=pass.value=''; logoData=''; logoBox.style.display='none'; render(); alert('সেভ ✅'); }
-loginBtn.onclick=()=>{ let s=insts.find(x=>x.code===instSel.value); if(!s)return alert('নেই'); if(loginPass.value!==s.pass)return alert('পাস ভুল'); let entry={bn:s.bn,addr:s.addr,eiin:s.eiin,code:s.code,passUsed:loginPass.value,shift:shift.value,sreni:sreni.value,shakha:shakha.value,time:new Date().toLocaleString('bn-BD'),logo:s.logo}; logins=logins.filter(x=>x.code!==s.code); logins.unshift(entry); localStorage.setItem('malek_log_v4',JSON.stringify(logins)); localStorage.setItem('malek_current',JSON.stringify(entry)); render(); alert('প্রবেশ সফল ✅'); }
-adminBtn.onclick=()=>{ if(adminName.value!=='takrim'||adminPass.value!=='takrim2022')return alert('ভুল'); adminBox.style.display='block'; render(); }
+function delL(c){if(!confirm('ডিলিট?'))return;insts=insts.filter(x=>x.code!==c);logins=logins.filter(x=>x.code!==c);saveAll();render();}
+
+saveBtn.onclick=()=>{
+  let b=bn.value.trim(), a=thikana.value.trim(), e=eiin.value.trim(), c=code.value.trim(), p=pass.value.trim();
+  if(!b||!e||!c||!p) return alert('বাংলা নাম, EIIN, Code, পাসওয়ার্ড লাগবে');
+  if(insts.some(x=>x.code===c)) return alert('এই কোড আগে আছে: '+c);
+  insts.push({bn:b,addr:a,eiin:e,code:c,pass:p,logo:logoData});
+  saveAll(); bn.value=thikana.value=eiin.value=code.value=pass.value=''; logoData=''; logoBox.style.display='none'; render(); alert('সেভ হয়েছে ✅\nকোড: '+c+'\nপাস: '+p);
+}
+
+loginBtn.onclick=()=>{
+  let code = instSel.value.trim();
+  let enteredPass = loginPass.value.trim();
+  if(!code || code.includes('কোনো প্রতিষ্ঠান')) return alert('প্রতিষ্ঠান সিলেক্ট করুন!');
+  let s = insts.find(x=>x.code.trim()===code);
+  if(!s){ alert('প্রতিষ্ঠান পাওয়া যায়নি! code='+code+'\nমোট আছে:'+insts.length); return; }
+  if(enteredPass!== s.pass.trim()){
+    alert('পাসওয়ার্ড ভুল!\nতুমি দিলে: '+enteredPass+'\nসঠিক: '+s.pass+'\nকোড: '+s.code);
+    return;
+  }
+  let entry={bn:s.bn,addr:s.addr,eiin:s.eiin,code:s.code,passUsed:enteredPass,shift:shift.value,sreni:sreni.value,shakha:shakha.value,time:new Date().toLocaleString('bn-BD'),logo:s.logo};
+  logins=logins.filter(x=>x.code!==s.code); logins.unshift(entry);
+  saveAll(); localStorage.setItem('malek_current',JSON.stringify(entry));
+  render(); alert('প্রবেশ সফল ✅ '+s.bn);
+}
+
+adminBtn.onclick=()=>{
+  if(adminName.value.trim()!=='takrim' || adminPass.value.trim()!=='takrim2022') return alert('এডমিন ভুল!\nনাম: takrim\nপাস: takrim2022');
+  adminBox.style.display='block'; render();
+  alert('এডমিন খুলেছে - নিচে তালিকা দেখুন');
+}
 render();
 </script>
 </body>
