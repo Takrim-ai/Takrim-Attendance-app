@@ -29,41 +29,31 @@ input,textarea{padding:8px;border:1px solid #ccc;border-radius:6px}
 <div id="accordionContainer"></div>
 
 <script>
-// === অটো ডাটা ===
 let students = JSON.parse(localStorage.getItem('students')||'[{"name":"কালাম","roll":"202","present":true},{"name":"কমল","roll":"203","present":false},{"name":"সাকিব","roll":"204","present":true}]');
-const instName = localStorage.getItem('instituteName') || 'আল-হেরা আইডিয়াল মাদ্রাসা';
-const instAddress = localStorage.getItem('instituteAddress') || 'ঠিকানা পাওয়া যায়নি';
-document.getElementById('instName').innerText=instName;
-document.getElementById('instAddress').innerText=instAddress;
+document.getElementById('instName').innerText = localStorage.getItem('instituteName') || 'আল-হেরা আইডিয়াল মাদ্রাসা';
+document.getElementById('instAddress').innerText = localStorage.getItem('instituteAddress') || 'ঠিকানা পাওয়া যায়নি';
 let savedResult = JSON.parse(localStorage.getItem('fullResultSheet')||'null');
 
 const steps = [
-  {title:'1️⃣ শিক্ষার্থী যোগ করুন', content:`
-    <input id="sName" placeholder="শিক্ষার্থীর নাম" style="width:100%;margin:5px 0">
-    <input id="sRoll" placeholder="রোল" style="width:100%;margin:5px 0">
-    <input id="sMobile" placeholder="মোবাইল" style="width:100%;margin:5px 0">
-    <button class="btn" style="background:#2e7d32" onclick="addStudent()">+ যোগ করুন</button>
-  `},
-  {title:`2️⃣ 📋 শিক্ষার্থীর তালিকা দেখুন ( ${students.length} )`, content:`<div id="studentList"></div>`},
+  {title:'1️⃣ শিক্ষার্থী যোগ করুন', content:`<input id="sName" placeholder="শিক্ষার্থীর নাম" style="width:100%;margin:5px 0"><input id="sRoll" placeholder="রোল" style="width:100%;margin:5px 0"><button class="btn" style="background:#2e7d32" onclick="addStudent()">+ যোগ করুন</button>`},
+  {title:`2️⃣ 📋 শিক্ষার্থীর তালিকা দেখুন`, content:`<div id="studentList"></div>`},
   {title:'3️⃣ ✅ উপস্থিত দেখুন', content:`<div id="presentList"></div><button class="btn" style="background:#2e7d32" onclick="sendWA('present')">📱 WhatsApp</button>`},
   {title:'4️⃣ ❌ অনুপস্থিত দেখুন', content:`<div id="absentList"></div><button class="btn" style="background:#2e7d32" onclick="sendWA('absent')">📱 WhatsApp</button>`},
   {title:'5️⃣ 📢 নোটিশ বোর্ড', content:`<textarea id="noticeText" rows="3" placeholder="নোটিশ লিখুন..." style="width:100%"></textarea><button class="btn" style="background:#ef6c00" onclick="saveNotice()">সেভ</button>`},
 
-  // === ৬ নম্বর পরিবর্তন - মাসিক হাজিরা ===
-  {title:'6️⃣ 📅 মাসিক হাজিরা দেখুন', content:`
-    <div style="background:white;padding:10px;border-radius:10px">
-      <label>মাস নির্বাচন করুন:</label>
-      <input type="month" id="monthPicker" value="${new Date().toISOString().slice(0,7)}" onchange="renderMonthly()" style="width:100%;margin:6px 0">
-      <div style="overflow:auto"><table id="monthlyTable" border="1" style="width:100%;border-collapse:collapse;text-align:center;font-size:13px"></table></div>
-      <div style="margin-top:8px">
-        <button class="btn" style="background:#1565c0" onclick="window.print()">🖨️ প্রিন্ট</button>
-        <button class="btn" style="background:#2e7d32" onclick="saveMonthly()">💾 সেভ</button>
+  {title:'6️⃣ 📅 মাসিক হাজিরা দেখুন (১-৩১)', content:`
+    <div style="background:white;padding:8px;border-radius:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <label><b>মাস:</b> <input type="month" id="monthPicker" value="${new Date().toISOString().slice(0,7)}" onchange="renderMonthly()" style="padding:6px;border-radius:6px;border:2px solid #1976d2"></label>
+        <div>
+          <button class="btn" style="background:#1565c0" onclick="window.print()">🖨️ প্রিন্ট</button>
+          <button class="btn" style="background:#c62828" onclick="deleteMonthly31()">🗑️ ডিলিট</button>
+        </div>
       </div>
-      <p style="font-size:12px;color:green;margin-top:5px">💡 উপস্থিত দিন এডিট করা যাবে, তারপর সেভ দিলে থেকে যাবে</p>
+      <div id="monthlyTable" style="margin-top:10px"></div>
     </div>
   `},
 
-  // === ৭ নম্বর পরিবর্তন - ফলাফল সিট - সব একসাথে এডিট ===
   {title:'7️⃣ 🔽 ফলাফল দেখুন', content:`
     <div id="resultSheetBox" style="background:white;padding:10px;border-radius:12px;border:2px solid #7c4dff">
       <h3 style="color:#6a1b9a">📋 ফলাফল সিট - সব ঘর একসাথে এডিট</h3>
@@ -101,34 +91,62 @@ function toggleAcc(i){
   }
 }
 
-// সাধারণ ফাংশন
+// বাকি ফাংশন আগের মতোই
 function addStudent(){ const n=document.getElementById('sName').value, r=document.getElementById('sRoll').value; if(!n) return alert('নাম দিন'); students.push({name:n,roll:r,present:true}); localStorage.setItem('students',JSON.stringify(students)); location.reload(); }
 function renderStudents(){ let h=''; students.forEach((s,idx)=>{ h+=`<div class="student-item"><span>${s.roll}. ${s.name}</span><span><button onclick="togglePresent(${idx})">${s.present?'✅':'❌'}</button> <button onclick="delStu(${idx})">🗑️</button></span></div>`}); document.getElementById('studentList').innerHTML=h; }
 function renderPresent(){ document.getElementById('presentList').innerHTML=students.filter(s=>s.present).map(s=>`✅ ${s.name}`).join('<br>')||'কেউ নেই'; }
-function renderAbsent(){ document.getElementById('absentList').innerHTML=students.filter(s=>!s.present).map(s=>`❌ ${s.name}`).join('<br>')||'সবাই উপস্থিত আলহামদুলিল্লাহ'; }
+function renderAbsent(){ document.getElementById('absentList').innerHTML=students.filter(s=>!s.present).map(s=>`❌ ${s.name}`).join('<br>')||'সবাই উপস্থিত'; }
 function togglePresent(i){ students[i].present=!students[i].present; localStorage.setItem('students',JSON.stringify(students)); renderStudents(); }
 function delStu(i){ if(confirm('ডিলিট?')){ students.splice(i,1); localStorage.setItem('students',JSON.stringify(students)); location.reload(); } }
 function saveNotice(){ localStorage.setItem('notice',document.getElementById('noticeText').value); alert('সেভ হয়েছে'); }
 function sendWA(t){ let m=t=='present'?students.filter(s=>s.present).map(s=>s.name).join(','):students.filter(s=>!s.present).map(s=>s.name).join(','); window.open(`https://wa.me/?text=${encodeURIComponent(m)}`,'_blank'); }
 
-// মাসিক হাজিরা - পরিবর্তন ১
+// === ৬ নম্বর ফাইনাল - ১ থেকে ৩১ + উপস্থিত/অনুপস্থিত + অটো সেভ ===
 function renderMonthly(){
-  let html='<tr style="background:#1976d2;color:white"><th>রোল</th><th>নাম</th><th>উপস্থিত দিন (এডিট)</th><th>অনুপস্থিত</th><th>%</th></tr>';
-  students.forEach((s,idx)=>{
-    const saved = JSON.parse(localStorage.getItem('monthlyData')||'{}')[idx] || 22;
-    html+=`<tr><td>${s.roll}</td><td>${s.name}</td><td><input id="mon_${idx}" type="number" value="${saved}" style="width:60px;text-align:center;border:1.5px dashed green"></td><td id="mon_abs_${idx}">${30-saved}</td><td id="mon_per_${idx}">${Math.round(saved/30*100)}%</td></tr>`;
-  });
-  document.getElementById('monthlyTable').innerHTML=html;
-  // টাইপ করলে অটো %
-  students.forEach((_,idx)=>{ document.getElementById(`mon_${idx}`)?.addEventListener('input',()=>{ const v=parseInt(document.getElementById(`mon_${idx}`).value)||0; document.getElementById(`mon_abs_${idx}`).innerText=30-v; document.getElementById(`mon_per_${idx}`).innerText=Math.round(v/30*100)+'%'; }); });
-}
-function saveMonthly(){ let data={}; students.forEach((_,idx)=>{ data[idx]=document.getElementById(`mon_${idx}`).value; }); localStorage.setItem('monthlyData',JSON.stringify(data)); alert('মাসিক হাজিরা সেভ হয়েছে - ডিলিট না করা পর্যন্ত থাকবে'); }
+  const month = document.getElementById('monthPicker')?.value || new Date().toISOString().slice(0,7);
+  let monthlyData = JSON.parse(localStorage.getItem('monthly31Data')||'{}');
+  let html = '<div style="overflow:auto;max-height:420px;border:1px solid #ddd;border-radius:8px"><table border="1" style="width:100%;border-collapse:collapse;text-align:center;font-size:12px;min-width:1100px"><tr style="background:#1976d2;color:white;position:sticky;top:0;z-index:3"><th style="position:sticky;left:0;background:#1976d2;z-index:4;min-width:45px">রোল</th><th style="position:sticky;left:45px;background:#1976d2;z-index:4;min-width:85px">নাম</th>';
+  for(let i=1;i<=31;i++) html+=`<th style="min-width:32px">${i}</th>`;
+  html+='<th style="background:#2e7d32;min-width:50px">উপস্থিত</th><th style="background:#c62828;min-width:55px">অনুপস্থিত</th></tr>';
 
-// ফলাফল সিট - পরিবর্তন ২ - সব একসাথে এডিট + সেভ
+  students.forEach((s, idx)=>{
+    html+=`<tr><td style="position:sticky;left:0;background:white;font-weight:bold;z-index:2">${s.roll}</td><td style="position:sticky;left:45px;background:white;text-align:left;padding-left:4px;z-index:2">${s.name}</td>`;
+    for(let d=1; d<=31; d++){
+      const key = `${month}_${idx}_${d}`;
+      const checked = monthlyData[key]!== false? 'checked' : '';
+      html+=`<td><input type="checkbox" id="d_${idx}_${d}" ${checked} style="width:18px;height:18px" onchange="autoSave31(${idx},${d})"></td>`;
+    }
+    html+=`<td id="present_${idx}" style="background:#e8f5e9;font-weight:bold;color:green">0</td><td id="absent_${idx}" style="background:#ffebee;font-weight:bold;color:red">0</td></tr>`;
+  });
+  html+='</table></div><p style="color:green;font-size:12px;margin-top:6px">✅ অটো সেভ চালু - ১-৩১ টিক দিলেই থেকে যাবে, ডিলিট না করা পর্যন্ত যাবে না</p>';
+  document.getElementById('monthlyTable').innerHTML = html;
+  students.forEach((_, idx)=> calcTotal31(idx));
+}
+function autoSave31(idx, day){
+  const month = document.getElementById('monthPicker')?.value || new Date().toISOString().slice(0,7);
+  let data = JSON.parse(localStorage.getItem('monthly31Data')||'{}');
+  data[`${month}_${idx}_${day}`] = document.getElementById(`d_${idx}_${day}`).checked;
+  localStorage.setItem('monthly31Data', JSON.stringify(data));
+  calcTotal31(idx);
+}
+function calcTotal31(idx){
+  let present=0; for(let d=1; d<=31; d++) if(document.getElementById(`d_${idx}_${d}`)?.checked) present++;
+  document.getElementById(`present_${idx}`).innerText = present;
+  document.getElementById(`absent_${idx}`).innerText = 31 - present;
+}
+function deleteMonthly31(){
+  if(confirm('১-৩১ তারিখের সব হাজিরা মুছবেন?')){
+    const month = document.getElementById('monthPicker')?.value || new Date().toISOString().slice(0,7);
+    let data = JSON.parse(localStorage.getItem('monthly31Data')||'{}');
+    students.forEach((_, idx)=>{ for(let d=1; d<=31; d++) delete data[`${month}_${idx}_${d}`]; });
+    localStorage.setItem('monthly31Data', JSON.stringify(data));
+    renderMonthly();
+  }
+}
+
+// ফলাফল - আগের মতোই
 function changeSub(n){ let c=parseInt(document.getElementById('subCount').value)||5; c+=n; if(c<1)c=1; if(c>12)c=12; document.getElementById('subCount').value=c; }
 function makeResultSheet(){
-  const count=parseInt(document.getElementById('subCount').value)||5;
-  if(savedResult) document.getElementById('subCount').value=savedResult.count||count;
   const finalCount=parseInt(document.getElementById('subCount').value)||5;
   let subjects=savedResult?.subjects||[];
   let editHtml=''; for(let i=0;i<finalCount;i++){ const s=subjects[i]||{name:`বিষয় ${i+1}`,full:100}; editHtml+=`<div style="background:#f3e5f5;padding:5px;border-radius:6px;display:flex;gap:4px"><input id="sname${i}" value="${s.name}" style="width:85px;padding:4px;border-radius:4px;border:1px solid #ccc"><input id="sfull${i}" type="number" value="${s.full}" style="width:60px;padding:4px;border-radius:4px;border:1px solid #ccc"></div>`; }
@@ -136,7 +154,6 @@ function makeResultSheet(){
   let head='<tr><th>রোল</th><th>নাম</th>'; for(let i=0;i<finalCount;i++) head+=`<th>বিষয় ${i+1}</th>`; head+='<th>পূর্ণ</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th><th>গড়</th></tr>'; document.getElementById('resultHead').innerHTML=head;
   let body=''; students.forEach((stu,idx)=>{ body+=`<tr><td>${stu.roll}</td><td style="text-align:left">${stu.name}</td>`; for(let j=0;j<finalCount;j++){ const old=savedResult?.marks?.[idx]?.[j]||''; body+=`<td><input id="mark_${idx}_${j}" type="number" value="${old}" style="width:58px;text-align:center;border:1.5px dashed #4caf50;padding:5px;border-radius:5px"></td>`; } body+=`<td id="full_${idx}">-</td><td id="obt_${idx}">-</td><td id="per_${idx}">-</td><td id="gpa_${idx}">-</td><td id="avg_${idx}">-</td></tr>`; }); document.getElementById('resultBody').innerHTML=body;
   if(savedResult) calcAllResult();
-  document.getElementById('saveStatus').innerText='✏️ সব ঘর এডিট মোডে - এডিট শেষে "সব সেভ করুন" চাপুন';
 }
 function calcAllResult(){
   const count=parseInt(document.getElementById('subCount').value)||5;
@@ -146,9 +163,9 @@ function saveAllResult(){
   const count=parseInt(document.getElementById('subCount').value)||5;
   let subjects=[]; for(let i=0;i<count;i++) subjects.push({name:document.getElementById(`sname${i}`).value, full:document.getElementById(`sfull${i}`).value});
   let marks=[]; students.forEach((_,idx)=>{ let row=[]; for(let j=0;j<count;j++) row.push(document.getElementById(`mark_${idx}_${j}`).value); marks.push(row); });
-  savedResult={subjects,marks,count}; localStorage.setItem('fullResultSheet',JSON.stringify(savedResult)); calcAllResult(); document.getElementById('saveStatus').innerText='✅ আলহামদুলিল্লাহ সেভ হয়েছে - ডিলিট না করা পর্যন্ত থাকবে';
+  savedResult={subjects,marks,count}; localStorage.setItem('fullResultSheet',JSON.stringify(savedResult)); calcAllResult(); document.getElementById('saveStatus').innerText='✅ আলহামদুলিল্লাহ সেভ হয়েছে';
 }
-function deleteResult(){ if(confirm('সব ফলাফল মুছবেন?')){ localStorage.removeItem('fullResultSheet'); savedResult=null; makeResultSheet(); document.getElementById('saveStatus').innerText='🗑️ ডিলিট হয়েছে'; } }
+function deleteResult(){ if(confirm('সব ফলাফল মুছবেন?')){ localStorage.removeItem('fullResultSheet'); savedResult=null; makeResultSheet(); } }
 
 renderStudents();
 </script>
