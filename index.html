@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MALEK FINAL - CODE PASS ADMIN</title>
+<title>MALEK FINAL FIX</title>
 <style>
 *{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}
 body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
@@ -12,13 +12,14 @@ body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 .section{width:100%;background:#fff;border-radius:20px;margin-top:14px;overflow:hidden}
 .section-head{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
 .section-head b{color:#0d5bff;font-size:18px}
+.arrow{font-size:16px}
 .section-body{display:none;padding:0 14px 16px 14px}
 .section-body.open{display:block}
 .input{width:100%;padding:12px;border-radius:12px;border:2px solid #d1d5db;margin-top:10px;font-size:15px}
 .yellowBtn{width:100%;padding:12px;background:#facc15;border:none;border-radius:10px;font-weight:900}
 .greenBtn{width:100%;padding:14px;background:#16a34a;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:12px}
 .blueBtn{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:12px}
-.redBtn{width:100%;padding:14px;background:#dc2626;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:10px}
+.redBtn{width:100%;padding:14px;background:#dc2626;color:#fff;border:none;border-radius:12px;font-weight:900;margin-top:10px;font-size:16px}
 .step{background:#eef2ff;border-radius:10px;padding:8px;margin-top:10px}
 .lbl{color:#1d4ed8;font-weight:800;font-size:13px}
 .logoC{width:80px;height:80px;border-radius:50%;border:3px solid #facc15;margin:10px auto;overflow:hidden;display:none}
@@ -31,63 +32,59 @@ body{margin:0;background:#0a2e1f;display:flex;justify-content:center}
 <div class="main-banner"><img id="mainBannerImg"></div>
 <div class="greenBox"><div class="blackPill">প্রাথমিক বিদ্যালয় হাজিরা</div></div>
 
-<!-- ১. প্রতিষ্ঠান ফরম -->
 <div class="section">
-<div class="section-head" onclick="tog('f1','a1')"><div>🏫 <b>প্রতিষ্ঠান ফরম</b></div><div id="a1">▼</div></div>
+<div class="section-head" onclick="tog('f1','a1')"><div>🏫 <b>প্রতিষ্ঠান ফরম</b></div><div id="a1" class="arrow">▼</div></div>
 <div id="f1" class="section-body">
 <button onclick="logoIn.click()" class="yellowBtn">🖼️ লোগো চেঞ্জ</button>
 <input type="file" id="logoIn" accept="image/*" hidden>
 <div id="logoBox" class="logoC"><img id="logoImg"></div>
 <input id="bn" class="input" placeholder="প্রতিষ্ঠানের নাম">
 <input id="thikana" class="input" placeholder="ঠিকানা">
-<div class="half"><input id="eiin" class="input" placeholder="EIIN (ঐচ্ছিক)"></div>
+<div class="half"><input id="eiin" class="input" placeholder="EIIN"></div>
 <div class="codeBox">
 <label style="font-weight:800">🏫 প্রতিষ্ঠান কোড *</label>
 <input id="code" class="input" placeholder="যেমন: 50017">
-<label style="font-weight:800;margin-top:10px;display:block">🔑 পাসওয়ার্ড * (এই পাসওয়ার্ড দিয়েই লগইন হবে)</label>
-<input id="pass" class="input" type="text" placeholder="পাসওয়ার্ড দিন">
+<label style="font-weight:800;margin-top:10px;display:block">🔑 পাসওয়ার্ড *</label>
+<input id="pass" class="input" type="text" placeholder="এই পাসওয়ার্ড দিয়েই লগইন হবে">
 </div>
 <button id="saveBtn" type="button" class="greenBtn">সেভ করুন ✅</button>
 <div id="cnt" style="font-size:12px;text-align:right;margin-top:6px;font-weight:700"></div>
 </div>
 </div>
 
-<!-- ২. লগইন - ফরমের পাসওয়ার্ড দিয়েই দ্বিতীয় পাতায় -->
 <div class="section">
-<div class="section-head" onclick="tog('f2','a2')"><div>🔑 <b>প্রতিষ্ঠান লগইন</b></div><div id="a2">▼</div></div>
+<div class="section-head" onclick="tog('f2','a2')"><div>🔑 <b>প্রতিষ্ঠান লগইন</b></div><div id="a2" class="arrow">▼</div></div>
 <div id="f2" class="section-body">
 <div class="codeBox">
 <label style="font-weight:800">🏫 প্রতিষ্ঠান কোড</label>
-<input id="loginCode" class="input" placeholder="ফরমে যে কোড দিয়েছিলেন">
+<input id="loginCode" class="input" placeholder="কোড">
 <label style="font-weight:800;margin-top:10px;display:block">🔑 পাসওয়ার্ড</label>
-<input id="loginPass" class="input" type="text" placeholder="ফরমে যে পাসওয়ার্ড দিয়েছিলেন">
+<input id="loginPass" class="input" type="text" placeholder="ফরমের পাসওয়ার্ড">
 </div>
-<div class="step"><div class="lbl">ধাপ ১: শিফট</div><select id="shift" class="input"><option>প্রভাতি</option><option>দিবা</option></select></div>
-<div class="step"><div class="lbl">ধাপ ২: শ্রেণি</div><select id="sreni" class="input"><option>প্রাক-প্রাথমিক</option><option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option></select></div>
-<div class="step"><div class="lbl">ধাপ ৩: শাখা</div><select id="shakha" class="input"><option>N/A</option><option>ক</option><option>খ</option></select></div>
+<div class="step"><div class="lbl">শিফট</div><select id="shift" class="input"><option>প্রভাতি</option><option>দিবা</option></select></div>
+<div class="step"><div class="lbl">শ্রেণি</div><select id="sreni" class="input"><option>প্রাক-প্রাথমিক</option><option>১ম</option><option>২য়</option><option>৩য়</option><option>৪র্থ</option><option>৫ম</option></select></div>
+<div class="step"><div class="lbl">শাখা</div><select id="shakha" class="input"><option>N/A</option><option>ক</option><option>খ</option></select></div>
 <button id="loginBtn" type="button" class="blueBtn">🔒 প্রবেশ করুন - দ্বিতীয় পাতায় যাবে</button>
 <div id="msg" style="text-align:center;color:#dc2626;font-weight:800;margin-top:10px"></div>
 </div>
 </div>
 
-<!-- ৩. তালিকা - শুধু এডমিন (তুমি) দেখবে -->
 <div class="section">
-<div class="section-head" onclick="tog('f3','a3')"><div>🔒 <b>প্রতিষ্ঠানের তালিকা (শুধু এডমিন)</b></div><div id="a3">▼</div></div>
+<div class="section-head" onclick="tog('f3','a3')"><div>🔒 <b>প্রতিষ্ঠানের তালিকা (শুধু এডমিন)</b></div><div id="a3" class="arrow">▼</div></div>
 <div id="f3" class="section-body">
 <div class="adminBox">
-<label style="font-weight:800;color:#dc2626">🔒 এডমিন লগইন (শুধু তুমি দেখবে)</label>
+<label style="font-weight:800;color:#dc2626">🔒 এডমিন লগইন (শুধু তুমি)</label>
 <input id="adminName" class="input" placeholder="এডমিন: takrim">
 <input id="adminPass" class="input" type="password" placeholder="পাস: takrim2022">
 <button id="adminBtn" type="button" class="redBtn">🔒 তালিকা খুলুন</button>
 </div>
 <div id="adminBox" style="display:none;margin-top:12px">
 <hr>
-<div style="font-weight:900">📋 যতগুলো প্রতিষ্ঠান লগইন করেছে (সব এখানে জমা থাকবে):</div>
+<div style="font-weight:900">📋 লগইন করা প্রতিষ্ঠান (যতগুলো লগইন হবে সব এখানে):</div>
 <div id="allList" style="margin-top:8px"></div>
 </div>
 </div>
 </div>
-
 </div>
 
 <script>
@@ -96,7 +93,17 @@ const banner=document.getElementById("mainBannerImg");
 banner.src="./"+encodeURIComponent(fileName);
 banner.onerror=()=>{banner.src="https://takrim-ai.github.io/Takrir/"+encodeURIComponent(fileName)};
 
-function tog(id,a){let d=document.getElementById(id);let o=d.classList.contains('open');document.querySelectorAll('.section-body').forEach(x=>x.classList.remove('open'));document.querySelectorAll('[id^=a]').forEach(x=>x.innerText='▼');if(!o){d.classList.add('open');document.getElementById(a).innerText='▲';}}
+// FIXED tog - এখন শুধু a1,a2,a3 কে ▼▲ করবে, admin কে নষ্ট করবে না
+function tog(id,arrowId){
+  let d=document.getElementById(id);
+  let isOpen=d.classList.contains('open');
+  document.querySelectorAll('.section-body').forEach(x=>x.classList.remove('open'));
+  document.querySelectorAll('.arrow').forEach(x=>x.innerText='▼');
+  if(!isOpen){
+    d.classList.add('open');
+    document.getElementById(arrowId).innerText='▲';
+  }
+}
 let logoData='';logoIn.onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{logoData=r.result;logoImg.src=logoData;logoBox.style.display='block';};r.readAsDataURL(f);};
 
 let insts=JSON.parse(localStorage.getItem('malek_v4')||localStorage.getItem('malek_insts_v3')||'[]');
@@ -104,19 +111,18 @@ let logins=JSON.parse(localStorage.getItem('malek_log_v4')||localStorage.getItem
 function saveAll(){localStorage.setItem('malek_v4',JSON.stringify(insts));localStorage.setItem('malek_insts_v3',JSON.stringify(insts));localStorage.setItem('malek_log_v4',JSON.stringify(logins));localStorage.setItem('malek_logins_v3',JSON.stringify(logins));}
 
 function render(){
-  cnt.innerText=`মোট প্রতিষ্ঠান: ${insts.length} / 585`;
-  msg.innerText=insts.length?`লগইন করুন - ${insts.length} টি প্রতিষ্ঠান আছে`:'আগে প্রতিষ্ঠান যোগ করুন!';
-  // তালিকা - শুধু লগইন হওয়াগুলো
+  cnt.innerText=`মোট: ${insts.length} / 585`;
+  msg.innerText=insts.length?`লগইন করুন - ${insts.length} টি আছে`:'আগে যোগ করুন';
   let html='';
-  if(logins.length===0){html='<div style="text-align:center;padding:20px;color:#666">এখনো কোনো প্রতিষ্ঠান লগইন করেনি</div>';}
+  if(logins.length===0){html='<div style="text-align:center;padding:15px;color:#666">এখনো কোনো প্রতিষ্ঠান লগইন করেনি<br><small>ফরমের পাসওয়ার্ড দিয়ে লগইন করলে এখানে জমা হবে</small></div>';}
   else{
-    html=`<div style="font-weight:800;margin-bottom:8px;color:#16a34a">✅ মোট লগইন: ${logins.length} টি</div>`;
+    html=`<div style="font-weight:800;color:#16a34a;margin-bottom:8px">✅ মোট লগইন: ${logins.length} টি</div>`;
     html+=logins.map((l,i)=>`
     <div style="border:2px solid #16a34a;padding:10px;border-radius:12px;margin-top:8px;background:#f0fff4">
-      <div style="font-weight:900">${i+1}. 🏫 ${l.bn}</div>
-      <div style="margin-top:6px"><span style="color:#666">কোড:</span> <b style="font-size:18px">${l.code}</b></div>
-      <div><span style="color:#666">পাসওয়ার্ড:</span> <b style="font-size:16px;color:#dc2626">${l.passUsed}</b></div>
-      <div style="font-size:12px;margin-top:4px">📚 ${l.shift} | ${l.sreni} | শাখা:${l.shakha} | ${l.time}</div>
+      <b>${i+1}. ${l.bn}</b><br>
+      <div style="margin-top:4px">🏫 কোড: <b style="font-size:18px">${l.code}</b></div>
+      <div>🔑 পাসওয়ার্ড: <b style="color:#dc2626;font-size:16px">${l.passUsed}</b></div>
+      <div style="font-size:12px">📚 ${l.shift} | ${l.sreni} | ${l.shakha} | ${l.time}</div>
       <button onclick="delLogin('${l.code}')" style="background:#dc2626;color:#fff;border:none;padding:4px 10px;border-radius:6px;margin-top:6px">🗑️ ডিলিট</button>
     </div>`).join('');
   }
@@ -127,45 +133,28 @@ function delLogin(c){if(!confirm('ডিলিট '+c+'?'))return;logins=logins.
 saveBtn.onclick=()=>{
   let b=bn.value.trim(),a=thikana.value.trim(),e=eiin.value.trim(),c=code.value.trim(),p=pass.value.trim();
   if(!b||!c||!p)return alert('নাম, কোড, পাসওয়ার্ড লাগবে');
-  if(insts.some(x=>x.code===c))return alert('এই কোড আগে আছে: '+c);
+  if(insts.some(x=>x.code===c))return alert('এই কোড আগে আছে');
   insts.push({bn:b,addr:a,eiin:e,code:c,pass:p,logo:logoData});
-  saveAll();bn.value=thikana.value=eiin.value=code.value=pass.value='';logoData='';logoBox.style.display='none';render();
-  alert('✅ সেভ হয়েছে!\n\nকোড: '+c+'\nপাসওয়ার্ড: '+p+'\n\nএখন লগইনে এই কোড ও পাসওয়ার্ড দিয়েই দ্বিতীয় পাতায় যেতে পারবে');
+  saveAll();bn.value=thikana.value=eiin.value=code.value=pass.value='';logoData='';logoBox.style.display='none';render();alert('সেভ ✅\nকোড: '+c+'\nপাস: '+p);
 }
 
 loginBtn.onclick=()=>{
   let c=loginCode.value.trim();let p=loginPass.value.trim();
-  if(!c||!p)return alert('কোড ও পাসওয়ার্ড লিখুন');
+  if(!c||!p)return alert('কোড ও পাসওয়ার্ড দিন');
   let s=insts.find(x=>x.code===c);
-  if(!s)return alert('এই কোডের প্রতিষ্ঠান পাওয়া যায়নি: '+c+'\nআগে ফরম পূরণ করুন');
-  if(s.pass!==p)return alert('পাসওয়ার্ড ভুল!\n\nফরমে দিয়েছিলেন: '+s.pass+'\nআপনি দিলেন: '+p);
-
-  // লগইন সফল - তালিকায় যোগ হবে
-  let entry={bn:s.bn,code:s.code,passUsed:p,shift:shift.value,sreni:sreni.value,shakha:shakha.value,time:new Date().toLocaleString('bn-BD'),logo:s.logo,addr:s.addr,eiin:s.eiin};
-  logins=logins.filter(x=>x.code!==c);
-  logins.unshift(entry);
-  saveAll();
-  localStorage.setItem('malek_current',JSON.stringify(entry));
-  render();
-  alert('✅ প্রবেশ সফল!\n\n'+s.bn+'\nকোড: '+c+'\n\nএখন দ্বিতীয় পাতায় যাচ্ছে...\n(এই লগইন তালিকায় জমা হলো)');
-
-  // দ্বিতীয় পাতায় যাবে - যদি attendance.html থাকে
-  setTimeout(()=>{
-    if(location.href.includes('Takrir')){
-      // চেষ্টা করো দ্বিতীয় পাতায় যেতে
-      let secondPage = localStorage.getItem('malek_second_page') || 'attendance.html';
-      // যদি ফাইল থাকে তাহলে যাবে, না থাকলে এখানেই থাকবে
-      // window.location.href = secondPage;
-      alert('দ্বিতীয় পাতার ফাইল (attendance.html) থাকলে ওখানে যাবে। এখন তালিকায় জমা হলো।');
-    }
-  },500);
+  if(!s)return alert('এই কোড পাওয়া যায়নি: '+c);
+  if(s.pass!==p)return alert('পাসওয়ার্ড ভুল!\nসঠিক: '+s.pass+'\nদিলেন: '+p);
+  let entry={bn:s.bn,code:s.code,passUsed:p,shift:shift.value,sreni:sreni.value,shakha:shakha.value,time:new Date().toLocaleString('bn-BD'),logo:s.logo};
+  logins=logins.filter(x=>x.code!==c);logins.unshift(entry);saveAll();localStorage.setItem('malek_current',JSON.stringify(entry));
+  render();alert('প্রবেশ সফল ✅ '+s.bn+'\nএখন তালিকায় জমা হলো');
 }
 
 adminBtn.onclick=()=>{
-  if(adminName.value.trim()!=='takrim' || adminPass.value.trim()!=='takrim2022')return alert('❌ এডমিন নাম/পাস ভুল!\n\nনাম: takrim\nপাস: takrim2022\n\nএটা শুধু তুমি জানবে, অন্য কেউ তালিকা দেখতে পারবে না');
+  let an=adminName.value.trim();let ap=adminPass.value.trim();
+  if(an!=='takrim' || ap!=='takrim2022'){alert('❌ ভুল!\nনাম: takrim\nপাস: takrim2022');return;}
   document.getElementById('adminBox').style.display='block';
   render();
-  alert('✅ এডমিন খুলেছে - নিচে '+logins.length+' টি লগইন করা প্রতিষ্ঠান আছে (শুধু তুমি দেখছো)');
+  alert('✅ তালিকা খুলেছে - মোট '+logins.length+' টি লগইন আছে');
 }
 
 render();
