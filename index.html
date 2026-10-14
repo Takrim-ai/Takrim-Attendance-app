@@ -3,143 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>দ্বিতীয় পাতা - হাজিরা ব্যবস্থাপনা</title>
+<title>দ্বিতীয় পাতা - ফাইনাল</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans Bengali',sans-serif}
 body{background:#f0f4f8;padding:10px}
 .pad{background:white;border:2px solid #0d47a1;border-radius:12px;padding:15px;text-align:center;margin-bottom:10px}
-.pad h1{color:#0d47a1;font-size:22px}
-.pad p{color:#333;font-size:14px}
+.pad h1{color:#0d47a1;font-size:22px}.pad p{color:#333;font-size:14px}
 .login-info{background:#e3f2fd;border-radius:10px;padding:12px;margin-bottom:15px;font-size:14px;line-height:22px}
-.accordion{margin-bottom:10px;border-radius:10px;overflow:hidden;background:white;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.accordion{margin-bottom:10px;border-radius:12px;overflow:hidden;background:white;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
 .acc-header{background:#1976d2;color:white;padding:14px 15px;font-size:16px;font-weight:bold;display:flex;justify-content:space-between;cursor:pointer}
-.acc-header span:last-child{transition:0.3s}
-.acc-body{display:none;padding:15px;background:#fafafa}
-.acc-body.active{display:block}
-input,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
-.btn{display:inline-block;padding:8px 14px;border:none;border-radius:6px;color:white;cursor:pointer;margin:5px 3px;font-size:14px}
-.btn-green{background:#2e7d32} .btn-blue{background:#1565c0} .btn-orange{background:#ef6c00}
+.acc-body{display:none;padding:12px;background:#fafafa}.acc-body.active{display:block}
+input,textarea{padding:8px;border:1px solid #ccc;border-radius:6px}
+.btn{padding:8px 14px;border:none;border-radius:6px;color:white;cursor:pointer;margin:4px 3px;font-size:14px}
 .student-item{display:flex;justify-content:space-between;background:white;padding:8px;border-radius:6px;margin:5px 0;border:1px solid #ddd}
 </style>
 </head>
 <body>
 
-<!-- 1. প্রথম পাতার প্যাড অটো আসবে -->
 <div class="pad" id="institutePad">
-  <h1 id="instName">প্রতিষ্ঠানের নাম লোড হচ্ছে...</h1>
-  <p id="instAddress"></p>
-  <p id="instEIIN"></p>
+  <h1 id="instName">আল-হেরা আইডিয়াল মাদ্রাসা</h1>
+  <p id="instAddress">ঠিকানা পাওয়া যায়নি</p>
 </div>
+<div class="login-info" id="loginInfo">👤 প্রধান: প্রধান শিক্ষক | 📞 মোবাইল: | 🏫 লগইন: সক্রিয় আছে - আলহামদুলিল্লাহ</div>
 
-<!-- 2. লগইন তথ্য অটো আসবে -->
-<div class="login-info" id="loginInfo">
-  লগইন তথ্য লোড হচ্ছে...
-</div>
-
-<!-- 8 টা ধাপ এখন 7 টা সহজ ধাপ -->
 <div id="accordionContainer"></div>
 
 <script>
-// প্রথম পাতা থেকে অটো ডাটা আনা
-const instName = localStorage.getItem('instituteName') || localStorage.getItem('schoolName') || 'আল-হেরা আইডিয়াল মাদ্রাসা';
+// === অটো ডাটা ===
+let students = JSON.parse(localStorage.getItem('students')||'[{"name":"কালাম","roll":"202","present":true},{"name":"কমল","roll":"203","present":false},{"name":"সাকিব","roll":"204","present":true}]');
+const instName = localStorage.getItem('instituteName') || 'আল-হেরা আইডিয়াল মাদ্রাসা';
 const instAddress = localStorage.getItem('instituteAddress') || 'ঠিকানা পাওয়া যায়নি';
-const instEIIN = localStorage.getItem('instituteEIIN') || '';
-const principal = localStorage.getItem('principalName') || 'প্রধান শিক্ষক';
-const mobile = localStorage.getItem('instituteMobile') || localStorage.getItem('mobile') || '';
-
-document.getElementById('instName').innerText = instName;
-document.getElementById('instAddress').innerText = instAddress;
-document.getElementById('instEIIN').innerText = instEIIN ? 'EIIN: '+instEIIN : '';
-document.getElementById('loginInfo').innerHTML = `👤 <b>প্রধান:</b> ${principal} | 📞 <b>মোবাইল:</b> ${mobile} | 🏫 <b>লগইন:</b> সক্রিয় আছে - আলহামদুলিল্লাহ`;
+document.getElementById('instName').innerText=instName;
+document.getElementById('instAddress').innerText=instAddress;
+let savedResult = JSON.parse(localStorage.getItem('fullResultSheet')||'null');
 
 const steps = [
   {title:'1️⃣ শিক্ষার্থী যোগ করুন', content:`
-    <input id="sName" placeholder="শিক্ষার্থীর নাম">
-    <input id="sRoll" placeholder="রোল নম্বর">
-    <input id="sMobile" placeholder="অভিভাবকের মোবাইল (01...)">
-    <button class="btn btn-green" onclick="addStudent()">+ যোগ করুন</button>
-    <div id="addMsg"></div>
+    <input id="sName" placeholder="শিক্ষার্থীর নাম" style="width:100%;margin:5px 0">
+    <input id="sRoll" placeholder="রোল" style="width:100%;margin:5px 0">
+    <input id="sMobile" placeholder="মোবাইল" style="width:100%;margin:5px 0">
+    <button class="btn" style="background:#2e7d32" onclick="addStudent()">+ যোগ করুন</button>
   `},
-  {title:'2️⃣ 📋 শিক্ষার্থীর তালিকা দেখুন ( <span id="totalCount">0</span> )', content:`<div id="studentList"></div>`},
-  {title:'3️⃣ ✅ উপস্থিত দেখুন', content:`
-    <div id="presentList"></div>
-    <hr style="margin:10px 0">
-    <button class="btn btn-green" onclick="sendSMS('present')">📩 SMS এ পাঠান</button>
-    <button class="btn btn-blue" onclick="sendWA('present')">📱 WhatsApp এ পাঠান</button>
-  `},
-  {title:'4️⃣ ❌ অনুপস্থিত দেখুন', content:`
-    <div id="absentList"></div>
-    <hr style="margin:10px 0">
-    <button class="btn btn-green" onclick="sendSMS('absent')">📩 SMS এ পাঠান</button>
-    <button class="btn btn-blue" onclick="sendWA('absent')">📱 WhatsApp এ পাঠান</button>
-  `},
-  {title:'5️⃣ 📢 নোটিশ বোর্ড', content:`
-    <textarea id="noticeText" rows="3" placeholder="নোটিশ লিখুন..."></textarea>
-    <button class="btn btn-orange" onclick="saveNotice()">নোটিশ সেভ করুন</button>
-    <div style="margin-top:10px">
-      <button class="btn btn-green" onclick="sendSMS('notice')">📩 SMS এ পাঠান</button>
-      <button class="btn btn-blue" onclick="sendWA('notice')">📱 WhatsApp এ পাঠান</button>
+  {title:`2️⃣ 📋 শিক্ষার্থীর তালিকা দেখুন ( ${students.length} )`, content:`<div id="studentList"></div>`},
+  {title:'3️⃣ ✅ উপস্থিত দেখুন', content:`<div id="presentList"></div><button class="btn" style="background:#2e7d32" onclick="sendWA('present')">📱 WhatsApp</button>`},
+  {title:'4️⃣ ❌ অনুপস্থিত দেখুন', content:`<div id="absentList"></div><button class="btn" style="background:#2e7d32" onclick="sendWA('absent')">📱 WhatsApp</button>`},
+  {title:'5️⃣ 📢 নোটিশ বোর্ড', content:`<textarea id="noticeText" rows="3" placeholder="নোটিশ লিখুন..." style="width:100%"></textarea><button class="btn" style="background:#ef6c00" onclick="saveNotice()">সেভ</button>`},
+
+  // === ৬ নম্বর পরিবর্তন - মাসিক হাজিরা ===
+  {title:'6️⃣ 📅 মাসিক হাজিরা দেখুন', content:`
+    <div style="background:white;padding:10px;border-radius:10px">
+      <label>মাস নির্বাচন করুন:</label>
+      <input type="month" id="monthPicker" value="${new Date().toISOString().slice(0,7)}" onchange="renderMonthly()" style="width:100%;margin:6px 0">
+      <div style="overflow:auto"><table id="monthlyTable" border="1" style="width:100%;border-collapse:collapse;text-align:center;font-size:13px"></table></div>
+      <div style="margin-top:8px">
+        <button class="btn" style="background:#1565c0" onclick="window.print()">🖨️ প্রিন্ট</button>
+        <button class="btn" style="background:#2e7d32" onclick="saveMonthly()">💾 সেভ</button>
+      </div>
+      <p style="font-size:12px;color:green;margin-top:5px">💡 উপস্থিত দিন এডিট করা যাবে, তারপর সেভ দিলে থেকে যাবে</p>
     </div>
   `},
-  {title:'6️⃣ 📅 মাসিক হাজিরা দেখুন', content:`<div id="monthlyReport">মাসিক রিপোর্ট এখানে দেখাবে...</div>`},
-  {title:'7️⃣ 🔽 ফলাফল দেখুন', content:`<div>ফলাফল যোগ ও দেখার সিস্টেম</div>`}
+
+  // === ৭ নম্বর পরিবর্তন - ফলাফল সিট - সব একসাথে এডিট ===
+  {title:'7️⃣ 🔽 ফলাফল দেখুন', content:`
+    <div id="resultSheetBox" style="background:white;padding:10px;border-radius:12px;border:2px solid #7c4dff">
+      <h3 style="color:#6a1b9a">📋 ফলাফল সিট - সব ঘর একসাথে এডিট</h3>
+      <div style="display:flex;gap:6px;align-items:center;margin:10px 0;flex-wrap:wrap">
+        <span style="background:#eee;padding:6px 10px;border-radius:20px;font-weight:bold">বিষয় সংখ্যা:</span>
+        <button onclick="changeSub(-1)" style="background:#2e7d32;color:white;border:none;width:32px;height:32px;border-radius:50%">-</button>
+        <input id="subCount" type="number" value="5" min="1" max="12" style="width:60px;text-align:center;padding:6px;border:2px solid #7c4dff;border-radius:8px">
+        <button onclick="changeSub(1)" style="background:#2e7d32;color:white;border:none;width:32px;height:32px;border-radius:50%">+</button>
+        <button onclick="makeResultSheet()" style="background:#7c4dff;color:white;border:none;padding:6px 12px;border-radius:6px">✅ সেট করুন</button>
+      </div>
+      <div id="subjectEdit" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
+      <div style="overflow:auto;border:1px solid #ddd;border-radius:8px"><table id="resultTable" border="1" style="width:100%;border-collapse:collapse;font-size:12px;text-align:center"><thead id="resultHead" style="background:#1b5e20;color:white"></thead><tbody id="resultBody"></tbody></table></div>
+      <div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap">
+        <button style="background:#2e7d32;color:white;padding:10px 18px;border-radius:8px;border:none;font-weight:bold" onclick="saveAllResult()">💾 সব সেভ করুন</button>
+        <button style="background:#1565c0;color:white;padding:10px 14px;border-radius:8px;border:none" onclick="calcAllResult()">🔄 হিসাব করুন</button>
+        <button style="background:#c62828;color:white;padding:10px 14px;border-radius:8px;border:none" onclick="deleteResult()">🗑️ ডিলিট</button>
+      </div>
+      <p id="saveStatus" style="margin-top:8px;color:green;font-weight:bold"></p>
+    </div>
+  `}
 ];
 
 const container = document.getElementById('accordionContainer');
 steps.forEach((step,i)=>{
-  container.innerHTML += `
-    <div class="accordion">
-      <div class="acc-header" onclick="toggleAcc(${i})"><span>${step.title}</span><span id="arrow${i}">▼</span></div>
-      <div class="acc-body" id="accBody${i}">${step.content}</div>
-    </div>
-  `;
+  container.innerHTML+=`<div class="accordion"><div class="acc-header" onclick="toggleAcc(${i})"><span>${step.title}</span><span id="arrow${i}">▼</span></div><div class="acc-body" id="accBody${i}">${step.content}</div></div>`;
 });
 
 function toggleAcc(i){
-  const body = document.getElementById('accBody'+i);
-  const arrow = document.getElementById('arrow'+i);
-  const isOpen = body.classList.contains('active');
+  const body=document.getElementById('accBody'+i); const arrow=document.getElementById('arrow'+i);
+  const isOpen=body.classList.contains('active');
   document.querySelectorAll('.acc-body').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('[id^=arrow]').forEach(a=>a.innerText='▼');
-  if(!isOpen){ body.classList.add('active'); arrow.innerText='▲'; if(i==1) renderStudents(); if(i==2) renderPresent(); if(i==3) renderAbsent(); }
+  if(!isOpen){ body.classList.add('active'); arrow.innerText='▲';
+    if(i==1) renderStudents(); if(i==2) renderPresent(); if(i==3) renderAbsent(); if(i==5) renderMonthly(); if(i==6) makeResultSheet();
+  }
 }
 
-// ডেমো ডাটা - localStorage থেকে আসবে
-let students = JSON.parse(localStorage.getItem('students')||'[{"name":"মালেক","roll":"1","mobile":"01700000001","present":true},{"name":"সাকিব","roll":"2","mobile":"01700000002","present":false}]');
+// সাধারণ ফাংশন
+function addStudent(){ const n=document.getElementById('sName').value, r=document.getElementById('sRoll').value; if(!n) return alert('নাম দিন'); students.push({name:n,roll:r,present:true}); localStorage.setItem('students',JSON.stringify(students)); location.reload(); }
+function renderStudents(){ let h=''; students.forEach((s,idx)=>{ h+=`<div class="student-item"><span>${s.roll}. ${s.name}</span><span><button onclick="togglePresent(${idx})">${s.present?'✅':'❌'}</button> <button onclick="delStu(${idx})">🗑️</button></span></div>`}); document.getElementById('studentList').innerHTML=h; }
+function renderPresent(){ document.getElementById('presentList').innerHTML=students.filter(s=>s.present).map(s=>`✅ ${s.name}`).join('<br>')||'কেউ নেই'; }
+function renderAbsent(){ document.getElementById('absentList').innerHTML=students.filter(s=>!s.present).map(s=>`❌ ${s.name}`).join('<br>')||'সবাই উপস্থিত আলহামদুলিল্লাহ'; }
+function togglePresent(i){ students[i].present=!students[i].present; localStorage.setItem('students',JSON.stringify(students)); renderStudents(); }
+function delStu(i){ if(confirm('ডিলিট?')){ students.splice(i,1); localStorage.setItem('students',JSON.stringify(students)); location.reload(); } }
+function saveNotice(){ localStorage.setItem('notice',document.getElementById('noticeText').value); alert('সেভ হয়েছে'); }
+function sendWA(t){ let m=t=='present'?students.filter(s=>s.present).map(s=>s.name).join(','):students.filter(s=>!s.present).map(s=>s.name).join(','); window.open(`https://wa.me/?text=${encodeURIComponent(m)}`,'_blank'); }
 
-function addStudent(){
-  const name=document.getElementById('sName').value;
-  const roll=document.getElementById('sRoll').value;
-  const mobile=document.getElementById('sMobile').value;
-  if(!name) return alert('নাম দিন');
-  students.push({name,roll,mobile,present:true});
-  localStorage.setItem('students',JSON.stringify(students));
-  document.getElementById('addMsg').innerHTML='<p style="color:green">✅ যোগ হয়েছে আলহামদুলিল্লাহ</p>';
-  renderStudents();
+// মাসিক হাজিরা - পরিবর্তন ১
+function renderMonthly(){
+  let html='<tr style="background:#1976d2;color:white"><th>রোল</th><th>নাম</th><th>উপস্থিত দিন (এডিট)</th><th>অনুপস্থিত</th><th>%</th></tr>';
+  students.forEach((s,idx)=>{
+    const saved = JSON.parse(localStorage.getItem('monthlyData')||'{}')[idx] || 22;
+    html+=`<tr><td>${s.roll}</td><td>${s.name}</td><td><input id="mon_${idx}" type="number" value="${saved}" style="width:60px;text-align:center;border:1.5px dashed green"></td><td id="mon_abs_${idx}">${30-saved}</td><td id="mon_per_${idx}">${Math.round(saved/30*100)}%</td></tr>`;
+  });
+  document.getElementById('monthlyTable').innerHTML=html;
+  // টাইপ করলে অটো %
+  students.forEach((_,idx)=>{ document.getElementById(`mon_${idx}`)?.addEventListener('input',()=>{ const v=parseInt(document.getElementById(`mon_${idx}`).value)||0; document.getElementById(`mon_abs_${idx}`).innerText=30-v; document.getElementById(`mon_per_${idx}`).innerText=Math.round(v/30*100)+'%'; }); });
 }
-function renderStudents(){
-  document.getElementById('totalCount').innerText=students.length;
-  let html=''; students.forEach((s,idx)=>{ html+=`<div class="student-item"><span>${s.roll}. ${s.name} - ${s.mobile}</span><span><button onclick="togglePresent(${idx})">${s.present?'✅':'❌'}</button> <button onclick="delStu(${idx})">🗑️</button></span></div>`});
-  const listEl=document.getElementById('studentList'); if(listEl) listEl.innerHTML=html||'কোনো শিক্ষার্থী নেই';
-}
-function renderPresent(){ let html=''; students.filter(s=>s.present).forEach(s=>{ html+=`<div class="student-item">✅ ${s.name} (${s.roll})</div>`}); document.getElementById('presentList').innerHTML=html||'কেউ উপস্থিত নেই';}
-function renderAbsent(){ let html=''; students.filter(s=>!s.present).forEach(s=>{ html+=`<div class="student-item">❌ ${s.name} (${s.roll})</div>`}); document.getElementById('absentList').innerHTML=html||'সবাই উপস্থিত আলহামদুলিল্লাহ';}
-function togglePresent(i){ students[i].present=!students[i].present; localStorage.setItem('students',JSON.stringify(students)); renderStudents();}
-function delStu(i){ if(confirm('ডিলিট করবেন?')){ students.splice(i,1); localStorage.setItem('students',JSON.stringify(students)); renderStudents();}}
-function saveNotice(){ localStorage.setItem('notice',document.getElementById('noticeText').value); alert('নোটিশ সেভ হয়েছে');}
+function saveMonthly(){ let data={}; students.forEach((_,idx)=>{ data[idx]=document.getElementById(`mon_${idx}`).value; }); localStorage.setItem('monthlyData',JSON.stringify(data)); alert('মাসিক হাজিরা সেভ হয়েছে - ডিলিট না করা পর্যন্ত থাকবে'); }
 
-function sendSMS(type){
-  let msg=''; if(type=='present') msg=`${instName} - উপস্থিত: ${students.filter(s=>s.present).map(s=>s.name).join(', ')}`;
-  if(type=='absent') msg=`${instName} - অনুপস্থিত: ${students.filter(s=>!s.present).map(s=>s.name).join(', ')}`;
-  if(type=='notice') msg=`${instName} - নোটিশ: ${localStorage.getItem('notice')||''}`;
-  window.location.href=`sms:?body=${encodeURIComponent(msg)}`;
+// ফলাফল সিট - পরিবর্তন ২ - সব একসাথে এডিট + সেভ
+function changeSub(n){ let c=parseInt(document.getElementById('subCount').value)||5; c+=n; if(c<1)c=1; if(c>12)c=12; document.getElementById('subCount').value=c; }
+function makeResultSheet(){
+  const count=parseInt(document.getElementById('subCount').value)||5;
+  if(savedResult) document.getElementById('subCount').value=savedResult.count||count;
+  const finalCount=parseInt(document.getElementById('subCount').value)||5;
+  let subjects=savedResult?.subjects||[];
+  let editHtml=''; for(let i=0;i<finalCount;i++){ const s=subjects[i]||{name:`বিষয় ${i+1}`,full:100}; editHtml+=`<div style="background:#f3e5f5;padding:5px;border-radius:6px;display:flex;gap:4px"><input id="sname${i}" value="${s.name}" style="width:85px;padding:4px;border-radius:4px;border:1px solid #ccc"><input id="sfull${i}" type="number" value="${s.full}" style="width:60px;padding:4px;border-radius:4px;border:1px solid #ccc"></div>`; }
+  document.getElementById('subjectEdit').innerHTML=editHtml;
+  let head='<tr><th>রোল</th><th>নাম</th>'; for(let i=0;i<finalCount;i++) head+=`<th>বিষয় ${i+1}</th>`; head+='<th>পূর্ণ</th><th>প্রাপ্ত</th><th>%</th><th>GPA</th><th>গড়</th></tr>'; document.getElementById('resultHead').innerHTML=head;
+  let body=''; students.forEach((stu,idx)=>{ body+=`<tr><td>${stu.roll}</td><td style="text-align:left">${stu.name}</td>`; for(let j=0;j<finalCount;j++){ const old=savedResult?.marks?.[idx]?.[j]||''; body+=`<td><input id="mark_${idx}_${j}" type="number" value="${old}" style="width:58px;text-align:center;border:1.5px dashed #4caf50;padding:5px;border-radius:5px"></td>`; } body+=`<td id="full_${idx}">-</td><td id="obt_${idx}">-</td><td id="per_${idx}">-</td><td id="gpa_${idx}">-</td><td id="avg_${idx}">-</td></tr>`; }); document.getElementById('resultBody').innerHTML=body;
+  if(savedResult) calcAllResult();
+  document.getElementById('saveStatus').innerText='✏️ সব ঘর এডিট মোডে - এডিট শেষে "সব সেভ করুন" চাপুন';
 }
-function sendWA(type){
-  let msg=''; if(type=='present') msg=`*${instName}*%0A✅ উপস্থিত:%0A${students.filter(s=>s.present).map(s=>s.name).join('%0A')}`;
-  if(type=='absent') msg=`*${instName}*%0A❌ অনুপস্থিত:%0A${students.filter(s=>!s.present).map(s=>s.name).join('%0A')}`;
-  if(type=='notice') msg=`*${instName}*%0A📢 নোটিশ:%0A${localStorage.getItem('notice')||''}`;
-  window.open(`https://wa.me/?text=${msg}`,'_blank');
+function calcAllResult(){
+  const count=parseInt(document.getElementById('subCount').value)||5;
+  students.forEach((_,idx)=>{ let fullT=0,obtT=0; for(let j=0;j<count;j++){ fullT+=parseInt(document.getElementById(`sfull${j}`)?.value)||0; obtT+=parseInt(document.getElementById(`mark_${idx}_${j}`)?.value)||0; } const per=fullT?Math.round(obtT/fullT*100):0; const avg=count?Math.round(obtT/count):0; let gpa='F'; if(per>=80)gpa='5.00'; else if(per>=70)gpa='4.00'; else if(per>=60)gpa='3.50'; else if(per>=50)gpa='3.00'; else if(per>=40)gpa='2.00'; else if(per>=33)gpa='1.00'; document.getElementById(`full_${idx}`).innerText=fullT; document.getElementById(`obt_${idx}`).innerText=obtT; document.getElementById(`per_${idx}`).innerText=per+'%'; document.getElementById(`avg_${idx}`).innerText=avg; document.getElementById(`gpa_${idx}`).innerText=gpa; });
 }
+function saveAllResult(){
+  const count=parseInt(document.getElementById('subCount').value)||5;
+  let subjects=[]; for(let i=0;i<count;i++) subjects.push({name:document.getElementById(`sname${i}`).value, full:document.getElementById(`sfull${i}`).value});
+  let marks=[]; students.forEach((_,idx)=>{ let row=[]; for(let j=0;j<count;j++) row.push(document.getElementById(`mark_${idx}_${j}`).value); marks.push(row); });
+  savedResult={subjects,marks,count}; localStorage.setItem('fullResultSheet',JSON.stringify(savedResult)); calcAllResult(); document.getElementById('saveStatus').innerText='✅ আলহামদুলিল্লাহ সেভ হয়েছে - ডিলিট না করা পর্যন্ত থাকবে';
+}
+function deleteResult(){ if(confirm('সব ফলাফল মুছবেন?')){ localStorage.removeItem('fullResultSheet'); savedResult=null; makeResultSheet(); document.getElementById('saveStatus').innerText='🗑️ ডিলিট হয়েছে'; } }
+
 renderStudents();
 </script>
 </body>
