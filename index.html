@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Al-Hera No Arrow Final</title>
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Al-Hera No Arrow Final - P/A</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
@@ -20,6 +20,8 @@
 .pillTotal{border-radius:14px;padding:4px 6px;background:#fef9c3;font-weight:bold}.pillGot{border-radius:14px;padding:4px 6px;background:#dcfce7;font-weight:bold}
 .acc-h-normal{background:#1976d2;color:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:bold;font-size:12px;border-radius:12px 12px 0 0}
 .acc-b-normal{display:none;padding:8px;background:#fafafa}.acc-b-normal.on{display:block}
+.paP{background:#e8f5e9;color:#2e7d32;font-weight:bold}
+.paA{background:#ffebee;color:#c62828;font-weight:bold}
 </style></head><body><div class="pad"><h1 style="color:#0d47a1;font-size:18px">আল-হেরা আইডিয়াল মাদ্রাসা</h1></div><div id="acc"></div>
 <script>
 let students=JSON.parse(localStorage.getItem('students_v2')||'[{"name":"কালাম","roll":"202","mobile":"01700000001","present":true},{"name":"কমল","roll":"203","mobile":"01700000002","present":false},{"name":"সাকিব","roll":"204","mobile":"01700000003","present":true}]');
@@ -41,30 +43,25 @@ function buildAcc(){
 buildAcc();
 function togN(i){let b=document.getElementById('ab'+i);let ar=document.getElementById('ar'+i);if(!b)return;let o=b.classList.contains('on');if(o){b.classList.remove('on');if(ar)ar.innerText='▼';}else{b.classList.add('on');if(ar)ar.innerText='▲';if(i==2)showStu();if(i==4)renderMonth();if(i==5)makeSheet();}}
 function setTab(t){
- if(activeTab===t){
-   activeTab='';
-   document.querySelectorAll('.hbox').forEach(x=>x.classList.remove('active'));
-   document.getElementById('ab3').classList.remove('show');
-   document.getElementById('tabContent').innerHTML='';
-   return;
- }
- activeTab=t;
- document.querySelectorAll('.hbox').forEach(x=>x.classList.remove('active'));
- document.getElementById('hb_'+t).classList.add('active');
- document.getElementById('ab3').classList.add('show');
- renderTab();
+ if(activeTab===t){activeTab='';document.querySelectorAll('.hbox').forEach(x=>x.classList.remove('active'));document.getElementById('ab3').classList.remove('show');document.getElementById('tabContent').innerHTML='';return;}
+ activeTab=t;document.querySelectorAll('.hbox').forEach(x=>x.classList.remove('active'));document.getElementById('hb_'+t).classList.add('active');document.getElementById('ab3').classList.add('show');renderTab();
 }
 function renderHeaderCounts(){let p=students.filter(s=>s.present).length;let a=students.filter(s=>!s.present).length;document.getElementById('hc_present').innerText=p;document.getElementById('hc_absent').innerText=a;}
-function renderTab(){
- let notice=localStorage.getItem('notice')||'';let pList=students.filter(s=>s.present);let aList=students.filter(s=>!s.present);let el=document.getElementById('tabContent');if(!el)return;
- if(activeTab===''){el.innerHTML='';return;}
- if(activeTab==='present'){el.innerHTML=`<div class="cbox" style="border-color:#2e7d32"><div class="cbox-head" style="background:#2e7d32">✅ মোট উপস্থিত - ${pList.length} জন</div><div class="cbox-body">${pList.map(s=>`✅ ${s.name} (${s.roll}) - ${s.mobile}`).join('<br>')||'কেউ নেই'}</div></div><div style="display:flex;gap:6px"><button class="btn" style="background:#0284c7;flex:1;padding:12px" onclick="sendSMSPresent()">📱 SMS উপস্থিত</button><button class="btn" style="background:#16a34a;flex:1;padding:12px" onclick="sendWAPresent()">💬 WhatsApp উপস্থিত</button></div>`;}
- else if(activeTab==='absent'){el.innerHTML=`<div class="cbox" style="border-color:#c62828"><div class="cbox-head" style="background:#c62828">❌ মোট অনুপস্থিত - ${aList.length} জন</div><div class="cbox-body">${aList.map(s=>`❌ ${s.name} (${s.roll}) - ${s.mobile}`).join('<br>')||'সবাই উপস্থিত'}</div></div><div style="display:flex;gap:6px"><button class="btn" style="background:#0284c7;flex:1;padding:12px" onclick="sendSMSAbsent()">📱 SMS অনুপস্থিত</button><button class="btn" style="background:#16a34a;flex:1;padding:12px" onclick="sendWAAbsent()">💬 WhatsApp অনুপস্থিত</button></div>`;}
- else if(activeTab==='notice'){el.innerHTML=`<div class="cbox" style="border-color:#ef6c00"><div class="cbox-head" style="background:#ef6c00">📢 নোটিশ - বিস্তারিত</div><div class="cbox-body"><textarea id="notice" rows="4" style="width:100%;border-radius:12px;padding:8px;border:1px solid #ccc">${notice}</textarea><button class="btn" style="background:#ef6c00;width:100%;margin-top:6px;padding:10px" onclick="saveNotice()">💾 সেভ</button></div></div><div style="display:flex;gap:6px"><button class="btn" style="background:#0284c7;flex:1;padding:12px" onclick="sendSMSNotice()">📱 SMS নোটিশ</button><button class="btn" style="background:#16a34a;flex:1;padding:12px" onclick="sendWANotice()">💬 WhatsApp নোটিশ</button></div><div style="margin-top:8px;display:flex;gap:6px"><button class="btn" style="background:#6a1b9a;flex:1;padding:12px" onclick="sendSMSAll()">📱 সব একসাথে SMS</button><button class="btn" style="background:#2e7d32;flex:1;padding:12px" onclick="sendWAAll()">💬 সব একসাথে WhatsApp</button></div>`;}
-}
+function renderTab(){let notice=localStorage.getItem('notice')||'';let pList=students.filter(s=>s.present);let aList=students.filter(s=>!s.present);let el=document.getElementById('tabContent');if(!el)return;if(activeTab===''){el.innerHTML='';return;}if(activeTab==='present'){el.innerHTML=`<div class="cbox" style="border-color:#2e7d32"><div class="cbox-head" style="background:#2e7d32">✅ মোট উপস্থিত - ${pList.length} জন</div><div class="cbox-body">${pList.map(s=>`✅ ${s.name} (${s.roll}) - ${s.mobile}`).join('<br>')||'কেউ নেই'}</div></div><div style="display:flex;gap:6px"><button class="btn" style="background:#0284c7;flex:1;padding:12px" onclick="sendSMSPresent()">📱 SMS উপস্থিত</button><button class="btn" style="background:#16a34a;flex:1;padding:12px" onclick="sendWAPresent()">💬 WhatsApp উপস্থিত</button></div>`;}else if(activeTab==='absent'){el.innerHTML=`<div class="cbox" style="border-color:#c62828"><div class="cbox-head" style="background:#c62828">❌ মোট অনুপস্থিত - ${aList.length} জন</div><div class="cbox-body">${aList.map(s=>`❌ ${s.name} (${s.roll}) - ${s.mobile}`).join('<br>')||'সবাই উপস্থিত'}</div></div><div style="display:flex;gap:6px"><button class="btn" style="background:#0284c7;flex:1;padding:12px" onclick="sendSMSAbsent()">📱 SMS অনুপস্থিত</button><button class="btn" style="background:#16a34a;flex:1;padding:12px" onclick="sendWAAbsent()">💬 WhatsApp অনুপস্থিত</button></div>`;}else{el.innerHTML=`<div class="cbox" style="border-color:#ef6c00"><div class="cbox-head" style="background:#ef6c00">📢 নোটিশ - বিস্তারিত</div><div class="cbox-body"><textarea id="notice" rows="4" style="width:100%;border-radius:12px;padding:8px;border:1px solid #ccc">${notice}</textarea><button class="btn" style="background:#ef6c00;width:100%;margin-top:6px;padding:10px" onclick="saveNotice()">💾 সেভ</button></div></div><div style="display:flex;gap:6px"><button class="btn" style="background:#0284c7;flex:1;padding:12px" onclick="sendSMSNotice()">📱 SMS নোটিশ</button><button class="btn" style="background:#16a34a;flex:1;padding:12px" onclick="sendWANotice()">💬 WhatsApp নোটিশ</button></div><div style="margin-top:8px;display:flex;gap:6px"><button class="btn" style="background:#6a1b9a;flex:1;padding:12px" onclick="sendSMSAll()">📱 সব একসাথে SMS</button><button class="btn" style="background:#2e7d32;flex:1;padding:12px" onclick="sendWAAll()">💬 সব একসাথে WhatsApp</button></div>`;}}
 function addStu(){let n=document.getElementById('sn').value.trim(),r=document.getElementById('sr').value.trim(),m=document.getElementById('sm').value.trim();if(!n||!r||!m)return alert('দিন');students.push({name:n,roll:r,mobile:m,present:true});localStorage.setItem('students_v2',JSON.stringify(students));location.reload();}
 function showStu(){let h='';students.forEach((s,i)=>{h+=`<div style="display:flex;justify-content:space-between;background:#fff;padding:8px;border-radius:20px;margin:4px 0;border:1px solid #ddd;font-size:12px"><span>${i+1}. ${s.name} (${s.roll})</span><span><button onclick="tp(${i})" style="border-radius:50%;border:none;padding:4px 8px;background:#e8f5e9">${s.present?'✅':'❌'}</button> <button onclick="ds(${i})" style="border-radius:50%;border:none">🗑️</button></span></div>`});let el=document.getElementById('sList');if(el)el.innerHTML=h;}
-function tp(i){students[i].present=!students[i].present;localStorage.setItem('students_v2',JSON.stringify(students));showStu();renderHeaderCounts();renderTab();}
+function tp(i){
+  students[i].present=!students[i].present;
+  localStorage.setItem('students_v2',JSON.stringify(students));
+  // মাসিক হাজিরা অটো P/A আপডেট
+  let month=new Date().toISOString().slice(0,7);
+  let d=new Date().getDate();
+  let mdata=JSON.parse(localStorage.getItem('monthly31Data')||'{}');
+  mdata[`${month}_${i}_${d}`]=students[i].present;
+  localStorage.setItem('monthly31Data',JSON.stringify(mdata));
+  showStu();renderHeaderCounts();renderTab();
+  if(document.getElementById('ab4')?.classList.contains('on')) renderMonth();
+}
 function ds(i){if(confirm('ডিলিট?')){students.splice(i,1);localStorage.setItem('students_v2',JSON.stringify(students));location.reload();}}
 function saveNotice(){let v=document.getElementById('notice').value;localStorage.setItem('notice',v);alert('নোটিশ সেভ');}
 function getPresentMsg(){let list=students.filter(s=>s.present);return `✅ মোট উপস্থিত: ${list.length} জন\n${list.map(s=>`✅ ${s.name} (${s.roll})`).join('\n')}`;}
@@ -79,9 +76,57 @@ function sendSMSNotice(){window.open(`sms:?body=${encodeURIComponent(getNoticeMs
 function sendWANotice(){window.open(`https://wa.me/?text=${encodeURIComponent(getNoticeMsg())}`,'_blank');}
 function sendSMSAll(){window.open(`sms:?body=${encodeURIComponent(getAllMsg())}`,'_blank');}
 function sendWAAll(){window.open(`https://wa.me/?text=${encodeURIComponent(getAllMsg())}`,'_blank');}
-function renderMonth(){let month=document.getElementById('mp')?.value||new Date().toISOString().slice(0,7);let data=JSON.parse(localStorage.getItem('monthly31Data')||'{}');let today=new Date();let tDay=today.getDate();let tMonth=today.toISOString().slice(0,7);let html=`<table border=1 style="width:100%;border-collapse:collapse;text-align:center;font-size:10px;min-width:900px"><tr style="background:#1976d2;color:#fff"><th>ক্রম</th><th>নাম</th><th>রোল</th>`;for(let i=1;i<=31;i++){let cls=(month==tMonth && i==tDay)?' class="todayCol" style="background:#fff176"':'';html+=`<th${cls}>${i}</th>`;}html+=`<th>মোট উপ</th><th>মোট অনু</th></tr>`;students.forEach((s,idx)=>{html+=`<tr><td>${idx+1}</td><td style="text-align:left">${s.name}</td><td>${s.roll}</td>`;for(let d=1;d<=31;d++){let k=`${month}_${idx}_${d}`;let ch=data[k]===true?'checked':'';let cls=(month==tMonth && d==tDay)?' class="todayCol"':'';html+=`<td${cls}><input type="checkbox" id="d_${idx}_${d}" ${ch} onchange="save31(${idx},${d})" style="width:16px;height:16px"></td>`;}html+=`<td id="p_${idx}" style="background:#e8f5e9">0</td><td id="a_${idx}" style="background:#ffebee">0</td></tr>`;});html+=`</table>`;let el=document.getElementById('monthTbl');if(el)el.innerHTML=html;students.forEach((_,i)=>calc31(i));}
-function save31(idx,d){let month=document.getElementById('mp').value;let data=JSON.parse(localStorage.getItem('monthly31Data')||'{}');data[`${month}_${idx}_${d}`]=document.getElementById(`d_${idx}_${d}`).checked;localStorage.setItem('monthly31Data',JSON.stringify(data));calc31(idx);}
-function calc31(idx){let c=0;for(let d=1;d<=31;d++)if(document.getElementById(`d_${idx}_${d}`)?.checked)c++;let pe=document.getElementById(`p_${idx}`);if(pe)pe.innerText=c;let ae=document.getElementById(`a_${idx}`);if(ae)ae.innerText=31-c;}
+function renderMonth(){
+  let month=document.getElementById('mp')?.value||new Date().toISOString().slice(0,7);
+  let data=JSON.parse(localStorage.getItem('monthly31Data')||'{}');
+  let today=new Date();let tDay=today.getDate();let tMonth=today.toISOString().slice(0,7);
+  let html=`<table border=1 style="width:100%;border-collapse:collapse;text-align:center;font-size:10px;min-width:900px"><tr style="background:#1976d2;color:#fff"><th>ক্রম</th><th>নাম</th><th>রোল</th>`;
+  for(let i=1;i<=31;i++){let cls=(month==tMonth && i==tDay)?' class="todayCol" style="background:#fff176"':'';html+=`<th${cls}>${i}</th>`;}
+  html+=`<th>মোট P</th><th>মোট A</th></tr>`;
+  students.forEach((s,idx)=>{
+    html+=`<tr><td>${idx+1}</td><td style="text-align:left">${s.name}</td><td>${s.roll}</td>`;
+    for(let d=1;d<=31;d++){
+      let k=`${month}_${idx}_${d}`;
+      let val=data[k];
+      if(val===undefined){
+        if(month==tMonth && d==tDay) val=s.present;
+        else if(d < tDay) val=s.present;
+      }
+      let cls=(month==tMonth && d==tDay)?' class="todayCol"':'';
+      let txt=val===true?'P':val===false?'A':'';
+      let bg=val===true?' paP':val===false?' paA':'';
+      html+=`<td${cls} class="${bg.trim()}" id="c_${idx}_${d}" onclick="togglePA(${idx},${d})" style="cursor:pointer;min-width:22px">${txt}</td>`;
+    }
+    html+=`<td id="p_${idx}" style="background:#e8f5e9">0</td><td id="a_${idx}" style="background:#ffebee">0</td></tr>`;
+  });
+  html+=`</table>`;
+  let el=document.getElementById('monthTbl');if(el)el.innerHTML=html;
+  students.forEach((_,i)=>calc31(i));
+}
+function togglePA(idx,d){
+  let month=document.getElementById('mp').value;
+  let data=JSON.parse(localStorage.getItem('monthly31Data')||'{}');
+  let k=`${month}_${idx}_${d}`;
+  let cur=data[k];
+  // true->false, false->true, undefined->true
+  if(cur===true) data[k]=false;
+  else data[k]=true;
+  localStorage.setItem('monthly31Data',JSON.stringify(data));
+  renderMonth();
+}
+function save31(idx,d){} // পুরানো ফাংশন, এখন togglePA ব্যবহার
+function calc31(idx){
+  let month=document.getElementById('mp')?.value||new Date().toISOString().slice(0,7);
+  let data=JSON.parse(localStorage.getItem('monthly31Data')||'{}');
+  let c=0,tot=0;
+  for(let d=1;d<=31;d++){
+    let k=`${month}_${idx}_${d}`;
+    if(data[k]===true) c++;
+    if(data[k]===true || data[k]===false) tot++;
+  }
+  let pe=document.getElementById(`p_${idx}`);if(pe)pe.innerText=c;
+  let ae=document.getElementById(`a_${idx}`);if(ae)ae.innerText=tot-c;
+}
 function goToday(){let m=new Date().toISOString().slice(0,7);document.getElementById('mp').value=m;renderMonth();}
 function delMonth(){if(confirm('মুছবেন?')){let month=document.getElementById('mp').value;let data=JSON.parse(localStorage.getItem('monthly31Data')||'{}');students.forEach((_,idx)=>{for(let d=1;d<=31;d++)delete data[`${month}_${idx}_${d}`]});localStorage.setItem('monthly31Data',JSON.stringify(data));renderMonth();}}
 function chSub(n){let c=parseInt(document.getElementById('sc').value)||5;c+=n;if(c<1)c=1;if(c>20)c=20;document.getElementById('sc').value=c;}
