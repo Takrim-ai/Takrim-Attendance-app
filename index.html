@@ -2,7 +2,6 @@
 <div class="card" style="border:4px solid #ffcc00;text-align:center;font-weight:700" id="head">হেডার লোড...</div>
 <div class="card" style="text-align:center;background:#1e2a8a;color:#ffcc00;font-weight:700" id="cls">শ্রেণী: ৯ম</div>
 <div style="display:flex;gap:8px;margin-top:10px"><button type="button" class="red" onclick="localStorage.removeItem('takrim_session');location.href='index.html'">লগআউট</button><button type="button" class="blue" onclick="location.href='index.html'">হোম</button></div>
-
 <div class="card">
 <input id="n" placeholder="ছাত্রের নাম">
 <input id="r" placeholder="রোল">
@@ -11,14 +10,12 @@
 <p id="msg" style="text-align:center;color:green"></p>
 </div>
 <div class="card" id="list"></div>
-
 <script>
 let sess=null; try{sess=JSON.parse(localStorage.getItem('takrim_session'))}catch(e){}
 let insts=JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');
 let name = sess?.inst?.bnName || insts[0]?.bnName || 'প্রতিষ্ঠান পাওয়া যায়নি';
 document.getElementById('head').innerText=name;
 document.getElementById('cls').innerText='শ্রেণী: '+(sess?.cls||'৯ম')+' | শাখা: '+(sess?.section||'ক');
-
 let KEY='takrim_final_'+(sess?.cls||'9')+'_'+(sess?.section||'ক');
 let arr=JSON.parse(localStorage.getItem(KEY)||'[]');
 function render(){ let h=''; arr.forEach((x,i)=>{ h+=`<div class="item"><span>${x.name} (${x.roll})</span><span onclick="arr.splice(${i},1);save()">🗑️</span></div>`; }); document.getElementById('list').innerHTML=h||'কোন ছাত্র নেই'; }
@@ -28,8 +25,7 @@ document.getElementById('addBtn').addEventListener('click', function(e){
   let nm=document.getElementById('n').value.trim(), rl=document.getElementById('r').value.trim();
   if(!nm||!rl){ alert('নাম রোল দিন'); return; }
   arr.push({name:nm, roll:rl});
-  document.getElementById('n').value=''; document.getElementById('r').value='';
-  document.getElementById('msg').innerText='✅ '+nm+' যোগ হয়েছে';
+  document.getElementById('n').value=''; document.getElementById('r').value='';  document.getElementById('msg').innerText='✅ '+nm+' যোগ হয়েছে';
   save();
 });
 render();
