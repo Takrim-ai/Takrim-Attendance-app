@@ -1,21 +1,24 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FINAL A4</title><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><style>*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}body{margin:0;background:#082a1e;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:10px}.main-banner{width:380px;max-width:95%;border:4px solid #ffcc00;border-radius:22px;overflow:hidden;margin-top:10px;background:#000;line-height:0}.main-banner img{width:100%;display:block}.green-box{width:380px;max-width:95%;background:#16a34a;border-radius:16px;padding:12px;margin-top:20px;text-align:center}.green-box span{background:#000;color:#fff;display:inline-block;padding:8px 22px;border-radius:30px;font-weight:700;font-size:18px}.card{background:#fff;margin-top:12px;border-radius:24px;padding:16px;width:100%;max-width:430px}.menu{width:100%;max-width:430px;background:#fff;border:none;border-radius:16px;padding:16px;font-weight:700;color:#0d5bff;margin-top:12px;display:flex;justify-content:space-between;cursor:pointer}.hidden{display:none!important}.btn{width:100%;padding:14px;border:none;border-radius:14px;font-weight:700;cursor:pointer;margin-top:8px}.green{background:#0a7a42;color:#fff}.blue{background:#0d5bff;color:#fff}.red{background:#d61f1f;color:#fff}.yellow{background:#ffcc00;color:#1a1a1a}input,select{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;margin:5px 0}.acc{margin-bottom:8px;border-radius:12px;overflow:hidden;background:#fff;width:100%;max-width:430px}.acc-b{display:none;padding:8px;background:#fafafa}.acc-b.show{display:block}.btn2{padding:8px 10px;border:none;border-radius:20px;color:#fff;cursor:pointer;margin:3px;font-weight:bold;font-size:11px}.header3{display:flex;gap:6px;width:100%}.hbox{flex:1;padding:14px 2px;border-radius:14px;text-align:center;font-weight:bold;font-size:13px;cursor:pointer;border:3px solid transparent}.hbox.active{border-color:yellow}.boxPresent{background:#2e7d32;color:#fff}.boxAbsent{background:#c62828;color:#fff}.boxNotice{background:#ef6c00;color:#fff}.acc-h-normal{background:#1976d2;color:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:bold;border-radius:12px 12px 0 0}.acc-b-normal{display:none;padding:8px;background:#fafafa}.acc-b-normal.on{display:block}.fifty{display:flex;gap:6px}.fifty>*{flex:1}
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FINAL A4 AutoFit</title><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><style>*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}body{margin:0;background:#082a1e;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:10px}.main-banner{width:380px;max-width:95%;border:4px solid #ffcc00;border-radius:22px;overflow:hidden;margin-top:10px;background:#000;line-height:0}.main-banner img{width:100%;display:block}.green-box{width:380px;max-width:95%;background:#16a34a;border-radius:16px;padding:12px;margin-top:20px;text-align:center}.green-box span{background:#000;color:#fff;display:inline-block;padding:8px 22px;border-radius:30px;font-weight:700;font-size:18px}.card{background:#fff;margin-top:12px;border-radius:24px;padding:16px;width:100%;max-width:430px}.menu{width:100%;max-width:430px;background:#fff;border:none;border-radius:16px;padding:16px;font-weight:700;color:#0d5bff;margin-top:12px;display:flex;justify-content:space-between;cursor:pointer}.hidden{display:none!important}.btn{width:100%;padding:14px;border:none;border-radius:14px;font-weight:700;cursor:pointer;margin-top:8px}.green{background:#0a7a42;color:#fff}.blue{background:#0d5bff;color:#fff}.red{background:#d61f1f;color:#fff}.yellow{background:#ffcc00;color:#1a1a1a}input,select{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;margin:5px 0}.acc{margin-bottom:8px;border-radius:12px;overflow:hidden;background:#fff;width:100%;max-width:430px}.acc-b{display:none;padding:8px;background:#fafafa}.acc-b.show{display:block}.btn2{padding:8px 10px;border:none;border-radius:20px;color:#fff;cursor:pointer;margin:3px;font-weight:bold;font-size:11px}.header3{display:flex;gap:6px;width:100%}.hbox{flex:1;padding:14px 2px;border-radius:14px;text-align:center;font-weight:bold;font-size:13px;cursor:pointer;border:3px solid transparent}.hbox.active{border-color:yellow}.boxPresent{background:#2e7d32;color:#fff}.boxAbsent{background:#c62828;color:#fff}.boxNotice{background:#ef6c00;color:#fff}.acc-h-normal{background:#1976d2;color:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:bold;border-radius:12px 12px 0 0}.acc-b-normal{display:none;padding:8px;background:#fafafa}.acc-b-normal.on{display:block}.fifty{display:flex;gap:6px}.fifty>*{flex:1}
 #logoPreview{width:90px;height:90px;border-radius:50%;border:3px solid #ffcc00;object-fit:cover;object-position:center;background:#fff;display:none;margin:0 auto}
 .subName{width:90px;padding:8px 6px;border-radius:6px;border:1.5px solid #0f5d1a;background:#e8f5e9;text-align:center;font-weight:700}
 .subFull{width:70px;padding:7px;border-radius:6px;border:1.5px solid #b7791f;background:#fffbeb;text-align:center;font-weight:700}
 .markGol{width:70px;height:38px;border-radius:6px;border:1.5px solid #94a3b8;background:#fff;text-align:center;font-weight:700}
 .tbl{width:100%;border-collapse:collapse;font-size:12px;text-align:center;background:#fff}.tbl th{background:#0f5d1a;color:#fff;padding:10px 4px}.tbl td{padding:4px;border:1px solid #e2e8f0}
+
+/* A4 PAD - 5 লাইন এক লাইনে অটো */
 #institutePadFull{width:100%;max-width:800px;background:#fff;border:1px solid #ccc;overflow:hidden}
-.padTop{display:flex;align-items:center;gap:12px;padding:8px 14px;background:#fff}
-.padLogo{width:78px;height:78px;border-radius:50%;border:3px solid #0d2a7a;object-fit:cover;background:#fff;flex-shrink:0}
-.padText{flex:1;text-align:center}
-.bnName{font-weight:700;color:#1a237e;font-size:22px;line-height:1.2}
-.enName{font-weight:700;color:#b71c1c;font-size:16px;line-height:1.2;text-transform:uppercase;margin-top:2px}
-.bnAddr{font-size:15px;color:#000;font-weight:500;margin-top:2px}
-.infoLine{font-size:11px;color:#000;text-align:center;padding:4px 6px;background:#fff;border-top:1px solid #eee}
-.blueLine{width:100%;height:4px;background:#0d2a7a}
-.classPillWrap{width:100%;display:flex;justify-content:center;padding:6px 0 10px 0;background:#fff}
-.classPill{background:#0d2a7a;color:#fff;padding:6px 22px;border-radius:0 0 14px 14px;font-size:13px;font-weight:700}
-@media(max-width:500px){.bnName{font-size:14px}.enName{font-size:11px}.bnAddr{font-size:12px}.padLogo{width:58px;height:58px}.infoLine{font-size:9px}}
+.padTop{display:flex;align-items:center;gap:10px;padding:6px 12px;background:#fff}
+.padLogo{width:82px;height:82px;border-radius:50%;border:3px solid #0a2a7a;object-fit:cover;flex-shrink:0;background:#fff}
+.padText{flex:1;text-align:center;line-height:1.2;overflow:hidden;min-width:0}
+.bnName{font-weight:700;color:#1a237e;font-size:17px;white-space:nowrap;display:block;width:100%;overflow:hidden}
+.enName{font-weight:700;color:#b71c1c;font-size:13.5px;white-space:nowrap;display:block;width:100%;overflow:hidden;text-transform:uppercase}
+.bnAddr{font-size:13px;color:#000;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.line4{font-size:11px;color:#000;white-space:nowrap}
+.line5{font-size:11px;color:#000;white-space:nowrap}
+.blueLine{width:100%;height:5px;background:#0d2a7a}
+.classPillWrap{width:100%;display:flex;justify-content:center;padding:5px 0 8px 0;background:#fff}
+.classPill{background:#0d2a7a;color:#fff;padding:5px 18px;border-radius:0 0 12px 12px;font-size:12px;font-weight:700}
+@media(max-width:500px){.padLogo{width:56px;height:56px}}
 </style></head><body>
 <div id="firstPageWrap" style="width:100%;display:flex;flex-direction:column;align-items:center">
 <div class="main-banner"><img src="IMG-20261005-WA0019(3).jpg"></div>
@@ -30,16 +33,26 @@
 <button class="menu" onclick="document.getElementById('listBox').classList.toggle('hidden')">🔒 তালিকা ▼</button>
 <div id="listBox" class="card hidden"><button class="btn red" onclick="openListSecure()">🔓 তালিকা খুলুন (এডমিন)</button><div id="instList"></div></div>
 </div>
+
 <div id="secondPageWrap" class="hidden" style="width:100%;display:flex;flex-direction:column;align-items:center">
 <div id="institutePadFull">
-  <div class="padTop"><img id="padLogo" class="padLogo" src=""><div class="padText"><div id="instName" class="bnName"></div><div id="instEng" class="enName"></div><div id="instAddr" class="bnAddr"></div></div></div>
-  <div class="infoLine">Mobile: <span id="padMobile"></span> | Email: <span id="padEmail"></span> | EIIN: <span id="padEiin"></span> | INS Code: <span id="padCode"></span></div>
+  <div class="padTop">
+    <img id="padLogo" class="padLogo" src="">
+    <div class="padText">
+      <div id="instName" class="bnName"></div>
+      <div id="instEng" class="enName"></div>
+      <div id="instAddr" class="bnAddr"></div>
+      <div class="line4">EIIN: <span id="padEiin"></span> | Code: <span id="padCode"></span></div>
+      <div class="line5">Mobile: <span id="padMobile"></span> | Email: <span id="padEmail"></span></div>
+    </div>
+  </div>
   <div class="blueLine"></div>
   <div class="classPillWrap"><div class="classPill">শ্রেণী: <span id="pillCls"></span> | শাখা: <span id="pillSec"></span> | শিফট: <span id="pillShift"></span></div></div>
 </div>
 <div style="text-align:center;margin-top:8px"><button onclick="logout()" style="background:#d61f1f;color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px">🚪 লগআউট</button></div>
 <div id="acc" style="width:100%;max-width:430px;margin-top:10px"></div>
 </div>
+
 <script>
 let rawInsts=JSON.parse(localStorage.getItem('takrim_primary_insts')||'[]');let mapDedup=new Map();rawInsts.forEach(x=>{let k=(x.bnName||'').trim();if(k&&!mapDedup.has(k))mapDedup.set(k,x);});let insts=[...mapDedup.values()];localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));
 let students=JSON.parse(localStorage.getItem('students_v2')||'[]');let saved=JSON.parse(localStorage.getItem('fullResultSheet')||'null');let activeTab='';let tempLogo=localStorage.getItem('takrim_temp_logo')||'';
@@ -47,7 +60,37 @@ function refreshInstSelect(){let el=document.getElementById('loginInst');el.inne
 document.getElementById('logoInput').addEventListener('change',function(){if(!this.files[0])return;let r=new FileReader();r.onload=e=>{let img=new Image();img.onload=()=>{let c=document.createElement('canvas');c.width=600;c.height=600;let ctx=c.getContext('2d');let size=Math.min(img.width,img.height),sx=(img.width-size)/2,sy=(img.height-size)/2;ctx.fillStyle='#fff';ctx.fillRect(0,0,600,600);ctx.drawImage(img,sx,sy,size,size,0,0,600,600);tempLogo=c.toDataURL('image/png');let p=document.getElementById('logoPreview');p.src=tempLogo;p.style.display='block';localStorage.setItem('takrim_temp_logo',tempLogo);};img.src=e.target.result;};r.readAsDataURL(this.files[0]);});
 function savePrimary(){let bn=document.getElementById('bnName').value.trim();let pass=document.getElementById('pass1').value.trim();if(!bn)return alert('প্রতিষ্ঠানের নাম দিন');if(!pass)return alert('পাসওয়ার্ড দিন');if(insts.some(x=>x.bnName.trim()===bn))return alert('❌ এই প্রতিষ্ঠান আগেই আছে');let o={bnName:bn,enName:document.getElementById('enName').value.trim(),addr:document.getElementById('address').value.trim(),eiin:document.getElementById('eiin').value.trim(),schoolCode:document.getElementById('schoolCode').value.trim(),mobile:document.getElementById('mobile').value.trim(),email:document.getElementById('email').value.trim(),pass:pass,logo:tempLogo||''};insts.push(o);localStorage.setItem('takrim_primary_insts',JSON.stringify(insts));localStorage.setItem('takrim_temp_logo','');alert('✅ সেভ');location.reload();}
 function primaryLogin(){let idx=document.getElementById('loginInst').value;if(idx==='')return document.getElementById('loginMsg').textContent='প্রতিষ্ঠান নির্বাচন';let ins=insts[idx];if(document.getElementById('loginPass').value!==ins.pass)return document.getElementById('loginMsg').textContent='❌ ভুল পাস';localStorage.setItem('takrim_session',JSON.stringify({inst:ins,cls:document.getElementById('cls').value,shift:document.getElementById('shift').value,section:document.getElementById('section').value}));showSecondPage();}
-function showSecondPage(){let sess=JSON.parse(localStorage.getItem('takrim_session')||'null');if(!sess)return;document.getElementById('firstPageWrap').classList.add('hidden');document.getElementById('secondPageWrap').classList.remove('hidden');document.body.style.background='#f0f4f8';document.getElementById('instName').innerText=sess.inst.bnName||'';document.getElementById('instEng').innerText=sess.inst.enName||'MOMTAZ UDDIN BUSINESS MANAGEMENT COLLEGE';document.getElementById('instAddr').innerText=sess.inst.addr||'উত্তর বাড্ডা, ঢাকা-১২১২';let logoEl=document.getElementById('padLogo');if(sess.inst.logo)logoEl.src=sess.inst.logo;document.getElementById('padEiin').innerText=sess.inst.eiin||'';document.getElementById('padCode').innerText=sess.inst.schoolCode||'';document.getElementById('padMobile').innerText=sess.inst.mobile||'';document.getElementById('padEmail').innerText=sess.inst.email||'';document.getElementById('pillCls').innerText=sess.cls;document.getElementById('pillSec').innerText=sess.section;document.getElementById('pillShift').innerText=sess.shift;buildAcc();showStu();renderHeaderCounts();}
+
+function autoFit(id,max,min){
+  let el=document.getElementById(id); if(!el) return;
+  let size=max; el.style.fontSize=size+'px';
+  // রিসেট
+  let parentW=el.parentElement.clientWidth;
+  while(el.scrollWidth > parentW && size > min){
+    size -= 0.5; el.style.fontSize=size+'px';
+  }
+}
+
+function showSecondPage(){
+  let sess=JSON.parse(localStorage.getItem('takrim_session')||'null');if(!sess)return;
+  document.getElementById('firstPageWrap').classList.add('hidden');
+  document.getElementById('secondPageWrap').classList.remove('hidden');
+  document.body.style.background='#f0f4f8';
+  document.getElementById('instName').innerText=sess.inst.bnName||'';
+  document.getElementById('instEng').innerText=sess.inst.enName||'';
+  document.getElementById('instAddr').innerText=sess.inst.addr||'উত্তর বাড্ডা, ঢাকা-১২১২';
+  let logoEl=document.getElementById('padLogo');if(sess.inst.logo)logoEl.src=sess.inst.logo;
+  document.getElementById('padEiin').innerText=sess.inst.eiin||'';
+  document.getElementById('padCode').innerText=sess.inst.schoolCode||'';
+  document.getElementById('padMobile').innerText=sess.inst.mobile||'';
+  document.getElementById('padEmail').innerText=sess.inst.email||'';
+  document.getElementById('pillCls').innerText=sess.cls;
+  document.getElementById('pillSec').innerText=sess.section;
+  document.getElementById('pillShift').innerText=sess.shift;
+  buildAcc();showStu();renderHeaderCounts();
+  setTimeout(()=>{ autoFit('instName',17,8); autoFit('instEng',13.5,7); },120);
+}
+
 function openListSecure(){let a=prompt('এডমিন নাম'),p=prompt('পাসওয়ার্ড');if(a!=='malek'||p!=='takrim2022')return alert('ভুল এডমিন');let listDiv=document.getElementById('instList');listDiv.innerHTML=insts.map((s,i)=>'<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 8px;border-bottom:1px solid #eee"><div style="display:flex;align-items:center;gap:8px"><img src="'+(s.logo||'')+'" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid #ffcc00"><div><div style="font-weight:700;font-size:13px">'+s.bnName+'</div><div style="font-size:11px;background:#f3f4f6;padding:4px 8px;border-radius:8px;margin-top:4px">🔑 <b style="color:#dc2626">'+s.pass+'</b></div></div></div><div><button onclick="navigator.clipboard.writeText(\''+s.pass+'\');alert(\'কপি\')" style="background:#dbeafe;border:none;padding:8px;border-radius:10px">📋</button><button onclick="if(confirm(\'ডিলিট?\')){insts.splice('+i+',1);localStorage.setItem(\'takrim_primary_insts\',JSON.stringify(insts));location.reload();}" style="background:#fee2e2;border:none;padding:8px;border-radius:10px">🗑️</button></div></div>').join('');}
 function logout(){if(confirm('লগআউট?')){localStorage.removeItem('takrim_session');location.reload();}}
 function buildAcc(){document.getElementById('acc').innerHTML='<div class="acc"><div class="acc-h-normal" onclick="togN(1)"><span>1️⃣ শিক্ষার্থী যোগ</span><span>▼</span></div><div class="acc-b-normal" id="ab1"><input id="sn" placeholder="নাম"><input id="sr" placeholder="রোল"><input id="sm" placeholder="মোবাইল"><button class="btn2" style="background:#2e7d32;width:100%;padding:12px" onclick="addStu()">+ যোগ</button></div></div><div class="acc"><div class="acc-h-normal" onclick="togN(2)"><span>2️⃣ তালিকা</span><span>▼</span></div><div class="acc-b-normal" id="ab2"><div id="sList"></div></div></div><div class="acc" style="border:3px solid #0d47a1"><div class="acc-h-normal" style="background:#0d47a1" onclick="togN(3)"><div class="header3"><div id="hb_present" class="hbox boxPresent" onclick="event.stopPropagation();setTab(\'present\')">✅ উপস্থিত<br><span id="hc_present">0</span> জন</div><div id="hb_absent" class="hbox boxAbsent" onclick="event.stopPropagation();setTab(\'absent\')">❌ অনুপস্থিত<br><span id="hc_absent">0</span> জন</div><div id="hb_notice" class="hbox boxNotice" onclick="event.stopPropagation();setTab(\'notice\')">📢 নোটিশ</div></div></div><div class="acc-b" id="ab3"><div id="tabContent"></div></div></div><div class="acc"><div class="acc-h-normal" onclick="togN(4)"><span>4️⃣ মাসিক হাজিরা (১-৩১)</span><span>▼</span></div><div class="acc-b-normal" id="ab4"><input type="month" id="mp" value="'+new Date().toISOString().slice(0,7)+'" onchange="renderMonth()"><div id="monthTbl" style="margin-top:8px;overflow:auto"></div></div></div><div class="acc"><div class="acc-h-normal" onclick="togN(5)"><span>5️⃣ ফলাফল - আয়তক্ষেত্র + মোট % GPA</span><span>▼</span></div><div class="acc-b-normal" id="ab5"><div class="fifty"><b>বিষয়:</b><button onclick="chSub(-1)">-</button><input id="sc" type="number" value="3" style="text-align:center"><button onclick="chSub(1)">+</button><button onclick="makeSheet()" style="background:#7c4dff;color:#fff;border:none;padding:6px 14px;border-radius:8px">সেট</button><span id="lockB"></span></div><div id="pdfArea" style="margin-top:8px;overflow:auto;background:#fff;padding:8px"><table class="tbl" id="rt"><thead id="rh"></thead><tbody id="rb"></tbody></table></div><div class="fifty" style="margin-top:8px"><button style="background:#2e7d32;color:#fff;padding:10px;border-radius:8px;border:none;flex:1" onclick="saveRes()">💾 সেভ লক</button><button style="background:#ff9800;color:#fff;padding:10px;border-radius:8px;border:none;flex:1" onclick="unlockRes()">✏️ এডিট</button></div><div class="fifty" style="margin-top:8px"><button style="background:#16a34a;color:#fff;padding:10px;border:none;border-radius:8px;flex:1" onclick="expExcel()">⬇️ Excel A4</button><button style="background:#dc2626;color:#fff;padding:10px;border:none;border-radius:8px;flex:1" onclick="downPDF()">⬇️ PDF A4 প্যাড সহ</button></div><p id="st" style="font-size:11px;color:green;font-weight:bold;margin-top:4px"></p></div></div></div>';}
@@ -72,29 +115,17 @@ function calcAll(){let cnt=parseInt(document.getElementById('sc').value)||3;let 
 function applyLock(){let locked=localStorage.getItem('fullResultSheetLocked')=='true';document.querySelectorAll('#rh input,#rb input,#sc').forEach(el=>{el.disabled=locked;});let b=document.getElementById('lockB');if(b)b.innerHTML=locked?'<span style="background:#dc2626;color:#fff;padding:4px 10px;border-radius:8px;font-size:11px">🔒 লক</span>':'<span style="background:#16a34a;color:#fff;padding:4px 10px;border-radius:8px;font-size:11px">✏️ খোলা</span>';}
 function saveRes(){let cnt=parseInt(document.getElementById('sc').value)||3;let subs=[];for(let i=0;i<cnt;i++)subs.push({name:document.getElementById('sn'+i).value,full:document.getElementById('sf'+i).value});let marks=[];students.forEach((_,idx)=>{let r=[];for(let j=0;j<cnt;j++)r.push(document.getElementById('m_'+idx+'_'+j).value);marks.push(r);});localStorage.setItem('fullResultSheet',JSON.stringify({subjects:subs,marks:marks}));localStorage.setItem('fullResultSheetLocked','true');saved=JSON.parse(localStorage.getItem('fullResultSheet'));document.getElementById('st').innerText='🔒 সেভ - PDF এ মার্ক সহ আসবে';applyLock();}
 function unlockRes(){localStorage.setItem('fullResultSheetLocked','false');document.getElementById('st').innerText='✏️ এডিট খোলা';applyLock();}
-
-// === PDF + EXCEL A4 ফাইনাল ===
-function expExcel(){
- let cnt=parseInt(document.getElementById('sc').value)||3;
- let sess=JSON.parse(localStorage.getItem('takrim_session')||'null');
- let header=['রোল','নাম']; for(let i=0;i<cnt;i++) header.push(document.getElementById('sn'+i)?.value||'বি'+(i+1)); header.push('মোট','%','GPA');
- let rows=[]; students.forEach((s,idx)=>{ let r=[s.roll,s.name]; let sum=0,totalFull=0; for(let j=0;j<cnt;j++){ let m=parseInt(document.getElementById('m_'+idx+'_'+j)?.value||0); totalFull+=parseInt(document.getElementById('sf'+j)?.value||0); sum+=m; r.push(m); } let per=totalFull? (sum*100/totalFull).toFixed(1)+'%':'0%'; let gpa=getGPA(totalFull? sum*100/totalFull:0).toFixed(2); r.push(sum,per,gpa); rows.push(r); });
- let ws=XLSX.utils.aoa_to_sheet([[sess?.inst?.bnName||''],[sess?.inst?.enName||''],['Mobile: '+(sess?.inst?.mobile||'')+' | EIIN: '+(sess?.inst?.eiin||'')],[],header,...rows]);
- ws['!margins']={left:0.4,right:0.4,top:0.5,bottom:0.5,header:0.3,footer:0.3};
- ws['!pageSetup']={paperSize:9,orientation:'landscape',fitToWidth:1,fitToHeight:0};
- ws['!cols']=[{wch:8},{wch:20}];
- let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Result A4'); XLSX.writeFile(wb,'Result_A4_'+(sess?.inst?.bnName||'')+'.xlsx');
-}
-
+function expExcel(){let cnt=parseInt(document.getElementById('sc').value)||3;let sess=JSON.parse(localStorage.getItem('takrim_session')||'null');let header=['রোল','নাম']; for(let i=0;i<cnt;i++) header.push(document.getElementById('sn'+i)?.value||'বি'+(i+1)); header.push('মোট','%','GPA'); let rows=[]; students.forEach((s,idx)=>{ let r=[s.roll,s.name]; let sum=0,totalFull=0; for(let j=0;j<cnt;j++){ let m=parseInt(document.getElementById('m_'+idx+'_'+j)?.value||0); totalFull+=parseInt(document.getElementById('sf'+j)?.value||0); sum+=m; r.push(m); } let per=totalFull? (sum*100/totalFull).toFixed(1)+'%':'0%'; let gpa=getGPA(totalFull? sum*100/totalFull:0).toFixed(2); r.push(sum,per,gpa); rows.push(r); }); let ws=XLSX.utils.aoa_to_sheet([[sess?.inst?.bnName||''],[sess?.inst?.enName||''],['Mobile: '+(sess?.inst?.mobile||'')+' | EIIN: '+(sess?.inst?.eiin||'')],[],header,...rows]); ws['!margins']={left:0.4,right:0.4,top:0.5,bottom:0.5}; ws['!pageSetup']={paperSize:9,orientation:'landscape',fitToWidth:1}; let wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Result A4'); XLSX.writeFile(wb,'Result_A4.xlsx');}
 async function downPDF(){
- let area=document.getElementById('pdfArea');
- let pad=document.getElementById('institutePadFull');
- let st=document.getElementById('st');
- let hasMark=false; document.querySelectorAll('.markGol').forEach(i=>{if(i.value) hasMark=true;});
- if(!hasMark){ alert('আগে মার্ক লিখে সেভ লক করুন'); return; }
+ let area=document.getElementById('pdfArea'); let pad=document.getElementById('institutePadFull'); let st=document.getElementById('st');
+ let hasMark=false; document.querySelectorAll('.markGol').forEach(i=>{if(i.value) hasMark=true;}); if(!hasMark){ alert('আগে মার্ক লিখে সেভ লক করুন'); return; }
  if(st) st.innerText='⏳ PDF A4 বানাচ্ছি...';
- let wrap=document.createElement('div'); wrap.style.background='#fff'; wrap.style.padding='10px'; wrap.style.width='1123px';
- let padClone=pad.cloneNode(true); padClone.style.maxWidth='100%'; padClone.style.border='1px solid #999';
+ let wrap=document.createElement('div'); wrap.style.background='#fff'; wrap.style.padding='10px'; wrap.style.width='1123px'; // A4 landscape width
+ let padClone=pad.cloneNode(true); padClone.style.maxWidth='100%'; padClone.style.width='1123px';
+ // A4 তে আবার অটো ফিট - বড় জায়গা তাই বড় ফন্টে ফিট হবে
+ let bnClone=padClone.querySelector('#instName'); let enClone=padClone.querySelector('#instEng');
+ if(bnClone){ bnClone.style.fontSize='24px'; while(bnClone.scrollWidth > 1000 && parseFloat(bnClone.style.fontSize) > 12){ bnClone.style.fontSize=(parseFloat(bnClone.style.fontSize)-0.5)+'px'; } }
+ if(enClone){ enClone.style.fontSize='19px'; while(enClone.scrollWidth > 1000 && parseFloat(enClone.style.fontSize) > 10){ enClone.style.fontSize=(parseFloat(enClone.style.fontSize)-0.5)+'px'; } }
  wrap.appendChild(padClone);
  let clone=area.cloneNode(true);
  clone.querySelectorAll('input').forEach(inp=>{ let div=document.createElement('div'); div.textContent=inp.value||'-'; div.style.cssText='display:inline-block;min-width:60px;height:32px;line-height:32px;border-radius:6px;text-align:center;font-weight:700;margin:2px;border:1px solid #999;background:#fff'; if(inp.className.includes('subName')) div.style.background='#e8f5e9'; if(inp.className.includes('subFull')) div.style.background='#fffbeb'; inp.parentNode.replaceChild(div, inp); });
@@ -105,11 +136,9 @@ async function downPDF(){
  let img=canvas.toDataURL('image/png');
  let {jsPDF}=window.jspdf; let pdf=new jsPDF('l','mm','a4');
  let pw=pdf.internal.pageSize.getWidth()-10; let ph=canvas.height*pw/canvas.width;
- let totalH=ph; let y=5;
- pdf.addImage(img,'PNG',5,y,pw,ph);
+ pdf.addImage(img,'PNG',5,5,pw,ph);
  pdf.save('Result_A4_'+new Date().toISOString().slice(0,10)+'.pdf');
  if(st) st.innerText='✅ PDF A4 প্যাড সহ ডাউনলোড';
 }
-
 let savedLogo=localStorage.getItem('takrim_temp_logo'); if(savedLogo){let lp=document.getElementById('logoPreview'); if(lp){lp.src=savedLogo;lp.style.display='block';} tempLogo=savedLogo;} let existing=JSON.parse(localStorage.getItem('takrim_session')||'null'); if(existing) showSecondPage();
 </script></body></html>
