@@ -1,88 +1,65 @@
-<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard</title><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}body{margin:0;background:#0b2e22;padding:8px}.top{background:#fff;border:3px solid #ffcc00;border-radius:16px;padding:10px;display:flex;gap:10px;align-items:center}.top img{width:70px;height:70px;border-radius:50%;border:3px solid #001a8a;object-fit:cover}.top h2{margin:0;color:#001a8a;font-size:18px;line-height:1.2}.top h3{margin:0;color:#c00;font-size:14px}.top p{margin:2px 0 0;font-size:12px}.blue-bar{background:#1e2a8a;color:#fff;text-align:center;padding:8px;border-radius:20px;margin-top:8px;font-weight:700}.btns{display:flex;gap:8px;margin-top:10px}.btns button{flex:1;padding:10px;border:none;border-radius:12px;font-weight:700;cursor:pointer}.red{background:#dc2626;color:#fff}.navy{background:#1e3a8a;color:#fff}.card{margin-top:10px;border-radius:16px;overflow:hidden;border:3px solid #0a4a8a}.card-head{background:#1d6bff;color:#fff;padding:12px;font-weight:700;display:flex;justify-content:space-between;cursor:pointer}.card-body{background:#fff;padding:10px} input{width:100%;padding:11px;border-radius:10px;border:1px solid #ccc;margin:5px 0}.addBtn{background:#0a7a42;color:#fff;border:none;width:100%;padding:12px;border-radius:12px;font-weight:700;margin-top:6px}.statusBox{display:flex;gap:6px}.statusBox div{flex:1;padding:12px;border-radius:14px;text-align:center;color:#fff;font-weight:700}.st1{background:#16a34a;border:3px solid #ffeb3b}.st2{background:#dc2626}.st3{background:#f97316}.list{background:#f0fdf4;padding:8px;border-radius:10px;margin-top:8px}.list div{padding:6px 0;border-bottom:1px dashed #ccc;font-weight:700}.wa{flex:1;background:#22c55e;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:700}.sms{flex:1;background:#2563eb;color:#fff;border:none;padding:12px;border-radius:12px;font-weight:700}.hidden{display:none}</style></head><body>
+<!DOCTYPE html><html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard - Fixed</title><link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;font-family:'Hind Siliguri',sans-serif}body{margin:0;background:#082a1e;padding:8px}.top{background:#fff;border:4px solid #ffcc00;border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;min-height:90px}.top img{width:70px;height:70px;border-radius:50%;border:3px solid #001a8a;object-fit:cover;background:#fff}.card{margin-top:10px;border-radius:16px;overflow:hidden;border:3px solid #0a4a8a}.card-head{background:#1d6bff;color:#fff;padding:14px;font-weight:700;display:flex;justify-content:space-between;cursor:pointer;font-size:18px}.card-body{background:#fff;padding:12px}.blue-bar{background:#1e2a8a;color:#ffcc00;text-align:center;padding:10px;border-radius:20px;margin-top:8px;font-weight:700;border:2px solid #ffcc00}.btns{display:flex;gap:10px;margin-top:10px}.btns button{flex:1;padding:14px;border:none;border-radius:14px;font-weight:700;cursor:pointer;font-size:16px}.red{background:#dc2626;color:#fff}.navy{background:#1e3a8a;color:#fff} input{width:100%;padding:14px;border-radius:12px;border:1px solid #aaa;margin:6px 0;font-size:16px}.addBtn{background:#0a7a42;color:#fff;border:none;width:100%;padding:14px;border-radius:14px;font-weight:700;margin-top:8px;font-size:17px;cursor:pointer}.statusBox{display:flex;gap:8px}.statusBox div{flex:1;padding:14px;border-radius:14px;text-align:center;color:#fff;font-weight:700}.st1{background:#16a34a}.st2{background:#dc2626}.st3{background:#f97316}.list{margin-top:10px}.list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-bottom:1px dashed #ccc;font-weight:700;background:#f0fdf4;margin-bottom:4px;border-radius:8px}.wa{flex:1;background:#22c55e;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:700;cursor:pointer}.sms{flex:1;background:#2563eb;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:700;cursor:pointer}
+</style></head><body>
+<div class="top" id="instHead">লোড হচ্ছে...</div>
+<div class="blue-bar" id="clsBar">শ্রেণী লোড হচ্ছে...</div>
+<div class="btns"><button class="red" id="logoutBtn">🚪 লগআউট</button><button class="navy" id="homeBtn">🏠 হোম</button></div>
 
-<div class="top" id="instHead"></div>
-<div class="blue-bar" id="clsBar"></div>
+<div class="card"><div class="card-head" id="toggle1"><span>1️⃣ শিক্ষার্থী যোগ</span><span>▼</span></div><div id="addBox" class="card-body"><input id="sName" placeholder="ছাত্রের নাম"><input id="sRoll" placeholder="রোল নং"><input id="sMobile" placeholder="মোবাইল (ঐচ্ছিক)"><button class="addBtn" id="addBtn">➕ যোগ করুন</button><p id="msg" style="text-align:center;color:green;font-weight:700"></p></div></div>
 
-<div class="btns"><button class="red" onclick="logout()">🚪 লগআউট</button><button class="navy" onclick="location.href='index.html'">🏠 হোম</button></div>
-
-<div class="card">
-<div class="card-head" onclick="document.getElementById('addBox').classList.toggle('hidden')"><span>1️⃣ শিক্ষার্থী যোগ</span><span>▼</span></div>
-<div id="addBox" class="card-body">
-<input id="sName" placeholder="ছাত্রের নাম">
-<input id="sRoll" placeholder="রোল নং">
-<input id="sMobile" placeholder="মোবাইল (ঐচ্ছিক)">
-<button class="addBtn" onclick="addStudent()">➕ যোগ করুন</button>
-<p id="msg" style="text-align:center;color:green"></p>
-</div>
-</div>
-
-<div class="card">
-<div class="card-head" onclick="document.getElementById('listArea').classList.toggle('hidden')"><span>2️⃣ তালিকা</span><span>▼</span></div>
-<div id="listArea" class="card-body">
-<div class="statusBox">
-<div class="st1">✅ উপস্থিত<br><span id="pCount">0 জন</span></div>
-<div class="st2">❌ অনুপস্থিত<br><span id="aCount">0 জন</span></div>
-<div class="st3">📢 নোটিশ</div>
-</div>
-<div id="studentList" class="list"></div>
-<div style="display:flex;gap:8px;margin-top:10px">
-<button class="sms" onclick="sendSMS()">📩 SMS</button>
-<button class="wa" onclick="sendWA()">💬 WhatsApp</button>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="card-head"><span>4️⃣ মাসিক হাজিরা (১-৩১)</span><span>▼</span></div>
-</div>
+<div class="card"><div class="card-head" id="toggle2"><span>2️⃣ তালিকা</span><span>▼</span></div><div id="listArea" class="card-body"><div class="statusBox"><div class="st1">✅ উপস্থিত<br><span id="pCount">0 জন</span></div><div class="st2">❌ অনুপস্থিত<br><span id="aCount">0 জন</span></div><div class="st3">📢 নোটিশ</div></div><div id="studentList" class="list"></div><div style="display:flex;gap:10px;margin-top:12px"><button class="sms" id="smsBtn">📩 SMS</button><button class="wa" id="waBtn">💬 WhatsApp</button></div></div></div>
 
 <script>
-let session = JSON.parse(localStorage.getItem('takrim_session')||'null');
-if(!session){ location.href='index.html'; }
+console.log("Dashboard Loading...");
+let sessionRaw = localStorage.getItem('takrim_session');
+let instsRaw = localStorage.getItem('takrim_primary_insts');
+let insts = instsRaw? JSON.parse(instsRaw) : [];
+let session = null;
+try{ session = JSON.parse(sessionRaw); }catch(e){ session=null; }
 
-let inst = session.inst;
-document.getElementById('instHead').innerHTML = `<img src="${inst.logo||''}"><div><h2>${inst.bnName}</h2><h3>${inst.enName||'KHILKHET TECHNICAL COLLEGE'}</h3><p>EIIN: ${inst.eiin} | Code: ${inst.schoolCode||inst.eiin}<br>Mobile: ${inst.mobile} | Email: ${inst.email}</p></div>`;
-document.getElementById('clsBar').innerText = `শ্রেণী: ${session.cls||'৯ম শ্রেণি'} | শাখা: ${session.section||''} | শিফট: ${session.shift||'প্রভাতী'}`;
+if(!session ||!session.inst){
+  // যদি সেশন না থাকে, প্রথম প্রতিষ্ঠান দিয়ে চালাও যাতে বাটন কাজ করে
+  if(insts.length>0){ session = {inst:insts[0], cls:'৯ম শ্রেণি', section:'ক', shift:'প্রভাতী'}; }
+  else{ document.getElementById('instHead').innerHTML = '❌ কোন প্রতিষ্ঠান পাওয়া যায়নি, index.html থেকে লগইন করুন'; }
+}
 
-// *** আসল ফিক্স এখানে - ক্লাস অনুযায়ী আলাদা চাবি ***
-let clsKey = `${inst.eiin||inst.schoolCode}_${session.cls}_${session.section}_${session.shift}`;
-let allData = JSON.parse(localStorage.getItem('takrim_all_students_v2')||'{}');
-let students = allData[clsKey] || [];
+if(session){
+  let inst = session.inst;
+  document.getElementById('instHead').innerHTML = `<img src="${inst.logo||''}" onerror="this.style.display='none'"><div><h2 style="margin:0;color:#001a8a">${inst.bnName||'প্রতিষ্ঠান'}</h2><p style="margin:2px 0 0;font-size:12px">EIIN: ${inst.eiin||''} | Code: ${inst.schoolCode||''}<br>Mobile: ${inst.mobile||''}</p></div>`;
+  document.getElementById('clsBar').innerText = `শ্রেণী: ${session.cls||'৯ম'} | শাখা: ${session.section||'ক'} | শিফট: ${session.shift||'প্রভাতী'}`;
 
-function saveAll(){
-  allData[clsKey] = students;
-  localStorage.setItem('takrim_all_students_v2', JSON.stringify(allData));
+  let clsKey = (inst.eiin||inst.schoolCode||'default') + "_" + (session.cls||'9') + "_" + (session.section||'ক') + "_" + (session.shift||'প্রভাতী');
+  let allData = JSON.parse(localStorage.getItem('takrim_all_students_v2')||'{}');
+  let students = allData[clsKey] || [];
+
+  function saveAll(){ allData[clsKey]=students; localStorage.setItem('takrim_all_students_v2', JSON.stringify(allData)); render(); }
+
+  function render(){
+    let html=''; let p=0;
+    students.forEach((s,i)=>{ if(s.present) p++; html+=`<div class="list-item"><span><input type="checkbox" ${s.present?'checked':''} id="chk${i}"> ${s.name} (${s.roll})</span><span style="cursor:pointer" onclick="delStu(${i})">🗑️</span></div>`; });
+    document.getElementById('studentList').innerHTML = html || '<div style="text-align:center;padding:20px">কোন ছাত্র নেই, উপরে নাম লিখে যোগ করুন</div>';
+    document.getElementById('pCount').innerText = p+' জন';
+    document.getElementById('aCount').innerText = (students.length-p)+' জন';
+    // চেকবক্সে ইভেন্ট লাগানো
+    students.forEach((s,i)=>{ let el=document.getElementById('chk'+i); if(el) el.onchange=()=>{ students[i].present=!students[i].present; saveAll(); }; });
+  }
+  window.delStu = function(i){ if(confirm('ডিলিট করবেন?')){ students.splice(i,1); saveAll(); } };
+
+  document.getElementById('addBtn').onclick = function(){
+    let name=document.getElementById('sName').value.trim();
+    let roll=document.getElementById('sRoll').value.trim();
+    if(!name ||!roll){ alert('নাম ও রোল দিন'); return; }
+    if(students.some(s=>s.roll==roll)){ alert('এই রোল আগে আছে'); return; }
+    students.push({name:name, roll:roll, mobile:document.getElementById('sMobile').value.trim(), present:true});
+    document.getElementById('sName').value=''; document.getElementById('sRoll').value=''; document.getElementById('sMobile').value='';
+    document.getElementById('msg').innerText='✅ যোগ হয়েছে: '+name;
+    saveAll();
+  };
+  document.getElementById('logoutBtn').onclick = ()=>{ localStorage.removeItem('takrim_session'); location.href='index.html'; };
+  document.getElementById('homeBtn').onclick = ()=>{ location.href='index.html'; };
+  document.getElementById('smsBtn').onclick = ()=>{ alert('SMS: মোট '+students.length+' জন, উপস্থিত '+document.getElementById('pCount').innerText); };
+  document.getElementById('waBtn').onclick = ()=>{ alert('WhatsApp রিপোর্ট রেডি - মোট '+students.length+' জন'); };
+  document.getElementById('toggle1').onclick = ()=>{ document.getElementById('addBox').classList.toggle('hidden'); };
+  document.getElementById('toggle2').onclick = ()=>{ document.getElementById('listArea').classList.toggle('hidden'); };
   render();
 }
-
-function addStudent(){
-  let name = document.getElementById('sName').value.trim();
-  let roll = document.getElementById('sRoll').value.trim();
-  if(!name ||!roll) return alert('নাম ও রোল দিন');
-  if(students.some(s=>s.roll==roll)) return alert('এই রোল আগে আছে');
-  students.push({name:name, roll:roll, mobile:document.getElementById('sMobile').value.trim(), present:true});
-  document.getElementById('sName').value=''; document.getElementById('sRoll').value=''; document.getElementById('sMobile').value='';
-  document.getElementById('msg').innerText='✅ যোগ হয়েছে - '+clsKey;
-  saveAll();
-}
-
-function render(){
-  let html = '';
-  let p=0;
-  students.forEach((s,i)=>{
-    if(s.present) p++;
-    html += `<div><label><input type="checkbox" ${s.present?'checked':''} onchange="toggleP(${i})"> ${s.name} (${s.roll})</label> <span style="float:right;cursor:pointer" onclick="del(${i})">🗑️</span></div>`;
-  });
-  document.getElementById('studentList').innerHTML = html || '<div style="text-align:center">কোন ছাত্র নেই - নতুন যোগ করুন</div>';
-  document.getElementById('pCount').innerText = p+' জন';
-  document.getElementById('aCount').innerText = (students.length-p)+' জন';
-}
-
-function toggleP(i){ students[i].present =!students[i].present; saveAll(); }
-function del(i){ if(confirm('ডিলিট করবেন?')){ students.splice(i,1); saveAll(); } }
-function logout(){ localStorage.removeItem('takrim_session'); location.href='index.html'; }
-function sendSMS(){ alert('SMS: '+students.filter(s=>s.present).length+' জন উপস্থিত'); }
-function sendWA(){ alert('WhatsApp রিপোর্ট রেডি'); }
-
-render();
 </script></body></html>
